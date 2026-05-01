@@ -1,73 +1,713 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chrysanthemum Vault - GitHub Repository Vault</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chrysanthemum Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cormorant+SC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080809;
+    --gold: #c9a55a;
+    --gold-dim: rgba(201,165,90,0.18);
+    --gold-mid: rgba(201,165,90,0.55);
+    --text: #efe8da;
+    --muted: #9a9080;
+    --line: rgba(201,165,90,0.22);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  #starfield {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Blueprint grid overlay — very subtle */
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,165,90,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,165,90,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  /* Corner registration marks */
+  .reg-mark {
+    position: absolute;
+    width: 24px; height: 24px;
+    pointer-events: none;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+  .reg-mark::before, .reg-mark::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+    opacity: 0.45;
+  }
+  .reg-mark::before { width: 1px; height: 100%; left: 50%; top: 0; }
+  .reg-mark::after  { height: 1px; width: 100%; top: 50%; left: 0; }
+  .reg-mark.tl { top: 24px; left: 24px; animation-delay: 0.2s; }
+  .reg-mark.tr { top: 24px; right: 24px; animation-delay: 0.3s; }
+  .reg-mark.bl { bottom: 24px; left: 24px; animation-delay: 0.4s; }
+  .reg-mark.br { bottom: 24px; right: 24px; animation-delay: 0.5s; }
+
+  /* ── CHRYSANTHEMUM SVG ── */
+  #chrysanthemum-wrap {
+    position: absolute;
+    bottom: 38%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(820px, 96vw);
+    opacity: 0;
+    animation: riseIn 2.4s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+  }
+
+  #chrysanthemum-wrap svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Clipping mask — only upper half visible (horizon effect) */
+  #chrysanthemum-wrap::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+    height: 50%;
+    background: linear-gradient(to top, var(--bg) 60%, transparent 100%);
+    pointer-events: none;
+  }
+
+  /* ── HORIZON LINE ── */
+  #horizon {
+    position: absolute;
+    bottom: 38%;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-mid) 20%, var(--gold) 50%, var(--gold-mid) 80%, transparent);
+    opacity: 0;
+    animation: fadeIn 1.2s ease 2.2s forwards;
+  }
+
+  /* ── TITLE ── */
+  #title-wrap {
+    position: absolute;
+    bottom: 28%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    animation: windowShade 1.2s cubic-bezier(0.16,1,0.3,1) 2.8s forwards;
+    white-space: nowrap;
+  }
+
+  #title-wrap .kicker {
+    display: block;
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+  }
+
+  #title-wrap h1 {
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(2rem, 6vw, 4.2rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  /* ── PORTALS ── */
+  #portals {
+    position: absolute;
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(0.6rem, 2vw, 1.4rem);
+    opacity: 0;
+    animation: fadeIn 0.8s ease 4s forwards;
+  }
+
+  .portal {
+    position: relative;
+    width: clamp(80px, 12vw, 130px);
+    height: clamp(44px, 7vw, 72px);
+    border: 1px solid var(--gold-mid);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--muted);
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(0.55rem, 1vw, 0.7rem);
+    letter-spacing: 0.2em;
+    font-weight: 400;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+  }
+
+  .portal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-dim);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .portal:hover {
+    color: var(--text);
+    border-color: var(--gold);
+  }
+
+  .portal:hover::before { transform: scaleX(1); }
+
+  /* Corner accents on portals */
+  .portal .corner { position: absolute; width: 6px; height: 6px; }
+  .portal .corner::before, .portal .corner::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+  }
+  .portal .corner::before { width: 1px; height: 100%; }
+  .portal .corner::after  { height: 1px; width: 100%; }
+  .portal .corner.tl { top: -1px; left: -1px; }
+  .portal .corner.tl::before { top: 0; left: 0; }
+  .portal .corner.tl::after  { top: 0; left: 0; }
+  .portal .corner.tr { top: -1px; right: -1px; }
+  .portal .corner.tr::before { top: 0; right: 0; }
+  .portal .corner.tr::after  { top: 0; right: 0; }
+  .portal .corner.bl { bottom: -1px; left: -1px; }
+  .portal .corner.bl::before { bottom: 0; left: 0; }
+  .portal .corner.bl::after  { bottom: 0; left: 0; }
+  .portal .corner.br { bottom: -1px; right: -1px; }
+  .portal .corner.br::before { bottom: 0; right: 0; }
+  .portal .corner.br::after  { bottom: 0; right: 0; }
+
+  .portal span { position: relative; z-index: 1; }
+
+  /* Portal stagger */
+  .portal:nth-child(1) { animation-delay: 4.0s; }
+  .portal:nth-child(2) { animation-delay: 4.15s; }
+  .portal:nth-child(3) { animation-delay: 4.3s; }
+  .portal:nth-child(4) { animation-delay: 4.45s; }
+
+  /* Star light pulse on portals */
+  .portal-star {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px; height: 4px;
+    opacity: 0;
+  }
+  .portal-star::before, .portal-star::after {
+    content: '';
+    position: absolute;
+    background: var(--gold);
+  }
+  .portal-star::before { width: 1px; height: 100%; left: 50%; top: 0; }
+  .portal-star::after  { height: 1px; width: 100%; top: 50%; left: 0; }
+
+  #portals.visible .portal-star {
+    animation: starPulse 2s ease-in-out infinite;
+  }
+  .portal:nth-child(1) .portal-star { animation-delay: 4.1s; }
+  .portal:nth-child(2) .portal-star { animation-delay: 4.5s; }
+  .portal:nth-child(3) .portal-star { animation-delay: 4.3s; }
+  .portal:nth-child(4) .portal-star { animation-delay: 4.7s; }
+
+  /* ── PORTAL ZOOM TRANSITION ── */
+  #zoom-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #zoom-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  #zoom-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.4s ease 0.3s, transform 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s;
+  }
+  #zoom-overlay.active #zoom-label {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* ── HEADER (post-scroll) ── */
+  #site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(8,8,9,0.88);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #site-header.visible { transform: translateY(0); }
+  .header-logo {
+    font-family: 'Cormorant SC', serif;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    color: var(--text);
+    font-weight: 300;
+  }
+  .header-nav {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+  }
+  .header-nav a {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .header-nav a:hover { color: var(--gold); }
+
+  /* ── COLLECTION PAGES (stub) ── */
+  .collection-page {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: var(--bg);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .collection-page.active { display: flex; }
+  .collection-page h2 {
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: riseIn 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+  }
+  .collection-page p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.8s forwards;
+  }
+  .back-btn {
+    margin-top: 2rem;
+    padding: 0.6rem 1.4rem;
+    border: 1px solid var(--gold-mid);
+    color: var(--muted);
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    background: none;
+    transition: color 0.2s, border-color 0.2s;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+  .back-btn:hover { color: var(--text); border-color: var(--gold); }
+
+  /* ── KEYFRAMES ── */
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes windowShade {
+    from { opacity: 0; clip-path: inset(100% 0 0 0); }
+    to   { opacity: 1; clip-path: inset(0% 0 0 0); }
+  }
+  @keyframes starPulse {
+    0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+    50%       { opacity: 1;   transform: translateX(-50%) scale(1.6); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50%       { opacity: 1; }
+  }
+  @keyframes petalDraw {
+    to { stroke-dashoffset: 0; }
+  }
+</style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#" class="logo">Chrysanthemum Vault</a>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="home" class="hero">
-            <h1 class="animated-text">Vault of the Chrysanthemum</h1>
-            <p>Discover elegant code repositories and innovative projects securely stored in this vault. Built for GitHub enthusiasts seeking minimalist sophistication.</p>
-        </section>
+<canvas id="starfield"></canvas>
 
-        <section id="projects" class="section">
-            <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Project Alpha</h3>
-                    <p>A minimalist web app for task management with unique influences.</p>
-                    <a href="https://github.com/yourusername/project-alpha" class="project-link" target="_blank">View on GitHub →</a>
-                </div>
-                <div class="project-card">
-                    <h3>Project Beta</h3>
-                    <p>Secure vault encryption tool with flowing designs.</p>
-                    <a href="https://github.com/yourusername/project-beta" class="project-link" target="_blank">View on GitHub →</a>
-                </div>
-                <div class="project-card">
-                    <h3>Project Gamma</h3>
-                    <p>Elegant data visualization library with precision.</p>
-                    <a href="https://github.com/yourusername/project-gamma" class="project-link" target="_blank">View on GitHub →</a>
-                </div>
-            </div>
-        </section>
+<div id="site-header">
+  <span class="header-logo">Chrysanthemum Vault</span>
+  <ul class="header-nav">
+    <li><a href="#">Paintings</a></li>
+    <li><a href="#">Marquetry</a></li>
+    <li><a href="#">Gemstones</a></li>
+    <li><a href="#">Curiosities</a></li>
+  </ul>
+</div>
 
-        <section id="about" class="section">
-            <h2>About the Vault</h2>
-            <p style="text-align: center; max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #D4AF37;">
-                Chrysanthemum Vault is a personal GitHub showcase domain, blending elegance with modern design. Hosted under chrysanthemumvault.com, it serves as a secure portal to curated repositories.
-            </p>
-        </section>
-    </main>
+<section id="hero">
+  <div class="reg-mark tl"></div>
+  <div class="reg-mark tr"></div>
+  <div class="reg-mark bl"></div>
+  <div class="reg-mark br"></div>
 
-    <footer id="contact">
-        <p>&copy; 2025 Chrysanthemum Vault. All rights reserved. | <a href="mailto:contact@chrysanthemumvault.com" style="color: #D4AF37;">contact@chrysanthemumvault.com</a></p>
-    </footer>
+  <!-- Chrysanthemum SVG -->
+  <div id="chrysanthemum-wrap">
+    <svg viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <radialGradient id="centerGlow" cx="50%" cy="100%" r="60%">
+          <stop offset="0%" stop-color="#c9a55a" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#c9a55a" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
 
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+      <!-- Glow beneath -->
+      <ellipse cx="410" cy="460" rx="260" ry="80" fill="url(#centerGlow)"/>
+
+      <!-- Outer orbital ellipses (blueprint reference lines) -->
+      <g stroke="#c9a55a" stroke-opacity="0.18" fill="none" stroke-width="0.6">
+        <ellipse cx="410" cy="460" rx="380" ry="120"/>
+        <ellipse cx="410" cy="460" rx="300" ry="95"/>
+        <ellipse cx="410" cy="460" rx="220" ry="70"/>
+      </g>
+
+      <!-- Dashed orbit -->
+      <ellipse cx="410" cy="460" rx="340" ry="105" stroke="#c9a55a" stroke-opacity="0.25" fill="none" stroke-width="0.5" stroke-dasharray="4 8"/>
+
+      <!-- Blueprint tick marks -->
+      <g stroke="#c9a55a" stroke-opacity="0.3" stroke-width="0.6">
+        <line x1="70" y1="460" x2="70" y2="450"/>
+        <line x1="750" y1="460" x2="750" y2="450"/>
+        <line x1="410" y1="340" x2="420" y2="340"/>
+        <line x1="180" y1="420" x2="185" y2="412"/>
+        <line x1="640" y1="420" x2="635" y2="412"/>
+      </g>
+
+      <!-- Scatter stars / reference points -->
+      <g fill="#c9a55a" filter="url(#glow)">
+        <g class="star-pt" style="animation: twinkle 3s ease-in-out 0.5s infinite">
+          <rect x="134" y="248" width="1" height="8" opacity="0.7"/>
+          <rect x="130" y="252" width="8" height="1" opacity="0.7"/>
+        </g>
+        <g class="star-pt" style="animation: twinkle 4s ease-in-out 1.2s infinite">
+          <rect x="670" y="190" width="1" height="8" opacity="0.7"/>
+          <rect x="666" y="194" width="8" height="1" opacity="0.7"/>
+        </g>
+        <g class="star-pt" style="animation: twinkle 3.5s ease-in-out 0.8s infinite">
+          <rect x="210" y="320" width="1" height="6" opacity="0.5"/>
+          <rect x="207" y="323" width="6" height="1" opacity="0.5"/>
+        </g>
+        <g class="star-pt" style="animation: twinkle 5s ease-in-out 2s infinite">
+          <rect x="598" y="300" width="1" height="6" opacity="0.5"/>
+          <rect x="595" y="303" width="6" height="1" opacity="0.5"/>
+        </g>
+        <g class="star-pt" style="animation: twinkle 2.8s ease-in-out 1.5s infinite">
+          <rect x="88" y="380" width="1" height="5" opacity="0.4"/>
+          <rect x="85" y="382" width="5" height="1" opacity="0.4"/>
+        </g>
+        <g class="star-pt" style="animation: twinkle 3.2s ease-in-out 0.3s infinite">
+          <rect x="726" y="360" width="1" height="5" opacity="0.4"/>
+          <rect x="723" y="362" width="5" height="1" opacity="0.4"/>
+        </g>
+      </g>
+
+      <!-- PETALS — generated in rings from center outward -->
+      <!-- Inner dense petals (small, upright) -->
+      <g stroke="#c9a55a" stroke-width="0.9" fill="none" stroke-opacity="0.75" filter="url(#glow)">
+        <!-- Ring 1 — very tight center -->
+        <path d="M410,460 Q408,432 410,418 Q412,432 410,460"/>
+        <path d="M410,460 Q421,434 427,421 Q419,436 410,460"/>
+        <path d="M410,460 Q430,442 439,432 Q426,445 410,460"/>
+        <path d="M410,460 Q399,434 393,421 Q401,436 410,460"/>
+        <path d="M410,460 Q390,442 381,432 Q394,445 410,460"/>
+        <path d="M410,460 Q432,450 444,443 Q429,452 410,460"/>
+        <path d="M410,460 Q388,450 376,443 Q391,452 410,460"/>
+
+        <!-- Ring 2 -->
+        <path d="M410,460 Q406,424 406,404 Q410,422 414,404 Q414,424 410,460"/>
+        <path d="M410,460 Q428,428 436,410 Q422,430 410,460"/>
+        <path d="M410,460 Q444,440 456,426 Q438,444 410,460"/>
+        <path d="M410,460 Q392,428 384,410 Q398,430 410,460"/>
+        <path d="M410,460 Q376,440 364,426 Q382,444 410,460"/>
+        <path d="M410,460 Q450,454 462,448 Q446,456 410,460"/>
+        <path d="M410,460 Q370,454 358,448 Q374,456 410,460"/>
+        <path d="M410,460 Q454,462 466,460 Q452,464 410,460"/>
+        <path d="M410,460 Q366,462 354,460 Q368,464 410,460"/>
+
+        <!-- Ring 3 — longer petals starting to curve -->
+        <path d="M410,460 Q404,410 402,384 Q408,406 416,384 Q416,410 410,460"/>
+        <path d="M410,460 Q434,416 448,394 Q432,420 410,460"/>
+        <path d="M410,460 Q454,432 472,412 Q450,438 410,460"/>
+        <path d="M410,460 Q468,452 486,440 Q462,456 410,460"/>
+        <path d="M410,460 Q386,416 372,394 Q388,420 410,460"/>
+        <path d="M410,460 Q366,432 348,412 Q370,438 410,460"/>
+        <path d="M410,460 Q352,452 334,440 Q358,456 410,460"/>
+        <path d="M410,460 Q476,464 492,462 Q474,468 410,460"/>
+        <path d="M410,460 Q344,464 328,462 Q346,468 410,460"/>
+
+        <!-- Ring 4 — outer long curved petals with hooking tips -->
+        <path d="M410,460 Q400,394 396,358 Q402,386 410,374 Q418,386 420,358 Q420,394 410,460"/>
+        <path d="M410,460 Q444,400 466,368 Q448,402 452,382 Q458,396 460,374 Q454,404 410,460"/>
+        <path d="M410,460 Q472,418 500,386 Q474,424 482,408 Q488,416 492,398 Q482,428 410,460"/>
+        <path d="M410,460 Q492,444 522,422 Q494,450 504,438 Q510,444 516,430 Q502,458 410,460"/>
+        <path d="M410,460 Q504,462 534,452 Q506,468 516,460 Q520,464 526,454 Q510,472 410,460"/>
+        <path d="M410,460 Q376,400 354,368 Q372,402 368,382 Q362,396 360,374 Q366,404 410,460"/>
+        <path d="M410,460 Q348,418 320,386 Q346,424 338,408 Q332,416 328,398 Q338,428 410,460"/>
+        <path d="M410,460 Q328,444 298,422 Q326,450 316,438 Q310,444 304,430 Q318,458 410,460"/>
+        <path d="M410,460 Q316,462 286,452 Q314,468 304,460 Q300,464 294,454 Q310,472 410,460"/>
+
+        <!-- Ring 5 — outermost dramatic curved petals -->
+        <path d="M410,460 Q430,378 440,338 Q418,362 412,344 Q424,368 410,460"/>
+        <path d="M410,460 Q460,386 490,348 Q464,390 472,368 Q480,378 482,358 Q468,396 410,460"/>
+        <path d="M410,460 Q494,406 534,368 Q498,414 510,394 Q518,400 524,382 Q506,420 410,460"/>
+        <path d="M410,460 Q524,434 564,402 Q526,442 540,426 Q546,432 554,418 Q534,452 410,460"/>
+        <path d="M410,460 Q548,454 586,432 Q550,462 564,450 Q568,456 576,446 Q556,470 410,460"/>
+        <path d="M410,460 Q560,468 596,456 Q562,476 576,468 Q578,472 584,464 Q566,480 410,460"/>
+        <path d="M410,460 Q390,378 380,338 Q402,362 408,344 Q396,368 410,460"/>
+        <path d="M410,460 Q360,386 330,348 Q356,390 348,368 Q340,378 338,358 Q352,396 410,460"/>
+        <path d="M410,460 Q326,406 286,368 Q322,414 310,394 Q302,400 296,382 Q314,420 410,460"/>
+        <path d="M410,460 Q296,434 256,402 Q294,442 280,426 Q274,432 266,418 Q286,452 410,460"/>
+        <path d="M410,460 Q272,454 234,432 Q270,462 256,450 Q252,456 244,446 Q264,470 410,460"/>
+        <path d="M410,460 Q260,468 224,456 Q258,476 244,468 Q242,472 236,464 Q254,480 410,460"/>
+      </g>
+
+      <!-- Inner spiraling core dots -->
+      <g fill="#c9a55a" fill-opacity="0.4">
+        <circle cx="410" cy="454" r="1.2"/>
+        <circle cx="414" cy="450" r="1"/>
+        <circle cx="406" cy="450" r="1"/>
+        <circle cx="418" cy="446" r="0.9"/>
+        <circle cx="402" cy="446" r="0.9"/>
+        <circle cx="410" cy="444" r="1.1"/>
+        <circle cx="420" cy="442" r="0.8"/>
+        <circle cx="400" cy="442" r="0.8"/>
+        <circle cx="415" cy="439" r="0.8"/>
+        <circle cx="405" cy="439" r="0.8"/>
+        <circle cx="424" cy="438" r="0.7"/>
+        <circle cx="396" cy="438" r="0.7"/>
+        <circle cx="410" cy="436" r="1"/>
+        <circle cx="422" cy="433" r="0.7"/>
+        <circle cx="398" cy="433" r="0.7"/>
+        <circle cx="428" cy="434" r="0.6"/>
+        <circle cx="392" cy="434" r="0.6"/>
+      </g>
+
+    </svg>
+  </div>
+
+  <div id="horizon"></div>
+
+  <div id="title-wrap">
+    <span class="kicker">A Private Collection</span>
+    <h1>Chrysanthemum Vault</h1>
+  </div>
+
+  <div id="portals">
+    <a class="portal" href="#" data-collection="paintings">
+      <div class="portal-star"></div>
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <span>Paintings</span>
+    </a>
+    <a class="portal" href="#" data-collection="marquetry">
+      <div class="portal-star"></div>
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <span>Marquetry</span>
+    </a>
+    <a class="portal" href="#" data-collection="gemstones">
+      <div class="portal-star"></div>
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <span>Gemstones</span>
+    </a>
+    <a class="portal" href="#" data-collection="curiosities">
+      <div class="portal-star"></div>
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <span>Curiosities</span>
+    </a>
+  </div>
+</section>
+
+<!-- Zoom transition overlay -->
+<div id="zoom-overlay">
+  <span id="zoom-label"></span>
+</div>
+
+<!-- Collection stubs -->
+<div class="collection-page" id="col-paintings">
+  <h2>Paintings</h2>
+  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
+  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
+</div>
+<div class="collection-page" id="col-marquetry">
+  <h2>Marquetry</h2>
+  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
+  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
+</div>
+<div class="collection-page" id="col-gemstones">
+  <h2>Gemstones</h2>
+  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
+  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
+</div>
+<div class="collection-page" id="col-curiosities">
+  <h2>Cabinet of Curiosities</h2>
+  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
+  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
+</div>
+
+<script>
+  // ── STARFIELD ──
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  const stars = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 220; i++) {
+    stars.push({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 0.9 + 0.2,
+      o: Math.random() * 0.5 + 0.1,
+      speed: Math.random() * 0.003 + 0.001,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+
+  function drawStars(t) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      const opacity = s.o * (0.6 + 0.4 * Math.sin(t * s.speed * 60 + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,165,90,${opacity})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+  requestAnimationFrame(drawStars);
+
+  // ── HEADER ON SCROLL ──
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) header.classList.add('visible');
+    else header.classList.remove('visible');
+  });
+
+  // ── PORTAL CLICK → ZOOM TRANSITION ──
+  const overlay  = document.getElementById('zoom-overlay');
+  const zoomLabel = document.getElementById('zoom-label');
+  const labels = {
+    paintings:   'Paintings',
+    marquetry:   'Marquetry',
+    gemstones:   'Gemstones',
+    curiosities: 'Cabinet of Curiosities'
+  };
+
+  document.querySelectorAll('.portal').forEach(portal => {
+    portal.addEventListener('click', e => {
+      e.preventDefault();
+      const col = portal.dataset.collection;
+      zoomLabel.textContent = labels[col];
+      overlay.classList.add('active');
+      setTimeout(() => {
+        overlay.classList.remove('active');
+        document.querySelectorAll('.collection-page').forEach(p => p.classList.remove('active'));
+        document.getElementById('col-' + col).classList.add('active');
+        header.classList.add('visible');
+      }, 900);
+    });
+  });
+
+  function closeCollection() {
+    zoomLabel.textContent = 'Chrysanthemum Vault';
+    overlay.classList.add('active');
+    setTimeout(() => {
+      overlay.classList.remove('active');
+      document.querySelectorAll('.collection-page').forEach(p => p.classList.remove('active'));
+      if (window.scrollY < 80) header.classList.remove('visible');
+    }, 900);
+  }
+
+  // Mark portals visible for star pulse animation after they appear
+  setTimeout(() => {
+    document.getElementById('portals').classList.add('visible');
+  }, 4200);
+</script>
 </body>
 </html>
