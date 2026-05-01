@@ -5,709 +5,539 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chrysanthemum Vault</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cormorant+SC:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cinzel:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #080809;
-    --gold: #c9a55a;
-    --gold-dim: rgba(201,165,90,0.18);
-    --gold-mid: rgba(201,165,90,0.55);
-    --text: #efe8da;
-    --muted: #9a9080;
-    --line: rgba(201,165,90,0.22);
-  }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  :root {
+    --black: #04040a;
+    --gold: #c9a55a;
+    --gold-dim: rgba(201,165,90,0.35);
+    --gold-faint: rgba(201,165,90,0.12);
+    --white: #efe8da;
+    --muted: #a09480;
+    --star: rgba(201,165,90,0.9);
+  }
+
   html, body {
-    width: 100%; height: 100%;
-    background: var(--bg);
-    color: var(--text);
+    height: 100%;
+    background: var(--black);
+    color: var(--white);
     font-family: 'Cormorant Garamond', serif;
     overflow-x: hidden;
   }
 
-  /* ── STARFIELD ── */
   #starfield {
     position: fixed;
     inset: 0;
-    pointer-events: none;
     z-index: 0;
+    opacity: 0;
+    animation: fadeInStars 2s ease forwards 0.3s;
   }
+  @keyframes fadeInStars { to { opacity: 1; } }
 
-  /* ── HERO ── */
   #hero {
     position: relative;
-    width: 100vw;
-    height: 100vh;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    z-index: 1;
+    justify-content: center;
+    min-height: 100vh;
     overflow: hidden;
   }
 
-  /* Blueprint grid overlay — very subtle */
-  #hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(201,165,90,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,165,90,0.03) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-  }
-
-  /* Corner registration marks */
-  .reg-mark {
-    position: absolute;
-    width: 24px; height: 24px;
-    pointer-events: none;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards;
-  }
-  .reg-mark::before, .reg-mark::after {
-    content: '';
-    position: absolute;
-    background: var(--gold);
-    opacity: 0.45;
-  }
-  .reg-mark::before { width: 1px; height: 100%; left: 50%; top: 0; }
-  .reg-mark::after  { height: 1px; width: 100%; top: 50%; left: 0; }
-  .reg-mark.tl { top: 24px; left: 24px; animation-delay: 0.2s; }
-  .reg-mark.tr { top: 24px; right: 24px; animation-delay: 0.3s; }
-  .reg-mark.bl { bottom: 24px; left: 24px; animation-delay: 0.4s; }
-  .reg-mark.br { bottom: 24px; right: 24px; animation-delay: 0.5s; }
-
-  /* ── CHRYSANTHEMUM SVG ── */
   #chrysanthemum-wrap {
-    position: absolute;
-    bottom: 38%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(820px, 96vw);
-    opacity: 0;
-    animation: riseIn 2.4s cubic-bezier(0.16,1,0.3,1) 0.6s forwards;
+    position: relative;
+    width: min(700px, 92vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  #chrysanthemum-wrap svg {
+  #chrysanthemum-svg {
     width: 100%;
-    height: auto;
-    overflow: visible;
+    opacity: 0;
+    animation: mumFadeIn 2.2s cubic-bezier(0.16,1,0.3,1) forwards 1s;
+    filter: drop-shadow(0 0 18px rgba(201,165,90,0.18));
+  }
+  @keyframes mumFadeIn {
+    0%   { opacity: 0; transform: scale(0.96); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
-  /* Clipping mask — only upper half visible (horizon effect) */
-  #chrysanthemum-wrap::after {
-    content: '';
-    position: absolute;
-    left: 0; right: 0;
-    bottom: 0;
-    height: 50%;
-    background: linear-gradient(to top, var(--bg) 60%, transparent 100%);
-    pointer-events: none;
+  #lower-half-mask {
+    animation: lowerFade 1.4s ease-in forwards 3.4s;
   }
+  @keyframes lowerFade { to { opacity: 0; } }
 
-  /* ── HORIZON LINE ── */
-  #horizon {
-    position: absolute;
-    bottom: 38%;
-    left: 0; right: 0;
+  #horizon-line {
+    width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-mid) 20%, var(--gold) 50%, var(--gold-mid) 80%, transparent);
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
     opacity: 0;
-    animation: fadeIn 1.2s ease 2.2s forwards;
+    animation: horizonIn 0.8s ease forwards 3.6s;
+    margin-top: -2px;
   }
+  @keyframes horizonIn { to { opacity: 1; } }
 
-  /* ── TITLE ── */
-  #title-wrap {
-    position: absolute;
-    bottom: 28%;
-    left: 50%;
-    transform: translateX(-50%);
+  #vault-title {
+    overflow: hidden;
+    height: 0;
+    animation: titleExpand 0.9s cubic-bezier(0.16,1,0.3,1) forwards 4s;
     text-align: center;
-    opacity: 0;
-    clip-path: inset(100% 0 0 0);
-    animation: windowShade 1.2s cubic-bezier(0.16,1,0.3,1) 2.8s forwards;
+    padding: 0 1rem;
+  }
+  @keyframes titleExpand { to { height: 5.5rem; } }
+
+  #vault-title h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 300;
+    font-size: clamp(1.6rem, 5vw, 3rem);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--white);
+    padding-top: 1.1rem;
     white-space: nowrap;
   }
 
-  #title-wrap .kicker {
-    display: block;
-    font-family: 'Cormorant SC', serif;
-    font-size: clamp(0.6rem, 1.2vw, 0.75rem);
-    letter-spacing: 0.35em;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-    font-weight: 300;
+  #vault-title p {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.3rem;
   }
 
-  #title-wrap h1 {
-    font-family: 'Cormorant SC', serif;
-    font-size: clamp(2rem, 6vw, 4.2rem);
-    font-weight: 300;
-    letter-spacing: 0.2em;
-    color: var(--text);
-    line-height: 1;
-  }
-
-  /* ── PORTALS ── */
   #portals {
-    position: absolute;
-    bottom: 8%;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     gap: clamp(0.6rem, 2vw, 1.4rem);
+    margin-top: 2.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
     opacity: 0;
-    animation: fadeIn 0.8s ease 4s forwards;
+    animation: portalsIn 0.8s ease forwards 5s;
   }
+  @keyframes portalsIn { to { opacity: 1; } }
 
   .portal {
     position: relative;
-    width: clamp(80px, 12vw, 130px);
-    height: clamp(44px, 7vw, 72px);
-    border: 1px solid var(--gold-mid);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid var(--gold-dim);
+    padding: 0.7rem 1.4rem;
     cursor: pointer;
     text-decoration: none;
     color: var(--muted);
-    font-family: 'Cormorant SC', serif;
-    font-size: clamp(0.55rem, 1vw, 0.7rem);
+    font-family: 'Cinzel', serif;
+    font-weight: 300;
+    font-size: clamp(0.6rem, 1.4vw, 0.78rem);
     letter-spacing: 0.2em;
-    font-weight: 400;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    text-transform: uppercase;
+    transition: color 0.3s, border-color 0.3s;
     overflow: hidden;
+    background: transparent;
   }
-
   .portal::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: var(--gold-dim);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-  }
-
-  .portal:hover {
-    color: var(--text);
-    border-color: var(--gold);
-  }
-
-  .portal:hover::before { transform: scaleX(1); }
-
-  /* Corner accents on portals */
-  .portal .corner { position: absolute; width: 6px; height: 6px; }
-  .portal .corner::before, .portal .corner::after {
-    content: '';
-    position: absolute;
-    background: var(--gold);
-  }
-  .portal .corner::before { width: 1px; height: 100%; }
-  .portal .corner::after  { height: 1px; width: 100%; }
-  .portal .corner.tl { top: -1px; left: -1px; }
-  .portal .corner.tl::before { top: 0; left: 0; }
-  .portal .corner.tl::after  { top: 0; left: 0; }
-  .portal .corner.tr { top: -1px; right: -1px; }
-  .portal .corner.tr::before { top: 0; right: 0; }
-  .portal .corner.tr::after  { top: 0; right: 0; }
-  .portal .corner.bl { bottom: -1px; left: -1px; }
-  .portal .corner.bl::before { bottom: 0; left: 0; }
-  .portal .corner.bl::after  { bottom: 0; left: 0; }
-  .portal .corner.br { bottom: -1px; right: -1px; }
-  .portal .corner.br::before { bottom: 0; right: 0; }
-  .portal .corner.br::after  { bottom: 0; right: 0; }
-
-  .portal span { position: relative; z-index: 1; }
-
-  /* Portal stagger */
-  .portal:nth-child(1) { animation-delay: 4.0s; }
-  .portal:nth-child(2) { animation-delay: 4.15s; }
-  .portal:nth-child(3) { animation-delay: 4.3s; }
-  .portal:nth-child(4) { animation-delay: 4.45s; }
-
-  /* Star light pulse on portals */
-  .portal-star {
-    position: absolute;
-    top: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px; height: 4px;
+    background: var(--gold-faint);
     opacity: 0;
+    transition: opacity 0.3s;
   }
-  .portal-star::before, .portal-star::after {
-    content: '';
-    position: absolute;
-    background: var(--gold);
-  }
-  .portal-star::before { width: 1px; height: 100%; left: 50%; top: 0; }
-  .portal-star::after  { height: 1px; width: 100%; top: 50%; left: 0; }
+  .portal:hover { color: var(--gold); border-color: var(--gold); }
+  .portal:hover::before { opacity: 1; }
 
-  #portals.visible .portal-star {
-    animation: starPulse 2s ease-in-out infinite;
-  }
-  .portal:nth-child(1) .portal-star { animation-delay: 4.1s; }
-  .portal:nth-child(2) .portal-star { animation-delay: 4.5s; }
-  .portal:nth-child(3) .portal-star { animation-delay: 4.3s; }
-  .portal:nth-child(4) .portal-star { animation-delay: 4.7s; }
-
-  /* ── PORTAL ZOOM TRANSITION ── */
-  #zoom-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background: var(--bg);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #zoom-overlay.active {
-    opacity: 1;
-    pointer-events: all;
-  }
-  #zoom-label {
-    font-family: 'Cormorant SC', serif;
-    font-size: clamp(1rem, 3vw, 1.8rem);
-    letter-spacing: 0.4em;
-    color: var(--gold);
-    opacity: 0;
-    transform: scale(0.85);
-    transition: opacity 0.4s ease 0.3s, transform 0.6s cubic-bezier(0.16,1,0.3,1) 0.3s;
-  }
-  #zoom-overlay.active #zoom-label {
-    opacity: 1;
-    transform: scale(1);
+  .portal-anim { animation: portalPulse 0.45s ease; }
+  @keyframes portalPulse {
+    0%   { border-color: var(--gold); box-shadow: 0 0 0 0 rgba(201,165,90,0.5); }
+    50%  { box-shadow: 0 0 0 8px rgba(201,165,90,0); }
+    100% { border-color: var(--gold-dim); box-shadow: none; }
   }
 
-  /* ── HEADER (post-scroll) ── */
   #site-header {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 50;
     backdrop-filter: blur(10px);
-    background: rgba(8,8,9,0.88);
-    border-bottom: 1px solid var(--line);
+    background: rgba(4,4,10,0.82);
+    border-bottom: 1px solid var(--gold-dim);
     transform: translateY(-100%);
     transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-    padding: 0.85rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0.85rem 2rem;
   }
   #site-header.visible { transform: translateY(0); }
-  .header-logo {
-    font-family: 'Cormorant SC', serif;
-    font-size: 1rem;
-    letter-spacing: 0.25em;
-    color: var(--text);
+
+  #site-header .logo {
+    font-family: 'Cinzel', serif;
     font-weight: 300;
+    font-size: 0.85rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
   }
-  .header-nav {
-    display: flex;
-    gap: 1.8rem;
-    list-style: none;
-  }
-  .header-nav a {
-    font-family: 'Cormorant SC', serif;
+
+  #site-header nav a {
+    font-family: 'Cinzel', serif;
     font-size: 0.65rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     color: var(--muted);
     text-decoration: none;
-    transition: color 0.2s;
+    margin-left: 1.6rem;
+    transition: color 0.25s;
   }
-  .header-nav a:hover { color: var(--gold); }
+  #site-header nav a:hover { color: var(--gold); }
 
-  /* ── COLLECTION PAGES (stub) ── */
-  .collection-page {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 90;
-    background: var(--bg);
+  .collection {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 1rem;
+    border-top: 1px solid var(--gold-dim);
+    padding: 6rem 2rem;
   }
-  .collection-page.active { display: flex; }
-  .collection-page h2 {
-    font-family: 'Cormorant SC', serif;
-    font-size: clamp(1.5rem, 5vw, 3rem);
-    font-weight: 300;
+
+  .collection-inner {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .collection-kicker {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
     letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .collection h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .collection p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 560px;
+    margin: 0 auto 2rem;
+  }
+
+  .coming-soon {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--gold-dim);
+    padding: 0.5rem 1.2rem;
+  }
+
+  #zoom-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s;
+  }
+  #zoom-overlay.active { opacity: 1; pointer-events: all; }
+
+  #zoom-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 300;
+    font-size: clamp(1rem, 3vw, 2rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
     color: var(--gold);
     opacity: 0;
-    transform: translateY(20px);
-    animation: riseIn 1s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+    transform: scale(0.85);
+    transition: opacity 0.5s 0.3s, transform 0.5s 0.3s;
   }
-  .collection-page p {
-    color: var(--muted);
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    opacity: 0;
-    animation: fadeIn 1s ease 0.8s forwards;
-  }
-  .back-btn {
-    margin-top: 2rem;
-    padding: 0.6rem 1.4rem;
-    border: 1px solid var(--gold-mid);
-    color: var(--muted);
-    font-family: 'Cormorant SC', serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    cursor: pointer;
-    background: none;
-    transition: color 0.2s, border-color 0.2s;
-    opacity: 0;
-    animation: fadeIn 1s ease 1.2s forwards;
-  }
-  .back-btn:hover { color: var(--text); border-color: var(--gold); }
-
-  /* ── KEYFRAMES ── */
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-  @keyframes riseIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes windowShade {
-    from { opacity: 0; clip-path: inset(100% 0 0 0); }
-    to   { opacity: 1; clip-path: inset(0% 0 0 0); }
-  }
-  @keyframes starPulse {
-    0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
-    50%       { opacity: 1;   transform: translateX(-50%) scale(1.6); }
-  }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0.2; }
-    50%       { opacity: 1; }
-  }
-  @keyframes petalDraw {
-    to { stroke-dashoffset: 0; }
-  }
+  #zoom-overlay.active #zoom-label { opacity: 1; transform: scale(1); }
 </style>
 </head>
 <body>
 
-<canvas id="starfield"></canvas>
+<header id="site-header">
+  <a class="logo" href="#">Chrysanthemum Vault</a>
+  <nav>
+    <a href="#paintings">Paintings</a>
+    <a href="#marquetry">Marquetry</a>
+    <a href="#gems">Gems</a>
+    <a href="#curiosities">Curiosities</a>
+  </nav>
+</header>
 
-<div id="site-header">
-  <span class="header-logo">Chrysanthemum Vault</span>
-  <ul class="header-nav">
-    <li><a href="#">Paintings</a></li>
-    <li><a href="#">Marquetry</a></li>
-    <li><a href="#">Gemstones</a></li>
-    <li><a href="#">Curiosities</a></li>
-  </ul>
+<div id="zoom-overlay">
+  <div id="zoom-label"></div>
 </div>
 
 <section id="hero">
-  <div class="reg-mark tl"></div>
-  <div class="reg-mark tr"></div>
-  <div class="reg-mark bl"></div>
-  <div class="reg-mark br"></div>
+  <canvas id="starfield"></canvas>
 
-  <!-- Chrysanthemum SVG -->
   <div id="chrysanthemum-wrap">
-    <svg viewBox="0 0 820 460" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+    <svg id="chrysanthemum-svg" viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="centerGlow" cx="50%" cy="100%" r="60%">
-          <stop offset="0%" stop-color="#c9a55a" stop-opacity="0.18"/>
+        <clipPath id="top-half">
+          <rect x="0" y="0" width="700" height="310"/>
+        </clipPath>
+        <clipPath id="bottom-half">
+          <rect x="0" y="310" width="700" height="70"/>
+        </clipPath>
+        <radialGradient id="core-glow" cx="50%" cy="100%" r="60%">
+          <stop offset="0%" stop-color="#c9a55a" stop-opacity="0.22"/>
           <stop offset="100%" stop-color="#c9a55a" stop-opacity="0"/>
         </radialGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="2.5" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
       </defs>
 
-      <!-- Glow beneath -->
-      <ellipse cx="410" cy="460" rx="260" ry="80" fill="url(#centerGlow)"/>
+      <ellipse cx="350" cy="310" rx="280" ry="90" fill="url(#core-glow)"/>
 
-      <!-- Outer orbital ellipses (blueprint reference lines) -->
-      <g stroke="#c9a55a" stroke-opacity="0.18" fill="none" stroke-width="0.6">
-        <ellipse cx="410" cy="460" rx="380" ry="120"/>
-        <ellipse cx="410" cy="460" rx="300" ry="95"/>
-        <ellipse cx="410" cy="460" rx="220" ry="70"/>
-      </g>
-
-      <!-- Dashed orbit -->
-      <ellipse cx="410" cy="460" rx="340" ry="105" stroke="#c9a55a" stroke-opacity="0.25" fill="none" stroke-width="0.5" stroke-dasharray="4 8"/>
-
-      <!-- Blueprint tick marks -->
-      <g stroke="#c9a55a" stroke-opacity="0.3" stroke-width="0.6">
-        <line x1="70" y1="460" x2="70" y2="450"/>
-        <line x1="750" y1="460" x2="750" y2="450"/>
-        <line x1="410" y1="340" x2="420" y2="340"/>
-        <line x1="180" y1="420" x2="185" y2="412"/>
-        <line x1="640" y1="420" x2="635" y2="412"/>
-      </g>
-
-      <!-- Scatter stars / reference points -->
-      <g fill="#c9a55a" filter="url(#glow)">
-        <g class="star-pt" style="animation: twinkle 3s ease-in-out 0.5s infinite">
-          <rect x="134" y="248" width="1" height="8" opacity="0.7"/>
-          <rect x="130" y="252" width="8" height="1" opacity="0.7"/>
-        </g>
-        <g class="star-pt" style="animation: twinkle 4s ease-in-out 1.2s infinite">
-          <rect x="670" y="190" width="1" height="8" opacity="0.7"/>
-          <rect x="666" y="194" width="8" height="1" opacity="0.7"/>
-        </g>
-        <g class="star-pt" style="animation: twinkle 3.5s ease-in-out 0.8s infinite">
-          <rect x="210" y="320" width="1" height="6" opacity="0.5"/>
-          <rect x="207" y="323" width="6" height="1" opacity="0.5"/>
-        </g>
-        <g class="star-pt" style="animation: twinkle 5s ease-in-out 2s infinite">
-          <rect x="598" y="300" width="1" height="6" opacity="0.5"/>
-          <rect x="595" y="303" width="6" height="1" opacity="0.5"/>
-        </g>
-        <g class="star-pt" style="animation: twinkle 2.8s ease-in-out 1.5s infinite">
-          <rect x="88" y="380" width="1" height="5" opacity="0.4"/>
-          <rect x="85" y="382" width="5" height="1" opacity="0.4"/>
-        </g>
-        <g class="star-pt" style="animation: twinkle 3.2s ease-in-out 0.3s infinite">
-          <rect x="726" y="360" width="1" height="5" opacity="0.4"/>
-          <rect x="723" y="362" width="5" height="1" opacity="0.4"/>
+      <!-- lower petals (will fade out) -->
+      <g id="lower-half-mask" clip-path="url(#bottom-half)">
+        <g transform="translate(350,310)" stroke="#c9a55a" stroke-width="0.6" fill="none" opacity="0.55">
+          <path d="M0,0 C-12,22 -28,55 -18,80 C-8,105 8,110 0,140"/>
+          <path d="M0,0 C12,22 28,55 18,80 C8,105 -8,110 0,140"/>
+          <path d="M0,0 C-25,18 -52,42 -48,68 C-44,92 -22,100 -30,128"/>
+          <path d="M0,0 C25,18 52,42 48,68 C44,92 22,100 30,128"/>
+          <path d="M0,0 C-40,10 -72,28 -74,52 C-76,74 -52,88 -66,112"/>
+          <path d="M0,0 C40,10 72,28 74,52 C76,74 52,88 66,112"/>
         </g>
       </g>
 
-      <!-- PETALS — generated in rings from center outward -->
-      <!-- Inner dense petals (small, upright) -->
-      <g stroke="#c9a55a" stroke-width="0.9" fill="none" stroke-opacity="0.75" filter="url(#glow)">
-        <!-- Ring 1 — very tight center -->
-        <path d="M410,460 Q408,432 410,418 Q412,432 410,460"/>
-        <path d="M410,460 Q421,434 427,421 Q419,436 410,460"/>
-        <path d="M410,460 Q430,442 439,432 Q426,445 410,460"/>
-        <path d="M410,460 Q399,434 393,421 Q401,436 410,460"/>
-        <path d="M410,460 Q390,442 381,432 Q394,445 410,460"/>
-        <path d="M410,460 Q432,450 444,443 Q429,452 410,460"/>
-        <path d="M410,460 Q388,450 376,443 Q391,452 410,460"/>
+      <!-- upper bloom (stays) -->
+      <g clip-path="url(#top-half)">
+        <g transform="translate(350,310)">
 
-        <!-- Ring 2 -->
-        <path d="M410,460 Q406,424 406,404 Q410,422 414,404 Q414,424 410,460"/>
-        <path d="M410,460 Q428,428 436,410 Q422,430 410,460"/>
-        <path d="M410,460 Q444,440 456,426 Q438,444 410,460"/>
-        <path d="M410,460 Q392,428 384,410 Q398,430 410,460"/>
-        <path d="M410,460 Q376,440 364,426 Q382,444 410,460"/>
-        <path d="M410,460 Q450,454 462,448 Q446,456 410,460"/>
-        <path d="M410,460 Q370,454 358,448 Q374,456 410,460"/>
-        <path d="M410,460 Q454,462 466,460 Q452,464 410,460"/>
-        <path d="M410,460 Q366,462 354,460 Q368,464 410,460"/>
+          <ellipse cx="0" cy="-5" rx="290" ry="110" stroke="#c9a55a" stroke-width="0.4" fill="none" opacity="0.28" stroke-dasharray="4 6"/>
+          <ellipse cx="0" cy="-5" rx="240" ry="90"  stroke="#c9a55a" stroke-width="0.3" fill="none" opacity="0.2"  stroke-dasharray="2 8"/>
+          <ellipse cx="0" cy="-8" rx="195" ry="72"  stroke="#c9a55a" stroke-width="0.35" fill="none" opacity="0.22"/>
 
-        <!-- Ring 3 — longer petals starting to curve -->
-        <path d="M410,460 Q404,410 402,384 Q408,406 416,384 Q416,410 410,460"/>
-        <path d="M410,460 Q434,416 448,394 Q432,420 410,460"/>
-        <path d="M410,460 Q454,432 472,412 Q450,438 410,460"/>
-        <path d="M410,460 Q468,452 486,440 Q462,456 410,460"/>
-        <path d="M410,460 Q386,416 372,394 Q388,420 410,460"/>
-        <path d="M410,460 Q366,432 348,412 Q370,438 410,460"/>
-        <path d="M410,460 Q352,452 334,440 Q358,456 410,460"/>
-        <path d="M410,460 Q476,464 492,462 Q474,468 410,460"/>
-        <path d="M410,460 Q344,464 328,462 Q346,468 410,460"/>
+          <line x1="-290" y1="0" x2="-302" y2="0" stroke="#c9a55a" stroke-width="0.5" opacity="0.5"/>
+          <line x1="290"  y1="0" x2="302"  y2="0" stroke="#c9a55a" stroke-width="0.5" opacity="0.5"/>
+          <line x1="-290" y1="-10" x2="-290" y2="10" stroke="#c9a55a" stroke-width="0.5" opacity="0.35"/>
+          <line x1="290"  y1="-10" x2="290"  y2="10" stroke="#c9a55a" stroke-width="0.5" opacity="0.35"/>
 
-        <!-- Ring 4 — outer long curved petals with hooking tips -->
-        <path d="M410,460 Q400,394 396,358 Q402,386 410,374 Q418,386 420,358 Q420,394 410,460"/>
-        <path d="M410,460 Q444,400 466,368 Q448,402 452,382 Q458,396 460,374 Q454,404 410,460"/>
-        <path d="M410,460 Q472,418 500,386 Q474,424 482,408 Q488,416 492,398 Q482,428 410,460"/>
-        <path d="M410,460 Q492,444 522,422 Q494,450 504,438 Q510,444 516,430 Q502,458 410,460"/>
-        <path d="M410,460 Q504,462 534,452 Q506,468 516,460 Q520,464 526,454 Q510,472 410,460"/>
-        <path d="M410,460 Q376,400 354,368 Q372,402 368,382 Q362,396 360,374 Q366,404 410,460"/>
-        <path d="M410,460 Q348,418 320,386 Q346,424 338,408 Q332,416 328,398 Q338,428 410,460"/>
-        <path d="M410,460 Q328,444 298,422 Q326,450 316,438 Q310,444 304,430 Q318,458 410,460"/>
-        <path d="M410,460 Q316,462 286,452 Q314,468 304,460 Q300,464 294,454 Q310,472 410,460"/>
+          <g stroke="#c9a55a" stroke-width="0.7" fill="none">
+            <path d="M0,0 C-18,-32 -42,-80 -28,-132 C-20,-158 -8,-162 -4,-190" opacity="0.75"/>
+            <path d="M0,0 C18,-32 42,-80 28,-132 C20,-158 8,-162 4,-190" opacity="0.75"/>
+            <path d="M0,0 C-32,-24 -78,-55 -80,-108 C-82,-138 -60,-148 -62,-176" opacity="0.72"/>
+            <path d="M0,0 C32,-24 78,-55 80,-108 C82,-138 60,-148 62,-176" opacity="0.72"/>
+            <path d="M0,0 C-48,-14 -100,-32 -110,-85 C-118,-115 -98,-128 -106,-155" opacity="0.68"/>
+            <path d="M0,0 C48,-14 100,-32 110,-85 C118,-115 98,-128 106,-155" opacity="0.68"/>
+            <path d="M0,0 C-58,-6 -118,-12 -134,-65 C-144,-94 -124,-110 -138,-135" opacity="0.62"/>
+            <path d="M0,0 C58,-6 118,-12 134,-65 C144,-94 124,-110 138,-135" opacity="0.62"/>
+            <path d="M0,0 C-64,4 -128,4 -150,-46 C-164,-72 -146,-90 -165,-112" opacity="0.56"/>
+            <path d="M0,0 C64,4 128,4 150,-46 C164,-72 146,-90 165,-112" opacity="0.56"/>
+            <path d="M0,0 C-66,12 -132,18 -158,-28 C-172,-52 -158,-72 -182,-90" opacity="0.48"/>
+            <path d="M0,0 C66,12 132,18 158,-28 C172,-52 158,-72 182,-90" opacity="0.48"/>
+            <path d="M0,0 C-8,-38 -18,-90 -8,-132 C-2,-155 8,-155 6,-178" opacity="0.65"/>
+            <path d="M0,0 C8,-38 18,-90 8,-132 C2,-155 -8,-155 -6,-178" opacity="0.65"/>
+            <path d="M0,0 C-22,-30 -55,-68 -52,-110 C-50,-136 -32,-142 -36,-165" opacity="0.62"/>
+            <path d="M0,0 C22,-30 55,-68 52,-110 C50,-136 32,-142 36,-165" opacity="0.62"/>
+            <path d="M0,0 C-40,-20 -88,-44 -92,-90 C-96,-118 -76,-128 -84,-152" opacity="0.58"/>
+            <path d="M0,0 C40,-20 88,-44 92,-90 C96,-118 76,-128 84,-152" opacity="0.58"/>
+            <path d="M0,0 C-52,-10 -108,-22 -120,-72 C-128,-100 -108,-112 -120,-138" opacity="0.52"/>
+            <path d="M0,0 C52,-10 108,-22 120,-72 C128,-100 108,-112 120,-138" opacity="0.52"/>
+          </g>
 
-        <!-- Ring 5 — outermost dramatic curved petals -->
-        <path d="M410,460 Q430,378 440,338 Q418,362 412,344 Q424,368 410,460"/>
-        <path d="M410,460 Q460,386 490,348 Q464,390 472,368 Q480,378 482,358 Q468,396 410,460"/>
-        <path d="M410,460 Q494,406 534,368 Q498,414 510,394 Q518,400 524,382 Q506,420 410,460"/>
-        <path d="M410,460 Q524,434 564,402 Q526,442 540,426 Q546,432 554,418 Q534,452 410,460"/>
-        <path d="M410,460 Q548,454 586,432 Q550,462 564,450 Q568,456 576,446 Q556,470 410,460"/>
-        <path d="M410,460 Q560,468 596,456 Q562,476 576,468 Q578,472 584,464 Q566,480 410,460"/>
-        <path d="M410,460 Q390,378 380,338 Q402,362 408,344 Q396,368 410,460"/>
-        <path d="M410,460 Q360,386 330,348 Q356,390 348,368 Q340,378 338,358 Q352,396 410,460"/>
-        <path d="M410,460 Q326,406 286,368 Q322,414 310,394 Q302,400 296,382 Q314,420 410,460"/>
-        <path d="M410,460 Q296,434 256,402 Q294,442 280,426 Q274,432 266,418 Q286,452 410,460"/>
-        <path d="M410,460 Q272,454 234,432 Q270,462 256,450 Q252,456 244,446 Q264,470 410,460"/>
-        <path d="M410,460 Q260,468 224,456 Q258,476 244,468 Q242,472 236,464 Q254,480 410,460"/>
+          <g stroke="#c9a55a" stroke-width="0.55" fill="none" opacity="0.7">
+            <path d="M0,0 C-10,-22 -24,-54 -16,-88 C-10,-106 0,-108 -2,-128"/>
+            <path d="M0,0 C10,-22 24,-54 16,-88 C10,-106 0,-108 2,-128"/>
+            <path d="M0,0 C-20,-18 -45,-42 -44,-76 C-44,-96 -28,-100 -32,-120"/>
+            <path d="M0,0 C20,-18 45,-42 44,-76 C44,-96 28,-100 32,-120"/>
+            <path d="M0,0 C-30,-12 -62,-26 -66,-60 C-70,-80 -52,-86 -60,-106"/>
+            <path d="M0,0 C30,-12 62,-26 66,-60 C70,-80 52,-86 60,-106"/>
+            <path d="M0,0 C-36,-5 -72,-10 -78,-44 C-84,-64 -66,-72 -76,-90"/>
+            <path d="M0,0 C36,-5 72,-10 78,-44 C84,-64 66,-72 76,-90"/>
+          </g>
+
+          <g stroke="#c9a55a" fill="none">
+            <circle cx="0" cy="-8" r="62" stroke-width="0.4" opacity="0.55"/>
+            <circle cx="0" cy="-8" r="50" stroke-width="0.4" opacity="0.6"/>
+            <circle cx="0" cy="-8" r="38" stroke-width="0.35" opacity="0.65"/>
+            <circle cx="0" cy="-8" r="27" stroke-width="0.35" opacity="0.7"/>
+            <circle cx="0" cy="-8" r="18" stroke-width="0.3" opacity="0.75"/>
+            <circle cx="0" cy="-8" r="11" stroke-width="0.3" opacity="0.8"/>
+            <circle cx="0" cy="-8" r="5"  stroke-width="0.35" opacity="0.9"/>
+          </g>
+
+          <g stroke="#c9a55a" stroke-width="0.5" fill="none" opacity="0.65">
+            <path d="M0,-8 C-8,-22 -14,-38 -8,-52 C-4,-60 4,-60 8,-52 C14,-38 8,-22 0,-8"/>
+            <path d="M0,-8 C-14,-18 -24,-30 -22,-46 C-18,-56 -8,-56 -2,-44 C4,-32 0,-18 0,-8"/>
+            <path d="M0,-8 C14,-18 24,-30 22,-46 C18,-56 8,-56 2,-44 C-4,-32 0,-18 0,-8"/>
+          </g>
+
+          <circle cx="0" cy="-8" r="2.5" fill="#c9a55a" opacity="0.9"/>
+
+          <!-- star points that become portals – positioned around the bloom -->
+          <!-- these are rendered as SVG but the animated portal dots are canvas overlaid -->
+          <g id="star-markers" fill="#c9a55a">
+            <!-- top centre -->
+            <path d="M0,-205 L2,-200 L7,-200 L3,-197 L5,-192 L0,-195 L-5,-192 L-3,-197 L-7,-200 L-2,-200 Z" opacity="0.85"/>
+            <!-- upper left -->
+            <path d="M-155,-168 L-153,-163 L-148,-163 L-152,-160 L-150,-155 L-155,-158 L-160,-155 L-158,-160 L-162,-163 L-157,-163 Z" opacity="0.75"/>
+            <!-- upper right -->
+            <path d="M155,-168 L157,-163 L162,-163 L158,-160 L160,-155 L155,-158 L150,-155 L152,-160 L148,-163 L153,-163 Z" opacity="0.75"/>
+            <!-- far left -->
+            <path d="M-196,-100 L-194,-95 L-189,-95 L-193,-92 L-191,-87 L-196,-90 L-201,-87 L-199,-92 L-203,-95 L-198,-95 Z" opacity="0.65"/>
+            <!-- far right -->
+            <path d="M196,-100 L198,-95 L203,-95 L199,-92 L201,-87 L196,-90 L191,-87 L193,-92 L189,-95 L194,-95 Z" opacity="0.65"/>
+          </g>
+
+        </g>
       </g>
-
-      <!-- Inner spiraling core dots -->
-      <g fill="#c9a55a" fill-opacity="0.4">
-        <circle cx="410" cy="454" r="1.2"/>
-        <circle cx="414" cy="450" r="1"/>
-        <circle cx="406" cy="450" r="1"/>
-        <circle cx="418" cy="446" r="0.9"/>
-        <circle cx="402" cy="446" r="0.9"/>
-        <circle cx="410" cy="444" r="1.1"/>
-        <circle cx="420" cy="442" r="0.8"/>
-        <circle cx="400" cy="442" r="0.8"/>
-        <circle cx="415" cy="439" r="0.8"/>
-        <circle cx="405" cy="439" r="0.8"/>
-        <circle cx="424" cy="438" r="0.7"/>
-        <circle cx="396" cy="438" r="0.7"/>
-        <circle cx="410" cy="436" r="1"/>
-        <circle cx="422" cy="433" r="0.7"/>
-        <circle cx="398" cy="433" r="0.7"/>
-        <circle cx="428" cy="434" r="0.6"/>
-        <circle cx="392" cy="434" r="0.6"/>
-      </g>
-
     </svg>
-  </div>
 
-  <div id="horizon"></div>
+    <div id="horizon-line"></div>
 
-  <div id="title-wrap">
-    <span class="kicker">A Private Collection</span>
-    <h1>Chrysanthemum Vault</h1>
-  </div>
+    <div id="vault-title">
+      <h1>Chrysanthemum&nbsp;Vault</h1>
+      <p>A private collection</p>
+    </div>
 
-  <div id="portals">
-    <a class="portal" href="#" data-collection="paintings">
-      <div class="portal-star"></div>
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
-      <span>Paintings</span>
-    </a>
-    <a class="portal" href="#" data-collection="marquetry">
-      <div class="portal-star"></div>
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
-      <span>Marquetry</span>
-    </a>
-    <a class="portal" href="#" data-collection="gemstones">
-      <div class="portal-star"></div>
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
-      <span>Gemstones</span>
-    </a>
-    <a class="portal" href="#" data-collection="curiosities">
-      <div class="portal-star"></div>
-      <div class="corner tl"></div><div class="corner tr"></div>
-      <div class="corner bl"></div><div class="corner br"></div>
-      <span>Curiosities</span>
-    </a>
+    <div id="portals">
+      <a class="portal" href="#paintings"   data-label="Paintings">Paintings</a>
+      <a class="portal" href="#marquetry"   data-label="Marquetry">Marquetry</a>
+      <a class="portal" href="#gems"        data-label="Gems &amp; Stones">Gems &amp; Stones</a>
+      <a class="portal" href="#curiosities" data-label="Cabinet of Curiosities">Curiosities</a>
+    </div>
+
   </div>
 </section>
 
-<!-- Zoom transition overlay -->
-<div id="zoom-overlay">
-  <span id="zoom-label"></span>
-</div>
 
-<!-- Collection stubs -->
-<div class="collection-page" id="col-paintings">
-  <h2>Paintings</h2>
-  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
-  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
-</div>
-<div class="collection-page" id="col-marquetry">
-  <h2>Marquetry</h2>
-  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
-  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
-</div>
-<div class="collection-page" id="col-gemstones">
-  <h2>Gemstones</h2>
-  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
-  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
-</div>
-<div class="collection-page" id="col-curiosities">
-  <h2>Cabinet of Curiosities</h2>
-  <p style="letter-spacing:0.15em; font-size:0.75rem;">Collection forthcoming</p>
-  <button class="back-btn" onclick="closeCollection()">← Return to Vault</button>
-</div>
+<section class="collection" id="paintings">
+  <div class="collection-inner">
+    <div class="collection-kicker">I — Oil &amp; Acrylic</div>
+    <h2>Paintings</h2>
+    <p>Original works in oil and acrylic. Each piece is a singular object, unrepeatable.</p>
+    <span class="coming-soon">Collection forthcoming</span>
+  </div>
+</section>
+
+<section class="collection" id="marquetry">
+  <div class="collection-inner">
+    <div class="collection-kicker">II — Wood &amp; Veneer</div>
+    <h2>Marquetry</h2>
+    <p>Intricate inlaid work assembled by hand from rare and figured veneers.</p>
+    <span class="coming-soon">Collection forthcoming</span>
+  </div>
+</section>
+
+<section class="collection" id="gems">
+  <div class="collection-inner">
+    <div class="collection-kicker">III — Minerals &amp; Stones</div>
+    <h2>Gems &amp; Stones</h2>
+    <p>Specimens selected for their rarity, form, and quiet luminosity.</p>
+    <span class="coming-soon">Collection forthcoming</span>
+  </div>
+</section>
+
+<section class="collection" id="curiosities">
+  <div class="collection-inner">
+    <div class="collection-kicker">IV — Diorama &amp; Bespoke</div>
+    <h2>Cabinet of Curiosities</h2>
+    <p>Dioramas, found objects, and singular creations that resist easy category.</p>
+    <span class="coming-soon">Collection forthcoming</span>
+  </div>
+</section>
+
 
 <script>
-  // ── STARFIELD ──
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
-  const stars = [];
+/* STARFIELD */
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars = [];
 
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+function resize() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
 
-  for (let i = 0; i < 220; i++) {
+function initStars() {
+  stars = [];
+  const count = Math.floor((canvas.width * canvas.height) / 3000);
+  for (let i = 0; i < count; i++) {
     stars.push({
-      x: Math.random(),
-      y: Math.random(),
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
       r: Math.random() * 0.9 + 0.2,
-      o: Math.random() * 0.5 + 0.1,
-      speed: Math.random() * 0.003 + 0.001,
-      phase: Math.random() * Math.PI * 2
+      a: Math.random() * 0.5 + 0.15,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.006 + Math.random() * 0.01
     });
   }
+}
 
-  function drawStars(t) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(s => {
-      const opacity = s.o * (0.6 + 0.4 * Math.sin(t * s.speed * 60 + s.phase));
-      ctx.beginPath();
-      ctx.arc(s.x * canvas.width, s.y * canvas.height, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(201,165,90,${opacity})`;
-      ctx.fill();
-    });
-    requestAnimationFrame(drawStars);
-  }
+let t = 0;
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  t += 0.016;
+  stars.forEach(s => {
+    const alpha = s.a * (0.55 + 0.45 * Math.sin(s.phase + t * s.speed * 60));
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(201,165,90,${alpha.toFixed(3)})`;
+    ctx.fill();
+  });
   requestAnimationFrame(drawStars);
+}
 
-  // ── HEADER ON SCROLL ──
-  const header = document.getElementById('site-header');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 80) header.classList.add('visible');
-    else header.classList.remove('visible');
-  });
+resize();
+initStars();
+requestAnimationFrame(drawStars);
+window.addEventListener('resize', () => { resize(); initStars(); });
 
-  // ── PORTAL CLICK → ZOOM TRANSITION ──
-  const overlay  = document.getElementById('zoom-overlay');
-  const zoomLabel = document.getElementById('zoom-label');
-  const labels = {
-    paintings:   'Paintings',
-    marquetry:   'Marquetry',
-    gemstones:   'Gemstones',
-    curiosities: 'Cabinet of Curiosities'
-  };
 
-  document.querySelectorAll('.portal').forEach(portal => {
-    portal.addEventListener('click', e => {
-      e.preventDefault();
-      const col = portal.dataset.collection;
-      zoomLabel.textContent = labels[col];
-      overlay.classList.add('active');
-      setTimeout(() => {
-        overlay.classList.remove('active');
-        document.querySelectorAll('.collection-page').forEach(p => p.classList.remove('active'));
-        document.getElementById('col-' + col).classList.add('active');
-        header.classList.add('visible');
-      }, 900);
-    });
-  });
+/* PORTAL CLICK ZOOM */
+const overlay   = document.getElementById('zoom-overlay');
+const zoomLabel = document.getElementById('zoom-label');
 
-  function closeCollection() {
-    zoomLabel.textContent = 'Chrysanthemum Vault';
+document.querySelectorAll('.portal').forEach(p => {
+  p.addEventListener('click', e => {
+    e.preventDefault();
+    const label  = p.dataset.label;
+    const target = p.getAttribute('href');
+
+    p.classList.remove('portal-anim');
+    void p.offsetWidth;
+    p.classList.add('portal-anim');
+
+    zoomLabel.textContent = label;
     overlay.classList.add('active');
+
     setTimeout(() => {
       overlay.classList.remove('active');
-      document.querySelectorAll('.collection-page').forEach(p => p.classList.remove('active'));
-      if (window.scrollY < 80) header.classList.remove('visible');
-    }, 900);
-  }
+      document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+    }, 1100);
+  });
+});
 
-  // Mark portals visible for star pulse animation after they appear
-  setTimeout(() => {
-    document.getElementById('portals').classList.add('visible');
-  }, 4200);
+
+/* SCROLL HEADER */
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('visible', window.scrollY > window.innerHeight * 0.85);
+}, { passive: true });
 </script>
 </body>
 </html>
