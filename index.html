@@ -1,134 +1,1267 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Chrysanthemum Vault — fine art, marquetry, curiosities, jewelry, archive, and commissions." />
-  <title>Chrysanthemum Vault</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHRYSANTHEMUM VAULT • EST 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;500&amp;display=swap');
+        
+        :root {
+            --gold: #D4AF37;
+            --gold-dark: #B8972E;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: -0.02em;
+        }
+
+        .gold-text {
+            color: #D4AF37;
+        }
+
+        .section-gold {
+            border-color: #D4AF37;
+        }
+
+        .luxury-shadow {
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #D4AF37;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(to right, #D4AF37, transparent);
+            transition: width 0.4s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .portal-card {
+            transition: all 0.5s cubic-bezier(0.23, 1.0, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            border-color: #D4AF37;
+        }
+        
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 20%,
+                rgba(212, 175, 55, 0.15) 50%,
+                transparent 80%
+            );
+            transform: rotate(25deg);
+            transition: all 0.7s ease;
+            opacity: 0;
+        }
+        
+        .portal-card:hover::before {
+            transform: rotate(25deg) translateX(200%);
+            opacity: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #D4AF37;
+            animation: twinkle 1.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.3); }
+        }
+
+        .horizon-glow {
+            box-shadow: 
+                0 0 20px #D4AF37,
+                0 0 40px #D4AF37,
+                0 0 80px rgba(212, 175, 55, 0.4);
+            animation: horizon-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes horizon-pulse {
+            0%, 100% { opacity: 0.85; }
+            50% { opacity: 1; }
+        }
+
+        .vault-title {
+            font-size: 2.75rem;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            text-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.5),
+                0 0 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .gold-glow {
+            text-shadow: 
+                0 0 10px #D4AF37,
+                0 0 20px #D4AF37;
+        }
+
+        .modal {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .drawing-line {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: drawLine 1.8s forwards ease-out;
+        }
+
+        .petal {
+            stroke-dasharray: 180;
+            stroke-dashoffset: 180;
+            animation: drawPetal 2.2s forwards ease-out;
+        }
+
+        .light-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #D4AF37;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #D4AF37,
+                        0 0 24px #D4AF37;
+            pointer-events: none;
+            z-index: 50;
+            animation: particle-fall 1.1s ease-out forwards;
+        }
+
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+        
+        @keyframes drawPetal {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes particle-fall {
+            0% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        .cosmic-bg {
+            background: radial-gradient(circle at 50% 30%, rgba(20, 20, 30, 0.6) 0%, #000000 70%);
+        }
+
+        .frame-corner {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #D4AF37;
+        }
+
+        .nav-active {
+            color: #D4AF37;
+            position: relative;
+        }
+        
+        .nav-active:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #D4AF37;
+            border-radius: 50%;
+        }
+    </style>
 </head>
-<body>
-  <div class="intro-field" aria-hidden="true"></div>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 flex items-center justify-center">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18" cy="18" r="17" stroke="#D4AF37" stroke-width="1.5"/>
+                        <!-- Mini chrysanthemum -->
+                        <g transform="translate(18,18)">
+                            <circle cx="0" cy="0" r="4" fill="#D4AF37"/>
+                            <g stroke="#D4AF37" stroke-width="1.2" stroke-linecap="round">
+                                <!-- 8 mini petals -->
+                                <path d="M0 0 Q6 -7 3 -13" />
+                                <path d="M0 0 Q7 0 9 -9" transform="rotate(45)"/>
+                                <path d="M0 0 Q6 7 3 13" transform="rotate(90)"/>
+                                <path d="M0 0 Q-6 7 -3 13" transform="rotate(135)"/>
+                                <path d="M0 0 Q-7 0 -9 -9" transform="rotate(180)"/>
+                                <path d="M0 0 Q-6 -7 -3 -13" transform="rotate(225)"/>
+                                <path d="M0 0 Q6 -7 3 -13" transform="rotate(270)"/>
+                                <path d="M0 0 Q7 0 9 9" transform="rotate(315)"/>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <div>
+                    <div class="font-bold text-xl tracking-[3px] text-white">CHRYSANTHEMUM</div>
+                    <div class="text-[10px] text-[#D4AF37] -mt-1 tracking-[2px]">VAULT.COM • EST 2025</div>
+                </div>
+            </div>
 
-  <header class="site-header">
-    <a class="brand-lockup" href="#home" aria-label="Chrysanthemum Vault home">
-      <svg class="brand-mark" viewBox="0 0 100 100" role="img" aria-label="Chrysanthemum Vault emblem">
-        <circle cx="50" cy="50" r="43" />
-        <circle cx="50" cy="50" r="31" />
-        <path d="M50 16 C46 32 46 43 50 72 C54 43 54 32 50 16Z" />
-        <path d="M34 22 C39 36 43 45 50 72 C49 42 43 31 34 22Z" />
-        <path d="M66 22 C61 36 57 45 50 72 C51 42 57 31 66 22Z" />
-        <path d="M22 36 C35 43 43 51 50 72 C39 50 31 40 22 36Z" />
-        <path d="M78 36 C65 43 57 51 50 72 C61 50 69 40 78 36Z" />
-        <path d="M20 55 C34 55 43 60 50 72 C38 63 29 58 20 55Z" />
-        <path d="M80 55 C66 55 57 60 50 72 C62 63 71 58 80 55Z" />
-        <path d="M50 6 V15 M50 85 V94 M6 50 H15 M85 50 H94" />
-      </svg>
-      <span class="brand-text">
-        <span class="brand-name">CHRYSANTHEMUM <span>VAULT.COM</span></span>
-        <span class="established">EST 2025</span>
-      </span>
-    </a>
+            <!-- Menu -->
+            <div class="hidden md:flex items-center gap-x-9 text-sm uppercase tracking-[2px] font-medium">
+                <a href="#vision" class="nav-link cursor-pointer text-white/90 hover:text-white">THE VISION</a>
+                <a href="#alchemy" class="nav-link cursor-pointer text-white/90 hover:text-white">THE ALCHEMY</a>
+                <a href="#collection" class="nav-link cursor-pointer text-white/90 hover:text-white">THE COLLECTION</a>
+                <a href="#atelier" class="nav-link cursor-pointer text-white/90 hover:text-white">THE ATELIER</a>
+            </div>
 
-    <nav class="primary-nav" aria-label="Primary navigation">
-      <a href="#vision">The Vision</a>
-      <a href="#alchemy">The Alchemy</a>
-      <a href="#collection">The Collection</a>
-      <a href="#atelier">The Atelier</a>
+            <!-- Inquire Button -->
+            <button onclick="showInquireModal()"
+                    class="px-8 py-2.5 text-sm uppercase tracking-[2px] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all duration-300 font-medium">
+                INQUIRE
+            </button>
+        </div>
     </nav>
 
-    <div class="header-action">
-      <a class="inquire-button" href="mailto:contact@chrysanthemumvault.com">Inquire</a>
-      <button class="mobile-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span></button>
-    </div>
-  </header>
-
-  <main id="home" class="page-shell">
-    <section class="hero" aria-label="Chrysanthemum Vault landing page">
-      <div class="hero-panel">
-        <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
-        <div class="starfield" aria-hidden="true"><span class="s1"></span><span class="s2"></span><span class="s3"></span><span class="s4"></span><span class="s5"></span><span class="s6"></span></div>
-
-        <div class="celestial-stage">
-          <div class="orbit" aria-hidden="true"></div>
-          <div class="bloom-wrap" aria-hidden="true">
-            <div class="horizon"></div>
-            <svg class="bloom-svg" viewBox="0 0 900 420">
-              <g class="outer-petals">
-                <path class="petal" d="M450 352 C320 280 238 205 132 134 C244 147 336 195 450 352" />
-                <path class="petal" d="M450 352 C580 280 662 205 768 134 C656 147 564 195 450 352" />
-                <path class="petal" d="M450 352 C338 254 300 145 260 53 C348 111 400 220 450 352" />
-                <path class="petal" d="M450 352 C562 254 600 145 640 53 C552 111 500 220 450 352" />
-                <path class="petal" d="M450 352 C402 226 411 110 450 35 C489 110 498 226 450 352" />
-                <path class="petal" d="M450 352 C284 315 190 276 78 252 C190 220 318 248 450 352" />
-                <path class="petal" d="M450 352 C616 315 710 276 822 252 C710 220 582 248 450 352" />
-                <path class="petal" d="M450 352 C350 318 280 300 195 302 C286 246 366 270 450 352" />
-                <path class="petal" d="M450 352 C550 318 620 300 705 302 C614 246 534 270 450 352" />
-              </g>
-              <g class="mid-petals">
-                <path class="petal" d="M450 356 C378 276 365 198 350 106 C421 170 452 260 450 356" />
-                <path class="petal" d="M450 356 C522 276 535 198 550 106 C479 170 448 260 450 356" />
-                <path class="petal" d="M450 356 C344 296 300 246 242 178 C330 195 394 244 450 356" />
-                <path class="petal" d="M450 356 C556 296 600 246 658 178 C570 195 506 244 450 356" />
-                <path class="petal" d="M450 356 C406 300 394 250 392 174 C440 224 456 284 450 356" />
-                <path class="petal" d="M450 356 C494 300 506 250 508 174 C460 224 444 284 450 356" />
-                <path class="petal" d="M450 356 C390 326 358 306 302 292 C363 268 414 296 450 356" />
-                <path class="petal" d="M450 356 C510 326 542 306 598 292 C537 268 486 296 450 356" />
-              </g>
-              <g class="core">
-                <ellipse class="seed" cx="450" cy="330" rx="75" ry="42" />
-                <ellipse class="seed" cx="450" cy="326" rx="58" ry="32" />
-                <ellipse class="seed" cx="450" cy="322" rx="40" ry="22" />
-                <path class="seed" d="M390 334 C420 295 482 292 510 334" />
-                <path class="seed" d="M410 350 C428 314 472 310 492 350" />
-                <path class="seed" d="M432 358 C438 326 462 326 468 358" />
-              </g>
-              <g>
-                <circle class="node" cx="132" cy="134" r="4" /><circle class="node" cx="768" cy="134" r="4" />
-                <circle class="node" cx="260" cy="53" r="4" /><circle class="node" cx="640" cy="53" r="4" />
-                <circle class="node" cx="450" cy="35" r="4" /><circle class="node" cx="78" cy="252" r="3" />
-                <circle class="node" cx="822" cy="252" r="3" />
-              </g>
-            </svg>
-          </div>
-
-          <h1 class="hero-title">CHRYSANTHEMUM VAULT</h1>
-          <div class="title-rule" aria-hidden="true"></div>
-
-          <div class="portal-grid" aria-label="Collection portals">
-            <a class="portal" href="#collection"><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><span class="portal-icon"><svg viewBox="0 0 48 48"><path d="M14 14h20v18H14zM19 37h10M24 32v5M12 41h24"/></svg></span><span class="portal-label">Paintings</span></a>
-            <a class="portal" href="#collection"><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><span class="portal-icon"><svg viewBox="0 0 48 48"><path d="M12 12h24v24H12zM12 24h24M24 12v24M12 12l24 24M36 12L12 36"/></svg></span><span class="portal-label">Marquetry</span></a>
-            <a class="portal" href="#collection"><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><span class="portal-icon"><svg viewBox="0 0 48 48"><circle cx="24" cy="22" r="11"/><path d="M13 22h22M24 11c5 5 5 17 0 22M24 11c-5 5-5 17 0 22M24 33v6M17 39h14"/></svg></span><span class="portal-label">Curiosities</span></a>
-            <a class="portal" href="#collection"><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><span class="portal-icon"><svg viewBox="0 0 48 48"><path d="M24 8l12 12-12 20-12-20zM12 20h24M19 20l5 20 5-20"/></svg></span><span class="portal-label">Jewelry</span></a>
-            <a class="portal" href="#collection"><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><span class="portal-icon"><svg viewBox="0 0 48 48"><path d="M15 9h21v30H15zM12 13h3M12 20h3M12 27h3M12 34h3M21 17h9M21 24h9M21 31h6"/></svg></span><span class="portal-label">Archive</span></a>
-            <a class="portal" href="#contact"><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><i class="portal-corner"></i><span class="portal-icon"><svg viewBox="0 0 48 48"><path d="M24 8l12 32M24 8L12 40M18 27h12M16 40h16M20 15a4 4 0 1 0 8 0 4 4 0 0 0-8 0z"/></svg></span><span class="portal-label">Commissions</span></a>
-          </div>
+    <!-- HERO / MAIN ILLUSTRATION -->
+    <div class="relative min-h-[100dvh] flex items-center justify-center pt-20 cosmic-bg">
+        <!-- Background Stars Canvas -->
+        <canvas id="star-canvas" class="absolute inset-0 z-0"></canvas>
+        
+        <!-- Outer Decorative Frame -->
+        <div id="decorative-frame" class="absolute inset-[4%] border border-[#D4AF37]/60 z-10 pointer-events-none"
+             style="box-shadow: inset 0 0 80px rgba(212,175,55,0.08);">
+            
+            <!-- Corner accents -->
+            <div class="frame-corner top-[-1px] left-[-1px] border-r-0 border-b-0"></div>
+            <div class="frame-corner top-[-1px] right-[-1px] border-l-0 border-b-0"></div>
+            <div class="frame-corner bottom-[-1px] left-[-1px] border-r-0 border-t-0"></div>
+            <div class="frame-corner bottom-[-1px] right-[-1px] border-l-0 border-t-0"></div>
+            
+            <!-- Mid-side accents -->
+            <div class="absolute top-[-1px] left-1/2 w-3 h-3 border border-[#D4AF37] -translate-x-1/2" style="border-top: none; border-left: none; border-right: none;"></div>
+            <div class="absolute bottom-[-1px] left-1/2 w-3 h-3 border border-[#D4AF37] -translate-x-1/2" style="border-bottom: none; border-left: none; border-right: none;"></div>
+            <div class="absolute left-[-1px] top-1/2 w-3 h-3 border border-[#D4AF37] -translate-y-1/2" style="border-left: none; border-top: none; border-bottom: none;"></div>
+            <div class="absolute right-[-1px] top-1/2 w-3 h-3 border border-[#D4AF37] -translate-y-1/2" style="border-right: none; border-top: none; border-bottom: none;"></div>
         </div>
-      </div>
-    </section>
 
-    <section id="vision" class="content-section"><p class="section-kicker">The Vision</p><h2>A curated vault, not a storefront.</h2><p class="section-copy">Chrysanthemum Vault is built as a quiet digital gallery for paintings, marquetry, object-work, jewelry, records, and selected commissions. The landing page uses a black field, a gold horizon, and architectural linework to make each collection feel discovered rather than advertised.</p></section>
-    <section id="alchemy" class="content-section"><p class="section-kicker">The Alchemy</p><h2>Material, hand, and transformation.</h2><p class="section-copy">The site language is restrained: gold line, dark ground, measured typography, and portal-like transitions. The visual system supports work made through paint, wood, stone, metal, archive, and careful assembly.</p></section>
-    <section id="collection" class="content-section"><p class="section-kicker">The Collection</p><h2>Six entrances into the vault.</h2><p class="section-copy">Paintings, marquetry, curiosities, jewelry, archive, and commissions are presented as separate repositories. Each category can later become a full gallery page without changing the landing-page structure.</p></section>
-    <section id="atelier" class="content-section"><p class="section-kicker">The Atelier</p><h2>The working room behind the object.</h2><p class="section-copy">The Atelier section is reserved for process notes, material records, provenance language, conservation notes, and the quieter written context behind the work.</p></section>
-    <section id="contact" class="content-section"><div class="contact-panel"><p class="section-kicker">Inquire</p><h2>Contact the Vault.</h2><p class="section-copy">For acquisitions, commissions, private collection questions, or studio correspondence, use the active studio email below.</p><a class="email-link" href="mailto:contact@chrysanthemumvault.com">contact@chrysanthemumvault.com</a></div></section>
-  </main>
+        <!-- Central Illustration Container -->
+        <div class="relative z-20 flex flex-col items-center px-6 max-w-[1100px] w-full">
+            
+            <!-- The Chrysanthemum Galaxy SVG -->
+            <div id="chrysanthemum-container" class="relative mb-8">
+                <svg id="chrysanthemum-svg" width="620" height="520" viewBox="0 0 620 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Subtle background glow -->
+                    <defs>
+                        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="45%">
+                            <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.15"/>
+                            <stop offset="70%" stop-color="#D4AF37" stop-opacity="0"/>
+                        </radialGradient>
+                        
+                        <linearGradient id="horizonGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+                            <stop offset="0%" stop-color="#000000"/>
+                            <stop offset="48%" stop-color="#D4AF37"/>
+                            <stop offset="52%" stop-color="#D4AF37"/>
+                            <stop offset="100%" stop-color="#000000"/>
+                        </linearGradient>
+                        
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Background Stars -->
+                    <g id="bg-stars">
+                        <!-- Populated by JS -->
+                    </g>
+                    
+                    <!-- Orbital Lines -->
+                    <ellipse cx="310" cy="235" rx="195" ry="52" fill="none" stroke="#D4AF37" stroke-width="0.9" stroke-dasharray="3 7" opacity="0.7"/>
+                    <ellipse cx="310" cy="235" rx="155" ry="38" fill="none" stroke="#D4AF37" stroke-width="0.7" stroke-dasharray="2 9" opacity="0.6"/>
+                    <ellipse cx="310" cy="235" rx="235" ry="68" fill="none" stroke="#D4AF37" stroke-width="0.6" stroke-dasharray="5 6" opacity="0.5"/>
+                    
+                    <!-- Horizon Line -->
+                    <line id="horizon-line" x1="70" y1="305" x2="550" y2="305" stroke="#D4AF37" stroke-width="1.5" stroke-opacity="0.9"/>
+                    
+                    <!-- Horizon Glow -->
+                    <rect x="70" y="298" width="480" height="14" fill="url(#horizonGradient)" opacity="0.75"/>
+                    <rect x="140" y="295" width="340" height="20" fill="#D4AF37" opacity="0.12"/>
+                    
+                    <!-- The Chrysanthemum - Line Art -->
+                    <g id="flower-group" transform="translate(310, 235)">
+                        <!-- Center Core -->
+                        <circle cx="0" cy="0" r="11" fill="none" stroke="#D4AF37" stroke-width="2.5"/>
+                        <circle cx="0" cy="0" r="5.5" fill="#D4AF37"/>
+                        
+                        <!-- Petal Layers - Generated via JS for perfect symmetry and animation -->
+                        <!-- Petals will be appended dynamically -->
+                    </g>
+                    
+                    <!-- Extra decorative sparks / light points -->
+                    <g id="sparks">
+                        <!-- Populated dynamically -->
+                    </g>
+                </svg>
+            </div>
+            
+            <!-- Title -->
+            <div id="main-title" class="text-center mb-3 opacity-0 translate-y-4 transition-all duration-700">
+                <h1 class="vault-title heading-serif text-[3.1rem] md:text-[3.6rem] font-bold tracking-tighter text-white">CHRYSANTHEMUM VAULT</h1>
+                <div class="flex items-center justify-center gap-x-3 mt-1">
+                    <div class="h-px w-8 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
+                    <div class="text-[#D4AF37] text-xs tracking-[4px] font-medium">EST 2025</div>
+                    <div class="h-px w-8 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
+                </div>
+            </div>
+            
+            <p class="text-white/60 text-sm max-w-xs text-center tracking-wide">A PRIVATE ARCHIVE OF CELESTIAL BEAUTY &amp; ALCHEMICAL CRAFT</p>
+        </div>
+        
+        <!-- Scroll Prompt -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-30">
+            <div class="text-[10px] tracking-[3px] text-white/40 mb-1">SCROLL TO ENTER THE VAULT</div>
+            <div class="w-px h-8 bg-gradient-to-b from-transparent via-[#D4AF37]/60 to-transparent"></div>
+        </div>
+    </div>
 
-  <footer class="site-footer"><span>© 2025 Chrysanthemum Vault</span><span>Fine Art & Marquetry</span></footer>
+    <!-- THE SIX PORTALS -->
+    <div id="portals-section" class="max-w-screen-2xl mx-auto px-8 pb-20 pt-6">
+        <div class="flex items-end justify-between mb-8 px-1">
+            <div>
+                <div class="uppercase tracking-[3px] text-xs text-[#D4AF37]">DISCOVER THE ARCHIVES</div>
+                <h2 class="text-3xl heading-serif font-semibold tracking-tight">The Six Portals</h2>
+            </div>
+            <div class="hidden md:block text-xs text-white/50 max-w-[240px] text-right">
+                Each portal opens into a private world of rare objects, masterworks, and commissions
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+            
+            <!-- Portal 1: Paintings -->
+            <div onclick="showPortalModal(0)" class="portal-card group bg-zinc-950 border border-white/10 p-5 flex flex-col items-center text-center cursor-pointer">
+                <div class="w-16 h-16 mb-4 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="14" y="12" width="36" height="42" rx="1.5" stroke="currentColor" stroke-width="2.5"/>
+                        <line x1="20" y1="20" x2="44" y2="20" stroke="currentColor" stroke-width="1.8"/>
+                        <line x1="20" y1="27" x2="44" y2="27" stroke="currentColor" stroke-width="1.8"/>
+                        <line x1="20" y1="34" x2="39" y2="34" stroke="currentColor" stroke-width="1.8"/>
+                        <path d="M8 52 L20 46 L44 46 L56 52" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                        <path d="M12 58 L52 58" stroke="currentColor" stroke-width="2.2"/>
+                    </svg>
+                </div>
+                <div class="font-semibold tracking-widest text-sm">PAINTINGS</div>
+                <div class="text-[10px] text-white/50 mt-1">Oils • Tempera • Mixed Media</div>
+            </div>
+            
+            <!-- Portal 2: Marquetry -->
+            <div onclick="showPortalModal(1)" class="portal-card group bg-zinc-950 border border-white/10 p-5 flex flex-col items-center text-center cursor-pointer">
+                <div class="w-16 h-16 mb-4 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="12" y="12" width="40" height="40" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <rect x="18" y="18" width="12" height="12" stroke="currentColor" stroke-width="1.8"/>
+                        <rect x="34" y="18" width="12" height="12" stroke="currentColor" stroke-width="1.8"/>
+                        <rect x="18" y="34" width="12" height="12" stroke="currentColor" stroke-width="1.8"/>
+                        <rect x="34" y="34" width="12" height="12" stroke="currentColor" stroke-width="1.8"/>
+                        <path d="M12 12 L52 52 M52 12 L12 52" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div class="font-semibold tracking-widest text-sm">MARQUETRY</div>
+                <div class="text-[10px] text-white/50 mt-1">Inlaid Woods • Geometric Revelations</div>
+            </div>
+            
+            <!-- Portal 3: Curiosities -->
+            <div onclick="showPortalModal(2)" class="portal-card group bg-zinc-950 border border-white/10 p-5 flex flex-col items-center text-center cursor-pointer">
+                <div class="w-16 h-16 mb-4 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="28" r="17" stroke="currentColor" stroke-width="2.2"/>
+                        <ellipse cx="32" cy="28" rx="8" ry="17" stroke="currentColor" stroke-width="1.6"/>
+                        <line x1="32" y1="11" x2="32" y2="45" stroke="currentColor" stroke-width="1.4"/>
+                        <line x1="15" y1="28" x2="49" y2="28" stroke="currentColor" stroke-width="1.4"/>
+                        <!-- Stand -->
+                        <path d="M20 47 Q32 53 44 47" stroke="currentColor" stroke-width="2"/>
+                        <rect x="24" y="53" width="16" height="5" rx="1" stroke="currentColor" stroke-width="1.8"/>
+                    </svg>
+                </div>
+                <div class="font-semibold tracking-widest text-sm">CURIOSITIES</div>
+                <div class="text-[10px] text-white/50 mt-1">Rare Objects • Scientific Wonders</div>
+            </div>
+            
+            <!-- Portal 4: Jewelry -->
+            <div onclick="showPortalModal(3)" class="portal-card group bg-zinc-950 border border-white/10 p-5 flex flex-col items-center text-center cursor-pointer">
+                <div class="w-16 h-16 mb-4 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M32 8 L38 20 Q32 32 26 20 Z" stroke="currentColor" stroke-width="2.2" fill="none"/>
+                        <circle cx="32" cy="24" r="4.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                        <path d="M32 30 L32 48" stroke="currentColor" stroke-width="2"/>
+                        <path d="M24 48 Q32 54 40 48" stroke="currentColor" stroke-width="2"/>
+                        <!-- Ornate details -->
+                        <circle cx="32" cy="18" r="2" fill="#D4AF37"/>
+                        <path d="M27 22 Q32 26 37 22" stroke="currentColor" stroke-width="1.2"/>
+                    </svg>
+                </div>
+                <div class="font-semibold tracking-widest text-sm">JEWELRY</div>
+                <div class="text-[10px] text-white/50 mt-1">Bespoke • Heirloom • Celestial</div>
+            </div>
+            
+            <!-- Portal 5: Archive -->
+            <div onclick="showPortalModal(4)" class="portal-card group bg-zinc-950 border border-white/10 p-5 flex flex-col items-center text-center cursor-pointer">
+                <div class="w-16 h-16 mb-4 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="13" y="10" width="38" height="48" rx="2" stroke="currentColor" stroke-width="2.2"/>
+                        <line x1="32" y1="10" x2="32" y2="58" stroke="currentColor" stroke-width="1.8"/>
+                        <!-- Left page lines -->
+                        <line x1="17" y1="18" x2="28" y2="18" stroke="currentColor" stroke-width="1.2"/>
+                        <line x1="17" y1="24" x2="28" y2="24" stroke="currentColor" stroke-width="1.2"/>
+                        <line x1="17" y1="30" x2="28" y2="30" stroke="currentColor" stroke-width="1.2"/>
+                        <!-- Right page lines -->
+                        <line x1="36" y1="18" x2="47" y2="18" stroke="currentColor" stroke-width="1.2"/>
+                        <line x1="36" y1="24" x2="47" y2="24" stroke="currentColor" stroke-width="1.2"/>
+                        <line x1="36" y1="30" x2="47" y2="30" stroke="currentColor" stroke-width="1.2"/>
+                    </svg>
+                </div>
+                <div class="font-semibold tracking-widest text-sm">ARCHIVE</div>
+                <div class="text-[10px] text-white/50 mt-1">Ephemera • Manuscripts • Records</div>
+            </div>
+            
+            <!-- Portal 6: Commissions -->
+            <div onclick="showPortalModal(5)" class="portal-card group bg-zinc-950 border border-white/10 p-5 flex flex-col items-center text-center cursor-pointer">
+                <div class="w-16 h-16 mb-4 flex items-center justify-center text-[#D4AF37] group-hover:scale-110 transition-transform">
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="21" stroke="currentColor" stroke-width="2.3"/>
+                        <line x1="32" y1="11" x2="32" y2="53" stroke="currentColor" stroke-width="1.8"/>
+                        <line x1="11" y1="32" x2="53" y2="32" stroke="currentColor" stroke-width="1.8"/>
+                        <!-- Needle -->
+                        <polygon points="32,15 37,32 32,49 27,32" fill="currentColor"/>
+                        <!-- Cardinal marks -->
+                        <text x="32" y="9" fill="currentColor" font-size="7" text-anchor="middle" font-weight="bold">N</text>
+                        <text x="32" y="58" fill="currentColor" font-size="7" text-anchor="middle" font-weight="bold">S</text>
+                        <text x="7" y="35" fill="currentColor" font-size="7" text-anchor="middle" font-weight="bold">W</text>
+                        <text x="57" y="35" fill="currentColor" font-size="7" text-anchor="middle" font-weight="bold">E</text>
+                    </svg>
+                </div>
+                <div class="font-semibold tracking-widest text-sm">COMMISSIONS</div>
+                <div class="text-[10px] text-white/50 mt-1">Bespoke Creations • Private Atelier</div>
+            </div>
+            
+        </div>
+    </div>
 
-  <script>
-    const toggle = document.querySelector('.mobile-toggle');
-    const links = document.querySelectorAll('.primary-nav a');
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        const open = document.body.classList.toggle('nav-open');
-        toggle.setAttribute('aria-expanded', String(open));
-      });
-      links.forEach(link => link.addEventListener('click', () => {
-        document.body.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }));
-    }
-  </script>
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 bg-black py-9">
+        <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-y-4 text-xs">
+            <div class="flex items-center gap-x-5 text-white/60">
+                <div>© CHRYSANTHEMUM VAULT 2025</div>
+                <div class="hidden md:block">•</div>
+                <a href="mailto:contact@chrysanthemumvault.com" class="hover:text-[#D4AF37] transition-colors">contact@chrysanthemumvault.com</a>
+            </div>
+            
+            <div class="flex items-center gap-x-6 text-white/60">
+                <a href="#" class="hover:text-white transition-colors">PRIVACY</a>
+                <a href="#" class="hover:text-white transition-colors">ACCESSIBILITY</a>
+                <a href="#" class="hover:text-white transition-colors">LEGAL</a>
+            </div>
+            
+            <div class="text-white/50 text-[10px] tracking-widest">A PRIVATE MEMBERSHIP EXPERIENCE</div>
+        </div>
+    </footer>
+
+    <!-- PORTAL MODALS -->
+    <div id="portal-modal" onclick="if (event.target.id === 'portal-modal') hidePortalModal()" class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] flex items-center justify-center p-6">
+        <div onclick="event.stopImmediatePropagation()" class="modal max-w-lg w-full bg-zinc-950 border border-[#D4AF37]/70 rounded-2xl overflow-hidden shadow-2xl">
+            
+            <!-- Modal Header -->
+            <div class="px-8 py-6 border-b border-white/10 flex items-center justify-between">
+                <div id="modal-icon" class="flex-shrink-0 text-[#D4AF37]"></div>
+                <div class="flex-1 px-6">
+                    <div id="modal-title" class="font-semibold text-2xl heading-serif tracking-tight"></div>
+                    <div id="modal-subtitle" class="text-xs uppercase tracking-[2px] text-[#D4AF37]/80"></div>
+                </div>
+                <button onclick="hidePortalModal()" class="text-white/60 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6h12v12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-8">
+                <div id="modal-description" class="text-[15px] leading-relaxed text-white/90"></div>
+                
+                <!-- Placeholder for visual / collection highlights -->
+                <div class="my-7 grid grid-cols-3 gap-3">
+                    <div class="aspect-video bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-[10px] text-white/40">DETAIL 01</div>
+                        </div>
+                    </div>
+                    <div class="aspect-video bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-[10px] text-white/40">DETAIL 02</div>
+                        </div>
+                    </div>
+                    <div class="aspect-video bg-zinc-900 border border-white/10 rounded-xl flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-[10px] text-white/40">DETAIL 03</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between pt-3 border-t border-white/10">
+                    <button onclick="inquireFromModal()" 
+                            class="px-7 py-3 text-xs uppercase tracking-[2px] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all flex-1 mr-3 font-medium">
+                        INQUIRE ABOUT THIS COLLECTION
+                    </button>
+                    
+                    <button onclick="hidePortalModal()" 
+                            class="px-7 py-3 text-xs uppercase tracking-[2px] text-white/60 hover:text-white transition-colors">
+                        CLOSE
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inquire Modal -->
+    <div id="inquire-modal" onclick="if (event.target.id === 'inquire-modal') hideInquireModal()" class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[110] flex items-center justify-center p-6">
+        <div onclick="event.stopImmediatePropagation()" class="modal max-w-md w-full bg-zinc-950 border border-[#D4AF37]/70 rounded-3xl p-8">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <div class="uppercase text-xs tracking-[3px] text-[#D4AF37]">PRIVATE INQUIRY</div>
+                    <div class="text-3xl heading-serif tracking-tight">Begin Your Journey</div>
+                </div>
+                <button onclick="hideInquireModal()" class="text-white/50 hover:text-white">
+                    ✕
+                </button>
+            </div>
+            
+            <form id="inquire-form" onsubmit="submitInquiry(event)">
+                <div class="space-y-5">
+                    <div>
+                        <label class="text-xs uppercase tracking-widest text-white/60 block mb-1.5">NAME</label>
+                        <input type="text" id="name" required class="w-full bg-black border border-white/20 focus:border-[#D4AF37] px-4 py-3 text-sm outline-none rounded-xl">
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs uppercase tracking-widest text-white/60 block mb-1.5">EMAIL</label>
+                        <input type="email" id="email" required class="w-full bg-black border border-white/20 focus:border-[#D4AF37] px-4 py-3 text-sm outline-none rounded-xl">
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs uppercase tracking-widest text-white/60 block mb-1.5">INTEREST</label>
+                        <select id="interest" class="w-full bg-black border border-white/20 focus:border-[#D4AF37] px-4 py-3 text-sm outline-none rounded-xl">
+                            <option value="">Select a portal...</option>
+                            <option value="Paintings">Paintings</option>
+                            <option value="Marquetry">Marquetry</option>
+                            <option value="Curiosities">Curiosities</option>
+                            <option value="Jewelry">Jewelry</option>
+                            <option value="Archive">Archive</option>
+                            <option value="Commissions">Commissions</option>
+                            <option value="General">General Inquiry</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="text-xs uppercase tracking-widest text-white/60 block mb-1.5">MESSAGE</label>
+                        <textarea id="message" rows="4" required placeholder="Tell us about your interest..." class="w-full resize-y bg-black border border-white/20 focus:border-[#D4AF37] px-4 py-3 text-sm outline-none rounded-xl"></textarea>
+                    </div>
+                </div>
+                
+                <div class="mt-7 flex gap-3">
+                    <button type="submit" 
+                            class="flex-1 py-3.5 text-sm uppercase tracking-[2px] bg-[#D4AF37] text-black font-medium hover:bg-amber-300 transition-colors rounded-2xl">
+                        SEND INQUIRY
+                    </button>
+                    <button type="button" onclick="hideInquireModal()" 
+                            class="flex-1 py-3.5 text-sm uppercase tracking-[2px] border border-white/30 hover:bg-white/5 transition-colors rounded-2xl">
+                        CANCEL
+                    </button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-5 text-[10px] text-white/40">We respond within 48 hours • All inquiries are confidential</div>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent-gold', '#D4AF37');
+        }
+        
+        // Starfield Canvas
+        function createStarfield() {
+            const canvas = document.getElementById('star-canvas');
+            const ctx = canvas.getContext('2d', { alpha: true });
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            let stars = [];
+            
+            function createStars(count) {
+                stars = [];
+                for (let i = 0; i < count; i++) {
+                    stars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height * 0.85,
+                        size: Math.random() * 1.8 + 0.6,
+                        opacity: Math.random() * 0.7 + 0.3,
+                        speed: Math.random() * 0.015 + 0.008
+                    });
+                }
+            }
+            
+            createStars(220);
+            
+            function drawStars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                for (let star of stars) {
+                    ctx.save();
+                    ctx.globalAlpha = star.opacity;
+                    ctx.fillStyle = '#D4AF37';
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Extra glow for larger stars
+                    if (star.size > 1.3) {
+                        ctx.globalAlpha = star.opacity * 0.35;
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.size * 2.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                    
+                    // Gentle twinkle animation
+                    star.opacity += (Math.random() - 0.5) * 0.025;
+                    star.opacity = Math.max(0.25, Math.min(1, star.opacity));
+                }
+            }
+            
+            function animateStars() {
+                drawStars();
+                requestAnimationFrame(animateStars);
+            }
+            
+            animateStars();
+            
+            // Occasional shooting star
+            setInterval(() => {
+                if (Math.random() > 0.6) {
+                    const x = Math.random() * canvas.width * 0.6;
+                    const y = Math.random() * (canvas.height * 0.6);
+                    
+                    const shoot = document.createElement('div');
+                    shoot.className = 'absolute w-[1px] h-[1px] bg-white';
+                    shoot.style.left = `${x}px`;
+                    shoot.style.top = `${y}px`;
+                    shoot.style.boxShadow = '0 0 8px #D4AF37, 0 0 18px #D4AF37';
+                    shoot.style.transition = 'all 0.6s linear';
+                    document.getElementById('star-canvas').parentNode.appendChild(shoot);
+                    
+                    setTimeout(() => {
+                        shoot.style.transform = `translate(${80 + Math.random() * 120}px, ${30 + Math.random() * 50}px)`;
+                        shoot.style.opacity = '0';
+                    }, 20);
+                    
+                    setTimeout(() => shoot.remove(), 900);
+                }
+            }, 4200);
+        }
+        
+        // Create the Chrysanthemum SVG petals dynamically
+        function createChrysanthemum() {
+            const flowerGroup = document.getElementById('flower-group');
+            const sparksGroup = document.getElementById('sparks');
+            
+            // Clear any existing
+            flowerGroup.innerHTML = `
+                <circle cx="0" cy="0" r="11" fill="none" stroke="#D4AF37" stroke-width="2.5"/>
+                <circle cx="0" cy="0" r="5.5" fill="#D4AF37"/>
+            `;
+            
+            const petalColors = ['#D4AF37', '#C9A227', '#D4AF37'];
+            
+            // Create multiple layers of petals
+            const layers = [
+                { count: 7, length: 42, curve: 18, width: 2.1, delayBase: 0 },      // inner
+                { count: 9, length: 68, curve: 26, width: 1.85, delayBase: 220 },  // mid
+                { count: 12, length: 95, curve: 38, width: 1.55, delayBase: 480 }, // outer long
+                { count: 8, length: 115, curve: 48, width: 1.3, delayBase: 760 }   // outer curling tips
+            ];
+            
+            let petalIndex = 0;
+            
+            layers.forEach((layer, layerIndex) => {
+                const angleStep = 360 / layer.count;
+                
+                for (let i = 0; i < layer.count; i++) {
+                    const angle = i * angleStep + (layerIndex * 11);
+                    const rad = angle * Math.PI / 180;
+                    
+                    // Create petal path
+                    const petal = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                    
+                    // Curved petal path
+                    const x1 = Math.cos(rad) * 12;
+                    const y1 = Math.sin(rad) * 12;
+                    
+                    const controlX = Math.cos(rad) * (layer.length * 0.55) + (Math.sin(rad) * layer.curve * (i % 2 === 0 ? 1 : -1));
+                    const controlY = Math.sin(rad) * (layer.length * 0.55) - (Math.cos(rad) * layer.curve * 0.7);
+                    
+                    const endX = Math.cos(rad) * layer.length + (Math.sin(rad) * layer.curve * 0.4);
+                    const endY = Math.sin(rad) * layer.length - (Math.cos(rad) * layer.curve * 0.9);
+                    
+                    const d = `M${x1},${y1} Q${controlX},${controlY} ${endX},${endY}`;
+                    
+                    petal.setAttribute('d', d);
+                    petal.setAttribute('fill', 'none');
+                    petal.setAttribute('stroke', petalColors[layerIndex % 3]);
+                    petal.setAttribute('stroke-width', layer.width);
+                    petal.setAttribute('stroke-linecap', 'round');
+                    petal.setAttribute('class', 'petal');
+                    petal.style.animationDelay = `${layer.delayBase + (i * 65)}ms`;
+                    
+                    flowerGroup.appendChild(petal);
+                    
+                    // Light point at tip
+                    if (Math.random() > 0.35 || layerIndex > 1) {
+                        const light = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                        light.setAttribute('cx', endX);
+                        light.setAttribute('cy', endY);
+                        light.setAttribute('r', layerIndex > 2 ? '2.8' : '2.1');
+                        light.setAttribute('fill', '#D4AF37');
+                        light.setAttribute('filter', 'url(#glow)');
+                        light.style.opacity = layerIndex > 2 ? '0.95' : '0.75';
+                        
+                        // Pulse animation
+                        setTimeout(() => {
+                            light.style.transition = 'all 2.4s ease-in-out';
+                            setInterval(() => {
+                                light.setAttribute('r', layerIndex > 2 ? '3.4' : '2.6');
+                                setTimeout(() => {
+                                    light.setAttribute('r', layerIndex > 2 ? '2.8' : '2.1');
+                                }, 1200);
+                            }, 2400);
+                        }, 1800);
+                        
+                        flowerGroup.appendChild(light);
+                    }
+                    
+                    petalIndex++;
+                }
+            });
+            
+            // Add some extra decorative curling lines
+            for (let k = 0; k < 6; k++) {
+                const extra = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const angle = (k * 47) + 15;
+                const rad = angle * Math.PI / 180;
+                
+                const startDist = 22;
+                const endDist = 125 + (k % 3) * 8;
+                
+                const x1 = Math.cos(rad) * startDist;
+                const y1 = Math.sin(rad) * startDist;
+                const x2 = Math.cos(rad) * endDist;
+                const y2 = Math.sin(rad) * endDist;
+                
+                const ctrlX = x1 * 1.6 + Math.sin(rad) * 28;
+                const ctrlY = y1 * 1.6 - Math.cos(rad) * 31;
+                
+                extra.setAttribute('d', `M${x1},${y1} Q${ctrlX},${ctrlY} ${x2},${y2}`);
+                extra.setAttribute('fill', 'none');
+                extra.setAttribute('stroke', '#D4AF37');
+                extra.setAttribute('stroke-width', '0.9');
+                extra.setAttribute('stroke-opacity', '0.65');
+                extra.setAttribute('class', 'petal');
+                extra.style.animationDelay = `${920 + (k * 110)}ms`;
+                
+                flowerGroup.appendChild(extra);
+            }
+            
+            // Sparkles around the flower
+            for (let s = 0; s < 11; s++) {
+                const spark = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                const angle = Math.random() * 360;
+                const dist = 95 + Math.random() * 115;
+                const rad = angle * Math.PI / 180;
+                
+                spark.setAttribute('cx', Math.cos(rad) * dist);
+                spark.setAttribute('cy', Math.sin(rad) * dist * 0.38);
+                spark.setAttribute('r', Math.random() * 1.8 + 1.1);
+                spark.setAttribute('fill', '#fff');
+                spark.style.opacity = Math.random() * 0.6 + 0.5;
+                
+                setTimeout(() => {
+                    spark.style.transition = 'all 1.8s ease';
+                    setInterval(() => {
+                        spark.style.opacity = (parseFloat(spark.style.opacity) > 0.6) ? '0.35' : '0.95';
+                    }, 1600 + Math.random() * 800);
+                }, 1400);
+                
+                sparksGroup.appendChild(spark);
+            }
+        }
+        
+        // Animate the entire scene on load
+        function animateScene() {
+            const frame = document.getElementById('decorative-frame');
+            const title = document.getElementById('main-title');
+            const svg = document.getElementById('chrysanthemum-svg');
+            const portalsSection = document.getElementById('portals-section');
+            
+            // Initial states
+            frame.style.opacity = '0';
+            svg.style.opacity = '0.15';
+            title.style.opacity = '0';
+            title.style.transform = 'translateY(18px)';
+            
+            // 1. Frame appears with subtle pulse
+            setTimeout(() => {
+                frame.style.transition = 'opacity 1.4s ease';
+                frame.style.opacity = '1';
+                
+                // Subtle breathing on frame
+                setTimeout(() => {
+                    frame.style.boxShadow = 'inset 0 0 80px rgba(212,175,55,0.08), 0 0 25px rgba(212,175,55,0.1)';
+                }, 800);
+            }, 180);
+            
+            // 2. Horizon line draws
+            setTimeout(() => {
+                const horizon = document.getElementById('horizon-line');
+                horizon.style.transition = 'stroke-dashoffset 1.6s ease-out';
+                horizon.style.strokeDasharray = '480';
+                horizon.style.strokeDashoffset = '480';
+                
+                setTimeout(() => {
+                    horizon.style.strokeDashoffset = '0';
+                }, 80);
+            }, 620);
+            
+            // 3. Flower blooms
+            setTimeout(() => {
+                svg.style.transition = 'opacity 1.8s ease';
+                svg.style.opacity = '1';
+                
+                // Trigger petal drawing animations (already have CSS classes)
+                const petals = svg.querySelectorAll('.petal');
+                petals.forEach((petal, i) => {
+                    petal.style.animation = `drawPetal 2.1s forwards ease-out`;
+                    petal.style.animationDelay = petal.style.animationDelay || `${i * 35}ms`;
+                });
+            }, 1100);
+            
+            // 4. Title fades in
+            setTimeout(() => {
+                title.style.transition = 'all 1.1s cubic-bezier(0.23, 1, 0.32, 1)';
+                title.style.opacity = '1';
+                title.style.transform = 'translateY(0)';
+            }, 1950);
+            
+            // 5. Cards rise with light particles
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.portal-card');
+                const flowerRect = svg.getBoundingClientRect();
+                const centerX = flowerRect.left + flowerRect.width / 2;
+                const centerY = flowerRect.top + flowerRect.height / 2 - 40;
+                
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        // Create falling light particle
+                        const particle = document.createElement('div');
+                        particle.className = 'light-particle';
+                        particle.style.left = `${centerX}px`;
+                        particle.style.top = `${centerY}px`;
+                        
+                        document.body.appendChild(particle);
+                        
+                        // Animate to card
+                        const cardRect = card.getBoundingClientRect();
+                        const targetX = cardRect.left + cardRect.width / 2;
+                        const targetY = cardRect.top + 25;
+                        
+                        setTimeout(() => {
+                            particle.style.transition = 'all 0.85s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                            particle.style.left = `${targetX}px`;
+                            particle.style.top = `${targetY}px`;
+                            
+                            setTimeout(() => {
+                                particle.style.opacity = '0';
+                                particle.style.transform = 'scale(0.2)';
+                                
+                                setTimeout(() => {
+                                    particle.remove();
+                                    
+                                    // Reveal card
+                                    card.style.transition = 'all 0.6s cubic-bezier(0.23, 1.0, 0.32, 1)';
+                                    card.style.opacity = '1';
+                                    card.style.transform = 'translateY(0)';
+                                }, 180);
+                            }, 820);
+                        }, 40);
+                        
+                        // Initial card state
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(45px)';
+                        
+                    }, index * 140);
+                });
+                
+                // Final polish - make sure all visible
+                setTimeout(() => {
+                    cards.forEach(c => {
+                        c.style.opacity = '1';
+                        c.style.transform = 'translateY(0)';
+                    });
+                }, 1600);
+                
+            }, 2450);
+            
+            // Subtle continuous animation on flower sparks
+            setTimeout(() => {
+                const sparks = document.querySelectorAll('#sparks circle');
+                sparks.forEach((spark, idx) => {
+                    setInterval(() => {
+                        spark.style.transitionDuration = '900ms';
+                        spark.style.opacity = (parseFloat(spark.style.opacity) || 0.6) > 0.6 ? '0.35' : '0.92';
+                    }, 1700 + (idx * 180));
+                });
+            }, 3200);
+        }
+        
+        // Portal Modal Content
+        const portalData = [
+            {
+                icon: `<svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="12" width="36" height="42" rx="1.5" stroke="#D4AF37" stroke-width="2.5"/><line x1="20" y1="20" x2="44" y2="20" stroke="#D4AF37" stroke-width="1.8"/><line x1="20" y1="27" x2="44" y2="27" stroke="#D4AF37" stroke-width="1.8"/><line x1="20" y1="34" x2="39" y2="34" stroke="#D4AF37" stroke-width="1.8"/><path d="M8 52 L20 46 L44 46 L56 52" stroke="#D4AF37" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 58 L52 58" stroke="#D4AF37" stroke-width="2.2"/></svg>`,
+                title: "PAINTINGS",
+                subtitle: "THE VISIONARY CANVAS",
+                description: "Our paintings capture the ephemeral dance of light across chrysanthemum petals and distant nebulae. Each work is executed in oil, egg tempera, or experimental mixed media on linen and wood panels prepared with traditional gesso. The collection explores themes of impermanence, cosmic order, and the quiet alchemy of color."
+            },
+            {
+                icon: `<svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="12" width="40" height="40" rx="2" stroke="#D4AF37" stroke-width="2"/><rect x="18" y="18" width="12" height="12" stroke="#D4AF37" stroke-width="1.8"/><rect x="34" y="18" width="12" height="12" stroke="#D4AF37" stroke-width="1.8"/><rect x="18" y="34" width="12" height="12" stroke="#D4AF37" stroke-width="1.8"/><rect x="34" y="34" width="12" height="12" stroke="#D4AF37" stroke-width="1.8"/><path d="M12 12 L52 52 M52 12 L12 52" stroke="#D4AF37" stroke-width="1.2" opacity="0.6"/></svg>`,
+                title: "MARQUETRY",
+                subtitle: "GEOMETRIC REVELATIONS",
+                description: "Exquisite wood inlay work using rare veneers — ebony, rosewood, maple, and mother-of-pearl — arranged in hypnotic geometric patterns inspired by sacred geometry and celestial charts. Each piece requires hundreds of hours of precise cutting and assembly by master artisans."
+            },
+            {
+                icon: `<svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="28" r="17" stroke="#D4AF37" stroke-width="2.2"/><ellipse cx="32" cy="28" rx="8" ry="17" stroke="#D4AF37" stroke-width="1.6"/><line x1="32" y1="11" x2="32" y2="45" stroke="#D4AF37" stroke-width="1.4"/><line x1="15" y1="28" x2="49" y2="28" stroke="#D4AF37" stroke-width="1.4"/><path d="M20 47 Q32 53 44 47" stroke="#D4AF37" stroke-width="2"/><rect x="24" y="53" width="16" height="5" rx="1" stroke="#D4AF37" stroke-width="1.8"/></svg>`,
+                title: "CURIOSITIES",
+                subtitle: "THE WUNDERKAMMER",
+                description: "A cabinet of wonders featuring 17th–19th century scientific instruments, preserved botanical specimens, meteorites, antique optical devices, and other singular objects that blur the line between art and science. Each curiosity is presented with its own provenance and poetic context."
+            },
+            {
+                icon: `<svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 8 L38 20 Q32 32 26 20 Z" stroke="#D4AF37" stroke-width="2.2" fill="none"/><circle cx="32" cy="24" r="4.5" fill="none" stroke="#D4AF37" stroke-width="1.8"/><path d="M32 30 L32 48" stroke="#D4AF37" stroke-width="2"/><path d="M24 48 Q32 54 40 48" stroke="#D4AF37" stroke-width="2"/><circle cx="32" cy="18" r="2" fill="#D4AF37"/><path d="M27 22 Q32 26 37 22" stroke="#D4AF37" stroke-width="1.2"/></svg>`,
+                title: "JEWELRY",
+                subtitle: "CELESTIAL HEIRLOOMS",
+                description: "Bespoke jewelry handcrafted in 18k gold and platinum, set with rare gems, moonstones, and diamonds chosen for their light-refracting qualities. Many pieces incorporate microscopic engravings of chrysanthemum motifs or star charts visible only under magnification. Designed to be worn for generations."
+            },
+            {
+                icon: `<svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="10" width="38" height="48" rx="2" stroke="#D4AF37" stroke-width="2.2"/><line x1="32" y1="10" x2="32" y2="58" stroke="#D4AF37" stroke-width="1.8"/><line x1="17" y1="18" x2="28" y2="18" stroke="#D4AF37" stroke-width="1.2"/><line x1="17" y1="24" x2="28" y2="24" stroke="#D4AF37" stroke-width="1.2"/><line x1="17" y1="30" x2="28" y2="30" stroke="#D4AF37" stroke-width="1.2"/><line x1="36" y1="18" x2="47" y2="18" stroke="#D4AF37" stroke-width="1.2"/><line x1="36" y1="24" x2="47" y2="24" stroke="#D4AF37" stroke-width="1.2"/><line x1="36" y1="30" x2="47" y2="30" stroke="#D4AF37" stroke-width="1.2"/></svg>`,
+                title: "ARCHIVE",
+                subtitle: "THE LIVING RECORD",
+                description: "A meticulously curated library of rare books, manuscripts, botanical illustrations, astronomical charts, and personal letters from artists and alchemists. The archive is available for private study by appointment and includes several never-before-published works on the symbolism of the chrysanthemum across cultures."
+            },
+            {
+                icon: `<svg width="52" height="52" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="21" stroke="#D4AF37" stroke-width="2.3"/><line x1="32" y1="11" x2="32" y2="53" stroke="#D4AF37" stroke-width="1.8"/><line x1="11" y1="32" x2="53" y2="32" stroke="#D4AF37" stroke-width="1.8"/><polygon points="32,15 37,32 32,49 27,32" fill="#D4AF37"/><text x="32" y="9" fill="#D4AF37" font-size="7" text-anchor="middle" font-weight="bold">N</text><text x="32" y="58" fill="#D4AF37" font-size="7" text-anchor="middle" font-weight="bold">S</text><text x="7" y="35" fill="#D4AF37" font-size="7" text-anchor="middle" font-weight="bold">W</text><text x="57" y="35" fill="#D4AF37" font-size="7" text-anchor="middle" font-weight="bold">E</text></svg>`,
+                title: "COMMISSIONS",
+                subtitle: "THE PRIVATE ATELIER",
+                description: "Work directly with our atelier to commission a unique piece — whether a monumental painting, a custom marquetry cabinet, a one-of-a-kind jewel, or an entire room installation. Every commission begins with a private consultation and is executed with the same obsessive attention to material, light, and meaning that defines the Vault."
+            }
+        ];
+        
+        function showPortalModal(index) {
+            const modal = document.getElementById('portal-modal');
+            const data = portalData[index];
+            
+            document.getElementById('modal-icon').innerHTML = data.icon;
+            document.getElementById('modal-title').innerHTML = data.title;
+            document.getElementById('modal-subtitle').innerHTML = data.subtitle;
+            document.getElementById('modal-description').innerHTML = data.description;
+            
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+            
+            // Subtle entrance animation for icon
+            setTimeout(() => {
+                const icon = document.getElementById('modal-icon');
+                icon.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                icon.style.transform = 'scale(1.05)';
+                setTimeout(() => icon.style.transform = 'scale(1)', 650);
+            }, 180);
+        }
+        
+        function hidePortalModal() {
+            const modal = document.getElementById('portal-modal');
+            modal.style.transition = 'opacity 0.25s ease';
+            modal.style.opacity = '0';
+            
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.style.transition = '';
+                modal.style.display = 'none';
+                modal.classList.add('hidden');
+            }, 250);
+        }
+        
+        function showInquireModal() {
+            const modal = document.getElementById('inquire-modal');
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+        }
+        
+        function hideInquireModal() {
+            const modal = document.getElementById('inquire-modal');
+            modal.style.transition = 'opacity 0.25s ease';
+            modal.style.opacity = '0';
+            
+            setTimeout(() => {
+                modal.style.opacity = '1';
+                modal.style.transition = '';
+                modal.style.display = 'none';
+                modal.classList.add('hidden');
+            }, 250);
+        }
+        
+        function inquireFromModal() {
+            hidePortalModal();
+            setTimeout(() => {
+                showInquireModal();
+            }, 320);
+        }
+        
+        function submitInquiry(e) {
+            e.preventDefault();
+            
+            const form = document.getElementById('inquire-form');
+            const btns = form.querySelectorAll('button');
+            btns.forEach(b => b.disabled = true);
+            
+            const originalText = btns[0].innerHTML;
+            btns[0].innerHTML = 'SENDING...';
+            
+            setTimeout(() => {
+                btns[0].innerHTML = '✓ INQUIRY RECEIVED';
+                btns[0].classList.add('!bg-emerald-600', '!text-white');
+                
+                setTimeout(() => {
+                    hideInquireModal();
+                    
+                    // Success toast
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900 border border-emerald-600 text-emerald-400 px-8 py-3 rounded-2xl text-sm flex items-center shadow-xl z-[200]';
+                    toast.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Thank you. We will contact you within 48 hours.</span>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    setTimeout(() => {
+                        toast.style.transition = 'all 0.5s ease';
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translate(-50%, 20px)';
+                        
+                        setTimeout(() => toast.remove(), 500);
+                    }, 3800);
+                    
+                    // Reset form
+                    form.reset();
+                    btns.forEach(b => {
+                        b.disabled = false;
+                        b.innerHTML = originalText;
+                        b.classList.remove('!bg-emerald-600', '!text-white');
+                    });
+                }, 1650);
+            }, 1350);
+        }
+        
+        // Keyboard escape support
+        function setupKeyboardControls() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const portalModal = document.getElementById('portal-modal');
+                    const inquireModal = document.getElementById('inquire-modal');
+                    
+                    if (!portalModal.classList.contains('hidden') && portalModal.style.display !== 'none') {
+                        hidePortalModal();
+                    } else if (!inquireModal.classList.contains('hidden') && inquireModal.style.display !== 'none') {
+                        hideInquireModal();
+                    }
+                }
+                
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    const firstCard = document.querySelector('.portal-card');
+                    if (firstCard) firstCard.click();
+                }
+            });
+            
+            // Easter egg: press "c" to trigger a special light burst on the flower
+            let konami = '';
+            document.addEventListener('keypress', function(e) {
+                konami += e.key;
+                if (konami.length > 6) konami = konami.slice(-6);
+                
+                if (konami === 'chrysa' || konami === 'vaultc') {
+                    konami = '';
+                    const svg = document.getElementById('chrysanthemum-svg');
+                    svg.style.transition = 'filter 0.2s ease';
+                    svg.style.filter = 'brightness(1.6) saturate(1.3)';
+                    
+                    setTimeout(() => {
+                        svg.style.filter = 'none';
+                    }, 650);
+                    
+                    // Extra particles
+                    const container = document.getElementById('chrysanthemum-container');
+                    for (let i = 0; i < 9; i++) {
+                        setTimeout(() => {
+                            const p = document.createElement('div');
+                            p.className = 'light-particle';
+                            p.style.left = (container.getBoundingClientRect().left + 280 + Math.random() * 60) + 'px';
+                            p.style.top = (container.getBoundingClientRect().top + 190 + Math.random() * 50) + 'px';
+                            document.body.appendChild(p);
+                            
+                            setTimeout(() => {
+                                p.style.transition = 'all 0.9s ease';
+                                p.style.transform = `translate(${Math.random()*120 - 60}px, ${Math.random()*90 - 120}px)`;
+                                p.style.opacity = '0';
+                            }, 40);
+                            
+                            setTimeout(() => p.remove(), 1100);
+                        }, i * 60);
+                    }
+                }
+            });
+        }
+        
+        // Main initialization
+        function initializeWebsite() {
+            initializeTailwind();
+            
+            // Create beautiful starfield
+            createStarfield();
+            
+            // Generate the intricate chrysanthemum
+            createChrysanthemum();
+            
+            // Run the full loading animation sequence
+            setTimeout(() => {
+                animateScene();
+            }, 420);
+            
+            // Subtle nav highlight on scroll
+            const navLinks = document.querySelectorAll('nav a');
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY + 120;
+                
+                navLinks.forEach(link => {
+                    const section = document.querySelector(link.getAttribute('href'));
+                    if (section) {
+                        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+                            navLinks.forEach(l => l.classList.remove('nav-active'));
+                            link.classList.add('nav-active');
+                        }
+                    }
+                });
+            });
+            
+            // Make sure cards start slightly hidden for animation
+            document.querySelectorAll('.portal-card').forEach((card, i) => {
+                card.style.transition = 'none';
+                card.style.opacity = '0.15';
+                card.style.transform = 'translateY(35px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s cubic-bezier(0.23, 1.0, 0.32, 1)';
+                }, 800 + i * 90);
+            });
+            
+            // Random gentle glow pulse on logo
+            setInterval(() => {
+                const logo = document.querySelector('nav svg');
+                if (logo) {
+                    logo.style.transition = 'filter 1.8s ease';
+                    logo.style.filter = 'drop-shadow(0 0 6px #D4AF37)';
+                    
+                    setTimeout(() => {
+                        logo.style.filter = 'none';
+                    }, 1900);
+                }
+            }, 12500);
+            
+            setupKeyboardControls();
+            
+            // Accessibility: announce ready state
+            console.log('%c[Chrysanthemum Vault] Landing page fully initialized and ready.', 'color:#555');
+            
+            // Final touch: ensure contact email is active (already is via mailto in footer)
+        }
+        
+        // Boot everything when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeWebsite);
+        } else {
+            initializeWebsite();
+        }
+        
+        // Expose a couple functions for console tinkering if desired
+        window.ChrysanthemumVault = {
+            bloom: () => document.getElementById('chrysanthemum-svg').style.opacity = '1',
+            triggerLights: () => {
+                const cards = document.querySelectorAll('.portal-card');
+                cards.forEach((c, i) => setTimeout(() => c.click(), i * 180));
+            }
+        };
+    </script>
 </body>
 </html>
