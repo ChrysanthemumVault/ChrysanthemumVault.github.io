@@ -1,0 +1,169 @@
+/* =============================================
+   CHRYSANTHEMUM VAULT — STYLE.CSS
+   Luxury dark cosmic aesthetic | Est 2025
+   ============================================= */
+
+:root {
+    --gold: #D4AF37;
+    --gold-dark: #B8972E;
+    --bg: #000000;
+}
+
+/* Base Enhancements */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navigation Polish */
+nav {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+}
+
+.nav-link {
+    font-weight: 500;
+    letter-spacing: 1.5px;
+}
+
+/* Hero & Illustration Container */
+#chrysanthemum-container {
+    filter: drop-shadow(0 25px 60px rgba(212, 175, 55, 0.12));
+    transition: filter 0.6s ease;
+}
+
+#chrysanthemum-container:hover {
+    filter: drop-shadow(0 35px 80px rgba(212, 175, 55, 0.22));
+}
+
+/* SVG Petal & Line Animation Refinements */
+.petal {
+    stroke-dasharray: 180;
+    stroke-dashoffset: 180;
+    animation: drawPetal 2.2s forwards ease-out;
+}
+
+@keyframes drawPetal {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Horizon & Frame Accents */
+#horizon-line {
+    stroke-dasharray: 480;
+    stroke-dashoffset: 480;
+    transition: stroke-dashoffset 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.frame-corner {
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Portal Cards */
+.portal-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #0a0a0a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.portal-card:hover {
+    border-color: #D4AF37;
+    box-shadow: 
+        0 0 25px rgba(212, 175, 55, 0.25),
+        0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Modal Styling */
+.modal {
+    box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(212, 175, 55, 0.2);
+}
+
+/* Light Particle Effect */
+.light-particle {
+    box-shadow: 
+        0 0 8px #D4AF37,
+        0 0 18px #D4AF37,
+        0 0 32px rgba(212, 175, 55, 0.6);
+    z-index: 9999;
+}
+
+/* Typography */
+.heading-serif {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-feature-settings: "kern" 1, "dlig" 1;
+}
+
+/* Subtle Background Pattern (optional cosmic dust) */
+.cosmic-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 25% 20%, rgba(212,175,55,0.035) 0.8px, transparent 1px),
+        radial-gradient(circle at 75% 65%, rgba(212,175,55,0.025) 1px, transparent 1.5px);
+    background-size: 110px 110px, 160px 160px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+/* Footer */
+footer a {
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+footer a:hover {
+    color: #D4AF37;
+    text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .vault-title {
+        font-size: 2.35rem !important;
+        line-height: 1.05;
+    }
+    
+    #chrysanthemum-svg {
+        width: 100% !important;
+        max-width: 520px;
+        height: auto;
+    }
+    
+    .portal-card {
+        padding: 1.15rem 0.9rem;
+    }
+}
+
+/* Accessibility & Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .petal,
+    .light-particle,
+    .drawing-line {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    #chrysanthemum-container {
+        filter: none;
+    }
+}
+
+/* Print Styles (for archival beauty) */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .gold-text, .portal-card, nav, #decorative-frame {
+        display: none;
+    }
+}
