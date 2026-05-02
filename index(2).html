@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHRYSANTHEMUM VAULT • EST 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Cinzel:wght@400;700&amp;display=swap');
+        
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F0D58C;
+            --dark: #0A0A0A;
+        }
+        
+        body {
+            font-family: 'Cinzel', Georgia, serif;
+            background: #0A0A0A;
+            color: #E8E8E8;
+            overflow-x: hidden;
+        }
+        
+        .luxury-font {
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 0.05em;
+        }
+
+        .gold-text {
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .gold-border {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .section-header {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            transition: width 0.4s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .category-card {
+            transition: all 0.4s cubic-bezier(0.23, 1.0, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4), 
+                       0 0 0 1px var(--gold),
+                       0 0 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .category-card:hover::before {
+            opacity: 1;
+        }
+        
+        .category-card:hover .icon-container {
+            transform: scale(1.1) rotate(2deg);
+            filter: brightness(1.2) saturate(1.3);
+        }
+
+        .icon-container {
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                       filter 0.4s ease;
+            position: relative;
+        }
+
+        .golden-glow {
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6),
+                       inset 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .star {
+            position: absolute;
+            background: #D4AF37;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #D4AF37;
+            animation: twinkle 1.5s infinite alternate ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.6); }
+            100% { opacity: 1; transform: scale(1.4); }
+        }
+
+        .galaxy-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .galaxy-container img {
+            filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.5));
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+        
+        .galaxy-container:hover img {
+            transform: scale(1.03);
+            filter: drop-shadow(0 0 60px rgba(212, 175, 55, 0.7));
+        }
+
+        .orbit {
+            position: absolute;
+            border: 1px dashed rgba(212, 175, 55, 0.4);
+            border-radius: 50%;
+            animation: rotate-orbit 25s linear infinite;
+            pointer-events: none;
+        }
+        
+        .orbit.slow {
+            animation-duration: 42s;
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+        
+        .orbit.fast {
+            animation-duration: 18s;
+            border-color: rgba(212, 175, 55, 0.35);
+        }
+
+        @keyframes rotate-orbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .nav-active {
+            color: var(--gold);
+        }
+
+        .vault-frame {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 0 12px rgba(10, 10, 10, 0.95),
+                       0 0 0 13px rgba(212, 175, 55, 0.15);
+        }
+
+        .elegant-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            opacity: 0.6;
+        }
+
+        .category-label {
+            font-size: 0.875rem;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+        }
+
+        .cosmic-bg {
+            background-image: 
+                radial-gradient(circle at 25% 30%, rgba(212,175,55,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 75% 70%, rgba(212,175,55,0.05) 0%, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-[#0A0A0A] text-[#E8E8E8]">
+    <!-- Background Canvas for Stars -->
+    <canvas id="starfield" class="fixed inset-0 z-0 pointer-events-none"></canvas>
+    
+    <!-- Subtle Golden Ratio Overlay -->
+    <div class="fixed inset-0 z-0 opacity-[0.035] pointer-events-none" 
+         style="background-image: url('Golden Ratio Division background.png'); background-size: cover; background-position: center; mix-blend-mode: screen;"></div>
+
+    <!-- NAV HEADER -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-[#D4AF37]/30">
+        <div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-x-3">
+                <div class="w-11 h-11 flex items-center justify-center">
+                    <img src="Chrysanthemum Vault LOGO.png" alt="Chrysanthemum Vault Logo" class="w-11 h-11 object-contain drop-shadow-[0_0_12px_#D4AF37]">
+                </div>
+                <div>
+                    <div class="text-xl font-bold tracking-[3px] text-[#D4AF37]">CHRYSANTHEMUM</div>
+                    <div class="text-[10px] text-[#D4AF37]/70 -mt-1 tracking-[4px]">VAULT • EST 2025</div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="hidden md:flex items-center gap-x-9 text-sm tracking-[1.5px] font-medium">
+                <a href="#vision" class="nav-link text-[#E8E8E8] hover:text-[#D4AF37] cursor-pointer">THE VISION</a>
+                <a href="#alchemy" class="nav-link text-[#E8E8E8] hover:text-[#D4AF37] cursor-pointer">THE ALCHEMY</a>
+                <a href="#collection" class="nav-link text-[#E8E8E8] hover:text-[#D4AF37] cursor-pointer">THE COLLECTION</a>
+                <a href="#atelier" class="nav-link text-[#E8E8E8] hover:text-[#D4AF37] cursor-pointer">THE ATELIER</a>
+            </div>
+
+            <!-- CTA Button -->
+            <button onclick="showInquiryModal()"
+                    class="px-8 py-2.5 text-sm tracking-[2px] font-semibold border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0A0A0A] transition-all duration-300 rounded-none">
+                INQUIRE
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO / GALAXY SECTION -->
+    <section class="relative min-h-[100dvh] flex items-center justify-center pt-20 z-10">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            
+            <!-- Animated Galaxy -->
+            <div class="galaxy-container mx-auto mb-8 relative w-[min(620px,90vw)]">
+                <!-- Orbiting Rings -->
+                <div class="orbit w-[620px] h-[620px] -top-7 -left-7 border-[#D4AF37]/30" style="animation-duration: 32s;"></div>
+                <div class="orbit w-[520px] h-[520px] top-12 left-12 border-[#D4AF37]/20 slow" style="animation-duration: 47s; animation-direction: reverse;"></div>
+                <div class="orbit w-[380px] h-[380px] top-[85px] left-[85px] border-[#D4AF37]/40 fast" style="animation-duration: 21s;"></div>
+                
+                <!-- Main Galaxy Image -->
+                <img src="Chrysanthemum Galaxy.png" 
+                     alt="Chrysanthemum Galaxy" 
+                     class="w-full max-w-[620px] mx-auto relative z-10 drop-shadow-[0_0_80px_#D4AF37]">
+                
+                <!-- Central Glow -->
+                <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                    <div class="w-4 h-4 bg-[#D4AF37] rounded-full animate-ping" style="animation-duration: 3.5s; box-shadow: 0 0 40px 20px #D4AF37;"></div>
+                </div>
+            </div>
+
+            <!-- Title -->
+            <div class="mb-6">
+                <h1 class="section-header luxury-font text-7xl md:text-[92px] leading-none tracking-tighter text-white mb-2">
+                    CHRYSANTHEMUM<br>VAULT
+                </h1>
+                <div class="flex items-center justify-center gap-x-3">
+                    <div class="h-px w-12 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
+                    <p class="text-[#D4AF37] text-sm tracking-[4px] font-medium">ESTABLISHED 2025</p>
+                    <div class="h-px w-12 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
+                </div>
+            </div>
+
+            <p class="max-w-md mx-auto text-lg text-[#A8A8A8] tracking-wide">
+                A private sanctuary for the world's most extraordinary objects,<br>
+                where art, alchemy, and eternity converge.
+            </p>
+            
+            <!-- Scroll Prompt -->
+            <div class="mt-16 flex flex-col items-center">
+                <div class="text-[#D4AF37]/70 text-xs tracking-[3px] mb-2">DISCOVER THE COLLECTION</div>
+                <div class="w-px h-12 bg-gradient-to-b from-[#D4AF37]/70 to-transparent animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE COLLECTION SECTION -->
+    <section id="collection" class="relative z-10 py-20 border-t border-[#D4AF37]/20">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-x-2 mb-4">
+                    <div class="w-2 h-2 bg-[#D4AF37] rounded-full animate-pulse"></div>
+                    <span class="uppercase tracking-[3px] text-sm text-[#D4AF37]">CURATED ARCHIVES</span>
+                </div>
+                <h2 class="text-5xl luxury-font tracking-tighter">The Collection</h2>
+                <p class="mt-4 text-[#A8A8A8] max-w-md mx-auto">Six realms of wonder, each a portal to the extraordinary.</p>
+            </div>
+
+            <!-- Category Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                
+                <!-- Paintings -->
+                <div onclick="exploreCategory('Paintings', 'Easel Paintings.png')" 
+                     class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
+                    <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
+                        <img src="Easel Paintings.png" alt="Paintings" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div>
+                        <div class="category-label text-[#D4AF37] mb-1">PAINTINGS</div>
+                        <div class="text-xs text-[#888] tracking-wider">CELESTIAL CANVASES</div>
+                    </div>
+                </div>
+
+                <!-- Marquetry -->
+                <div onclick="exploreCategory('Marquetry', 'Box Marquetry.png')" 
+                     class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
+                    <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
+                        <img src="Box Marquetry.png" alt="Marquetry" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div>
+                        <div class="category-label text-[#D4AF37] mb-1">MARQUETRY</div>
+                        <div class="text-xs text-[#888] tracking-wider">INLAID WONDERS</div>
+                    </div>
+                </div>
+
+                <!-- Curiosities -->
+                <div onclick="exploreCategory('Curiosities', 'Chrysanthemum Vault LOGO.png')" 
+                     class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
+                    <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
+                        <img src="Chrysanthemum Vault LOGO.png" alt="Curiosities" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div>
+                        <div class="category-label text-[#D4AF37] mb-1">CURIOSITIES</div>
+                        <div class="text-xs text-[#888] tracking-wider">THE IMPOSSIBLE</div>
+                    </div>
+                </div>
+
+                <!-- Jewelry -->
+                <div onclick="exploreCategory('Jewelry', 'Gemstone Pendant Jewelry.png')" 
+                     class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
+                    <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
+                        <img src="Gemstone Pendant Jewelry.png" alt="Jewelry" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div>
+                        <div class="category-label text-[#D4AF37] mb-1">JEWELRY</div>
+                        <div class="text-xs text-[#888] tracking-wider">ETERNAL ADORNMENTS</div>
+                    </div>
+                </div>
+
+                <!-- Archive -->
+                <div onclick="exploreCategory('Archive', 'Book Archive.png')" 
+                     class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
+                    <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
+                        <img src="Book Archive.png" alt="Archive" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div>
+                        <div class="category-label text-[#D4AF37] mb-1">ARCHIVE</div>
+                        <div class="text-xs text-[#888] tracking-wider">FORGOTTEN TOMES</div>
+                    </div>
+                </div>
+
+                <!-- Commissions -->
+                <div onclick="exploreCategory('Commissions', 'Compass Commissions.png')" 
+                     class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
+                    <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
+                        <img src="Compass Commissions.png" alt="Commissions" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div>
+                        <div class="category-label text-[#D4AF37] mb-1">COMMISSIONS</div>
+                        <div class="text-xs text-[#888] tracking-wider">BESPOKE CREATIONS</div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="text-center mt-16">
+                <button onclick="showInquiryModal()" 
+                        class="group inline-flex items-center gap-x-3 px-10 py-4 border border-[#D4AF37]/70 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all text-sm tracking-[2.5px]">
+                    <span>REQUEST PRIVATE VIEWING</span>
+                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISION / ALCHEMY / ATELIER TEASERS -->
+    <section id="vision" class="relative z-10 py-24 border-t border-[#D4AF37]/20 bg-[#050505]">
+        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="uppercase tracking-[3px] text-[#D4AF37] text-sm mb-3">THE VISION</div>
+                <h3 class="text-5xl luxury-font tracking-tighter leading-none mb-6">Beyond the<br>visible world.</h3>
+                <p class="text-[#A8A8A8] text-[15px] leading-relaxed max-w-md">
+                    Chrysanthemum Vault exists at the intersection of myth and matter — 
+                    a private collection of objects that defy categorization and time itself.
+                </p>
+            </div>
+            <div class="relative">
+                <div class="aspect-[16/9] bg-[#111] border border-[#D4AF37]/30 flex items-center justify-center overflow-hidden">
+                    <img src="Golden Ratio Division background.png" class="opacity-40 scale-125" alt="Golden Ratio">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-infinity text-6xl text-[#D4AF37]/60 mb-4"></i>
+                            <div class="text-xs tracking-[2px] text-[#D4AF37]">THE INFINITE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="alchemy" class="relative z-10 py-24 border-t border-[#D4AF37]/20">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="max-w-lg mx-auto">
+                <div class="uppercase tracking-[3px] text-[#D4AF37] text-sm mb-3">THE ALCHEMY</div>
+                <h3 class="text-5xl luxury-font tracking-tighter mb-6">We do not collect.<br>We transmute.</h3>
+                <p class="text-[#A8A8A8]">
+                    Every piece in the Vault has undergone a secret process of refinement — 
+                    where matter meets meaning, and beauty becomes eternal.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="atelier" class="relative z-10 py-24 border-t border-[#D4AF37]/20 bg-[#050505]">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="uppercase tracking-[3px] text-[#D4AF37] text-sm mb-3">THE ATELIER</div>
+            <h3 class="text-5xl luxury-font tracking-tighter mb-6">Where legends are forged.</h3>
+            <p class="max-w-md mx-auto text-[#A8A8A8]">
+                Our private atelier works exclusively with visionaries, 
+                alchemists, and collectors who understand that true rarity cannot be bought — only commissioned.
+            </p>
+            
+            <div class="mt-12 flex justify-center">
+                <div class="inline-flex border border-[#D4AF37]/40 px-6 py-2 text-xs tracking-widest text-[#D4AF37]">
+                    BY INVITATION ONLY
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-[#D4AF37]/30 py-12 bg-[#0A0A0A]">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-y-6 text-sm">
+            <div class="flex items-center gap-x-2 text-[#666]">
+                <span>© 2025 CHRYSANTHEMUM VAULT</span>
+                <span class="hidden md:inline">•</span>
+                <span class="hidden md:inline">A PRIVATE SANCTUARY</span>
+            </div>
+            
+            <div class="flex items-center gap-x-8 text-xs tracking-widest">
+                <a href="#" class="hover:text-[#D4AF37] transition">PRIVACY</a>
+                <a href="#" class="hover:text-[#D4AF37] transition">ACCESS</a>
+                <a href="#" class="hover:text-[#D4AF37] transition">JOURNAL</a>
+                <a href="#" onclick="showInquiryModal()" class="hover:text-[#D4AF37] transition">CONTACT</a>
+            </div>
+            
+            <div class="text-[#555] text-xs">NOT FOR PUBLIC CONSUMPTION</div>
+        </div>
+    </footer>
+
+    <!-- INQUIRY MODAL -->
+    <div id="inquiry-modal" onclick="hideInquiryModal()" class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-6">
+        <div onclick="event.stopImmediatePropagation()" class="bg-[#111] border border-[#D4AF37]/50 max-w-md w-full p-10 relative">
+            <button onclick="hideInquiryModal()" class="absolute top-6 right-6 text-[#D4AF37] hover:text-white text-xl">×</button>
+            
+            <div class="text-center mb-8">
+                <div class="mx-auto w-16 h-16 mb-4">
+                    <img src="Chrysanthemum Vault LOGO.png" class="w-full h-full object-contain" alt="">
+                </div>
+                <h3 class="text-3xl luxury-font tracking-tight">Private Inquiry</h3>
+                <p class="text-sm text-[#888] mt-2">Access is granted by personal invitation only.</p>
+            </div>
+            
+            <form onsubmit="submitInquiry(event)" class="space-y-6">
+                <div>
+                    <label class="block text-xs tracking-[1.5px] text-[#D4AF37] mb-2">YOUR NAME</label>
+                    <input type="text" required class="w-full bg-black border-b border-[#D4AF37]/40 py-3 text-lg focus:outline-none focus:border-[#D4AF37] placeholder:text-[#444]">
+                </div>
+                <div>
+                    <label class="block text-xs tracking-[1.5px] text-[#D4AF37] mb-2">EMAIL ADDRESS</label>
+                    <input type="email" required class="w-full bg-black border-b border-[#D4AF37]/40 py-3 text-lg focus:outline-none focus:border-[#D4AF37] placeholder:text-[#444]">
+                </div>
+                <div>
+                    <label class="block text-xs tracking-[1.5px] text-[#D4AF37] mb-2">INTEREST</label>
+                    <select class="w-full bg-black border-b border-[#D4AF37]/40 py-3 text-lg focus:outline-none focus:border-[#D4AF37]">
+                        <option>Private Viewing</option>
+                        <option>Commission Inquiry</option>
+                        <option>Curatorial Consultation</option>
+                        <option>General Access Request</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs tracking-[1.5px] text-[#D4AF37] mb-2">MESSAGE</label>
+                    <textarea rows="3" class="w-full bg-black border-b border-[#D4AF37]/40 py-3 text-lg focus:outline-none focus:border-[#D4AF37] resize-y placeholder:text-[#444]" placeholder="Tell us about your interest..."></textarea>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full mt-4 py-4 bg-[#D4AF37] text-black font-semibold tracking-[2px] text-sm hover:bg-white transition">
+                    SEND INQUIRY
+                </button>
+            </form>
+            
+            <div class="text-center mt-6 text-[10px] text-[#555]">Your request will be reviewed by the Curators</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent-gold', '#D4AF37');
+        }
+        
+        // Starfield Canvas Animation
+        function createStarfield() {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            
+            let stars = [];
+            let width, height;
+            
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }
+            
+            function createStars(count) {
+                stars = [];
+                for (let i = 0; i < count; i++) {
+                    stars.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        size: Math.random() * 1.8 + 0.6,
+                        speed: Math.random() * 0.015 + 0.005,
+                        opacity: Math.random() * 0.7 + 0.3,
+                        twinkleSpeed: Math.random() * 0.03 + 0.015,
+                        phase: Math.random() * Math.PI * 2
+                    });
+                }
+            }
+            
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+                
+                ctx.fillStyle = '#D4AF37';
+                
+                for (let star of stars) {
+                    // Gentle drift
+                    star.y += star.speed;
+                    if (star.y > height) star.y = 0;
+                    
+                    // Twinkle
+                    star.phase += star.twinkleSpeed;
+                    const currentOpacity = star.opacity * (0.6 + Math.sin(star.phase) * 0.4);
+                    
+                    ctx.globalAlpha = currentOpacity;
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Extra glow for larger stars
+                    if (star.size > 1.5) {
+                        ctx.globalAlpha = currentOpacity * 0.3;
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.size * 2.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(draw);
+            }
+            
+            window.addEventListener('resize', () => {
+                resize();
+                createStars(280);
+            });
+            
+            resize();
+            createStars(280);
+            draw();
+            
+            // Add a few shooting stars occasionally
+            setInterval(() => {
+                if (Math.random() < 0.3) {
+                    createShootingStar();
+                }
+            }, 4200);
+            
+            function createShootingStar() {
+                const startX = Math.random() * width * 0.6;
+                const startY = Math.random() * height * 0.4;
+                const length = Math.random() * 90 + 60;
+                const angle = Math.random() * 0.6 + 0.8;
+                
+                let progress = 0;
+                const duration = 650;
+                const startTime = Date.now();
+                
+                function animateShooting() {
+                    const elapsed = Date.now() - startTime;
+                    progress = elapsed / duration;
+                    
+                    if (progress > 1) return;
+                    
+                    ctx.strokeStyle = '#F0D58C';
+                    ctx.lineWidth = 1.5;
+                    ctx.globalAlpha = (1 - progress) * 0.9;
+                    
+                    const currentX = startX + Math.cos(angle) * length * progress;
+                    const currentY = startY + Math.sin(angle) * length * progress;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(currentX, currentY);
+                    ctx.stroke();
+                    
+                    // Head glow
+                    ctx.fillStyle = '#fff';
+                    ctx.globalAlpha = (1 - progress) * 0.8;
+                    ctx.beginPath();
+                    ctx.arc(currentX, currentY, 1.8, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    requestAnimationFrame(animateShooting);
+                }
+                
+                animateShooting();
+            }
+        }
+        
+        // Category exploration modal
+        function exploreCategory(category, iconSrc) {
+            const modal = document.createElement('div');
+            modal.className = `fixed inset-0 bg-black/95 z-[110] flex items-center justify-center p-6`;
+            modal.innerHTML = `
+                <div onclick="event.target.remove()" class="absolute inset-0"></div>
+                <div class="relative bg-[#0A0A0A] border border-[#D4AF37]/60 max-w-lg w-full p-10 text-center">
+                    <div class="mx-auto w-20 h-20 mb-6 flex justify-center">
+                        <img src="${iconSrc}" class="w-20 h-20 object-contain" alt="${category}">
+                    </div>
+                    
+                    <h3 class="text-4xl luxury-font tracking-tight text-white mb-2">${category.toUpperCase()}</h3>
+                    <div class="text-[#D4AF37] text-xs tracking-[3px] mb-6">PRIVATE ARCHIVE</div>
+                    
+                    <div class="text-[#A8A8A8] text-sm leading-relaxed mb-8">
+                        ${getCategoryDescription(category)}
+                    </div>
+                    
+                    <div class="flex flex-col gap-y-3">
+                        <button onclick="this.closest('.fixed').remove(); showInquiryModal()" 
+                                class="py-3.5 border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition font-medium tracking-widest text-sm">
+                            REQUEST ACCESS TO THIS ARCHIVE
+                        </button>
+                        <button onclick="this.closest('.fixed').remove()" 
+                                class="py-3 text-xs text-[#666] hover:text-[#999]">CLOSE</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        
+        function getCategoryDescription(category) {
+            const descriptions = {
+                'Paintings': 'Masterworks captured in light and pigment. Each canvas holds entire universes within its gilded frame.',
+                'Marquetry': 'Wood, bone, and precious metals inlaid with impossible precision. Geometry made sacred.',
+                'Curiosities': 'Objects that should not exist. Artifacts from dreams, myths, and forgotten sciences.',
+                'Jewelry': 'Adornments forged for gods and emperors. Each piece contains a captured star.',
+                'Archive': 'The written word as relic. Manuscripts, grimoires, and maps to places that never were.',
+                'Commissions': 'The highest form of patronage. Your vision, realized by the Vault\'s master artisans.'
+            };
+            return descriptions[category] || 'A singular treasure awaiting the worthy collector.';
+        }
+        
+        // Inquiry Modal
+        let modalOpen = false;
+        
+        function showInquiryModal() {
+            const modal = document.getElementById('inquiry-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            modalOpen = true;
+        }
+        
+        function hideInquiryModal() {
+            const modal = document.getElementById('inquiry-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            modalOpen = false;
+        }
+        
+        function submitInquiry(e) {
+            e.preventDefault();
+            const modalContent = e.target.parentElement;
+            
+            modalContent.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="mx-auto mb-6 w-16 h-16 flex items-center justify-center">
+                        <i class="fas fa-check-circle text-[#D4AF37] text-6xl"></i>
+                    </div>
+                    <h3 class="text-3xl luxury-font tracking-tight mb-3">Inquiry Received</h3>
+                    <p class="text-[#A8A8A8] mb-6">Thank you. The Curators will contact you within 72 hours.</p>
+                    
+                    <button onclick="document.getElementById('inquiry-modal').classList.add('hidden'); document.getElementById('inquiry-modal').classList.remove('flex')" 
+                            class="px-8 py-3 text-sm border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition tracking-widest">
+                        RETURN TO THE VAULT
+                    </button>
+                </div>
+            `;
+            
+            // Confetti effect
+            createConfetti();
+        }
+        
+        function createConfetti() {
+            const colors = ['#D4AF37', '#F0D58C', '#B8973A'];
+            for (let i = 0; i < 45; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'fixed z-[200] text-xl pointer-events-none';
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.top = '-20px';
+                    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.transform = `rotate(${Math.random()*360}deg)`;
+                    particle.innerHTML = ['✧', '✦', '❋', '✺'][Math.floor(Math.random()*4)];
+                    
+                    document.body.appendChild(particle);
+                    
+                    const duration = Math.random() * 2800 + 2400;
+                    const xDrift = (Math.random() - 0.5) * 180;
+                    
+                    particle.animate([
+                        { 
+                            transform: `translate(0, 0) rotate(0deg)`,
+                            opacity: 1 
+                        },
+                        { 
+                            transform: `translate(${xDrift}px, ${window.innerHeight + 100}px) rotate(${Math.random()*720 - 360}deg)`,
+                            opacity: 0 
+                        }
+                    ], {
+                        duration: duration,
+                        easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+                    }).onfinish = () => particle.remove();
+                }, i * 1.5);
+            }
+        }
+        
+        // Smooth scroll for nav links
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        e.preventDefault();
+                        const navHeight = 80;
+                        const elementPosition = target.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Keyboard escape for modals
+        function setupKeyboardControls() {
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modals = document.querySelectorAll('.fixed.inset-0');
+                    if (modals.length > 0) {
+                        modals[modals.length - 1].remove();
+                    } else {
+                        const inquiry = document.getElementById('inquiry-modal');
+                        if (!inquiry.classList.contains('hidden')) {
+                            inquiry.classList.add('hidden');
+                            inquiry.classList.remove('flex');
+                        }
+                    }
+                }
+                
+                if (e.key === '/' && document.activeElement.tagName === 'BODY') {
+                    e.preventDefault();
+                    const collection = document.getElementById('collection');
+                    collection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // Easter egg: press 'c' for chrysanthemum bloom effect
+            let bloomCount = 0;
+            document.addEventListener('keypress', function(e) {
+                if (e.key.toLowerCase() === 'c') {
+                    bloomCount++;
+                    if (bloomCount % 5 === 0) {
+                        const galaxy = document.querySelector('.galaxy-container img');
+                        if (galaxy) {
+                            galaxy.style.transitionDuration = '400ms';
+                            galaxy.style.transform = 'scale(1.15) rotate(1deg)';
+                            setTimeout(() => {
+                                galaxy.style.transform = 'scale(1) rotate(0deg)';
+                            }, 650);
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Parallax subtle effect on galaxy
+        function setupParallax() {
+            const galaxyContainer = document.querySelector('.galaxy-container');
+            if (!galaxyContainer) return;
+            
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.03;
+                galaxyContainer.style.transform = `translateY(${rate}px)`;
+            });
+        }
+        
+        // Initialize everything
+        function initializeLandingPage() {
+            initializeTailwind();
+            createStarfield();
+            setupSmoothScroll();
+            setupKeyboardControls();
+            setupParallax();
+            
+            // Subtle entrance animation for category cards
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.category-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.7s cubic-bezier(0.23, 1.0, 0.32, 1)';
+                        card.style.transitionDelay = (index * 80) + 'ms';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 300);
+                });
+            }, 800);
+            
+            // Random gentle pulse on the central glow
+            setInterval(() => {
+                const glow = document.querySelector('.galaxy-container .animate-ping');
+                if (glow) {
+                    glow.style.animation = 'none';
+                    void glow.offsetWidth;
+                    glow.style.animation = 'ping 3.5s cubic-bezier(0, 0, 0.2, 1) infinite';
+                }
+            }, 14500);
+            
+            // Welcome console message
+            console.log('%c[Chrysanthemum Vault] ✨ Animated landing page initialized. Press "c" for a special effect.', 'color:#666; font-size:9px');
+            
+            // Preload hover states hint
+            console.log('%c[Chrysanthemum Vault] All systems nominal. Welcome, collector.', 'color:#444; font-size:9px');
+        }
+        
+        // Boot the experience
+        window.onload = initializeLandingPage;
+    </script>
+</body>
+</html>
