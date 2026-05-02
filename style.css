@@ -1,169 +1,184 @@
-/* =============================================
-   CHRYSANTHEMUM VAULT — STYLE.CSS
-   Luxury dark cosmic aesthetic | Est 2025
-   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Cinzel:wght@400;700&amp;display=swap');
 
 :root {
     --gold: #D4AF37;
-    --gold-dark: #B8972E;
-    --bg: #000000;
-}
-
-/* Base Enhancements */
-html {
-    scroll-behavior: smooth;
+    --gold-light: #F0D58C;
+    --dark: #0A0A0A;
 }
 
 body {
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Cinzel', Georgia, serif;
+    background: #0A0A0A;
+    color: #E8E8E8;
+    overflow-x: hidden;
 }
 
-/* Navigation Polish */
-nav {
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+.luxury-font {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: 0.05em;
+}
+
+.gold-text {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.gold-border {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.section-header {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .nav-link {
-    font-weight: 500;
-    letter-spacing: 1.5px;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-/* Hero & Illustration Container */
-#chrysanthemum-container {
-    filter: drop-shadow(0 25px 60px rgba(212, 175, 55, 0.12));
-    transition: filter 0.6s ease;
-}
-
-#chrysanthemum-container:hover {
-    filter: drop-shadow(0 35px 80px rgba(212, 175, 55, 0.22));
-}
-
-/* SVG Petal & Line Animation Refinements */
-.petal {
-    stroke-dasharray: 180;
-    stroke-dashoffset: 180;
-    animation: drawPetal 2.2s forwards ease-out;
-}
-
-@keyframes drawPetal {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-/* Horizon & Frame Accents */
-#horizon-line {
-    stroke-dasharray: 480;
-    stroke-dashoffset: 480;
-    transition: stroke-dashoffset 1.6s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.frame-corner {
-    box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-}
-
-/* Portal Cards */
-.portal-card {
-    border: 1px solid rgba(255,255,255,0.08);
-    background: #0a0a0a;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-}
-
-.portal-card:hover {
-    border-color: #D4AF37;
-    box-shadow: 
-        0 0 25px rgba(212, 175, 55, 0.25),
-        0 20px 40px rgba(0, 0, 0, 0.7);
-}
-
-/* Modal Styling */
-.modal {
-    box-shadow: 
-        0 25px 80px rgba(0, 0, 0, 0.8),
-        0 0 0 1px rgba(212, 175, 55, 0.2);
-}
-
-/* Light Particle Effect */
-.light-particle {
-    box-shadow: 
-        0 0 8px #D4AF37,
-        0 0 18px #D4AF37,
-        0 0 32px rgba(212, 175, 55, 0.6);
-    z-index: 9999;
-}
-
-/* Typography */
-.heading-serif {
-    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-    font-feature-settings: "kern" 1, "dlig" 1;
-}
-
-/* Subtle Background Pattern (optional cosmic dust) */
-.cosmic-bg::after {
+.nav-link:after {
     content: '';
     position: absolute;
-    inset: 0;
-    background-image: 
-        radial-gradient(circle at 25% 20%, rgba(212,175,55,0.035) 0.8px, transparent 1px),
-        radial-gradient(circle at 75% 65%, rgba(212,175,55,0.025) 1px, transparent 1.5px);
-    background-size: 110px 110px, 160px 160px;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    transition: width 0.4s ease;
+}
+
+.nav-link:hover:after {
+    width: 100%;
+}
+
+.category-card {
+    transition: all 0.4s cubic-bezier(0.23, 1.0, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
     pointer-events: none;
+}
+
+.category-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4), 
+               0 0 0 1px var(--gold),
+               0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+.category-card:hover::before {
+    opacity: 1;
+}
+
+.category-card:hover .icon-container {
+    transform: scale(1.1) rotate(2deg);
+    filter: brightness(1.2) saturate(1.3);
+}
+
+.icon-container {
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+               filter 0.4s ease;
+    position: relative;
+}
+
+.golden-glow {
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6),
+               inset 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.star {
+    position: absolute;
+    background: #D4AF37;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #D4AF37;
+    animation: twinkle 1.5s infinite alternate ease-in-out;
     z-index: 1;
-    opacity: 0.7;
 }
 
-/* Footer */
-footer a {
-    transition: color 0.3s ease, text-shadow 0.3s ease;
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(0.6); }
+    100% { opacity: 1; transform: scale(1.4); }
 }
 
-footer a:hover {
-    color: #D4AF37;
-    text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+.galaxy-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .vault-title {
-        font-size: 2.35rem !important;
-        line-height: 1.05;
-    }
-    
-    #chrysanthemum-svg {
-        width: 100% !important;
-        max-width: 520px;
-        height: auto;
-    }
-    
-    .portal-card {
-        padding: 1.15rem 0.9rem;
-    }
+.galaxy-container img {
+    filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.5));
+    transition: transform 0.6s ease, filter 0.6s ease;
 }
 
-/* Accessibility & Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-    .petal,
-    .light-particle,
-    .drawing-line {
-        animation: none !important;
-        transition: none !important;
-    }
-    
-    #chrysanthemum-container {
-        filter: none;
-    }
+.galaxy-container:hover img {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 60px rgba(212, 175, 55, 0.7));
 }
 
-/* Print Styles (for archival beauty) */
-@media print {
-    body {
-        background: white;
-        color: black;
-    }
-    
-    .gold-text, .portal-card, nav, #decorative-frame {
-        display: none;
-    }
+.orbit {
+    position: absolute;
+    border: 1px dashed rgba(212, 175, 55, 0.4);
+    border-radius: 50%;
+    animation: rotate-orbit 25s linear infinite;
+    pointer-events: none;
+}
+
+.orbit.slow {
+    animation-duration: 42s;
+    border-color: rgba(212, 175, 55, 0.25);
+}
+
+.orbit.fast {
+    animation-duration: 18s;
+    border-color: rgba(212, 175, 55, 0.35);
+}
+
+@keyframes rotate-orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.nav-active {
+    color: var(--gold);
+}
+
+.vault-frame {
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 0 12px rgba(10, 10, 10, 0.95),
+               0 0 0 13px rgba(212, 175, 55, 0.15);
+}
+
+.elegant-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.6;
+}
+
+.category-label {
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.cosmic-bg {
+    background-image: 
+        radial-gradient(circle at 25% 30%, rgba(212,175,55,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 75% 70%, rgba(212,175,55,0.05) 0%, transparent 50%);
 }
