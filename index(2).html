@@ -6,192 +6,7 @@
     <title>CHRYSANTHEMUM VAULT • EST 2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Cinzel:wght@400;700&amp;display=swap');
-        
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F0D58C;
-            --dark: #0A0A0A;
-        }
-        
-        body {
-            font-family: 'Cinzel', Georgia, serif;
-            background: #0A0A0A;
-            color: #E8E8E8;
-            overflow-x: hidden;
-        }
-        
-        .luxury-font {
-            font-family: 'Playfair Display', Georgia, serif;
-            letter-spacing: 0.05em;
-        }
-
-        .gold-text {
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        .gold-border {
-            border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .section-header {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-link {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
-            transition: width 0.4s ease;
-        }
-        
-        .nav-link:hover:after {
-            width: 100%;
-        }
-
-        .category-card {
-            transition: all 0.4s cubic-bezier(0.23, 1.0, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4), 
-                       0 0 0 1px var(--gold),
-                       0 0 30px rgba(212, 175, 55, 0.4);
-        }
-        
-        .category-card:hover::before {
-            opacity: 1;
-        }
-        
-        .category-card:hover .icon-container {
-            transform: scale(1.1) rotate(2deg);
-            filter: brightness(1.2) saturate(1.3);
-        }
-
-        .icon-container {
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
-                       filter 0.4s ease;
-            position: relative;
-        }
-
-        .golden-glow {
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.6),
-                       inset 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-
-        .star {
-            position: absolute;
-            background: #D4AF37;
-            border-radius: 50%;
-            box-shadow: 0 0 6px #D4AF37;
-            animation: twinkle 1.5s infinite alternate ease-in-out;
-            z-index: 1;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.3; transform: scale(0.6); }
-            100% { opacity: 1; transform: scale(1.4); }
-        }
-
-        .galaxy-container {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .galaxy-container img {
-            filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.5));
-            transition: transform 0.6s ease, filter 0.6s ease;
-        }
-        
-        .galaxy-container:hover img {
-            transform: scale(1.03);
-            filter: drop-shadow(0 0 60px rgba(212, 175, 55, 0.7));
-        }
-
-        .orbit {
-            position: absolute;
-            border: 1px dashed rgba(212, 175, 55, 0.4);
-            border-radius: 50%;
-            animation: rotate-orbit 25s linear infinite;
-            pointer-events: none;
-        }
-        
-        .orbit.slow {
-            animation-duration: 42s;
-            border-color: rgba(212, 175, 55, 0.25);
-        }
-        
-        .orbit.fast {
-            animation-duration: 18s;
-            border-color: rgba(212, 175, 55, 0.35);
-        }
-
-        @keyframes rotate-orbit {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .nav-active {
-            color: var(--gold);
-        }
-
-        .vault-frame {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 0 0 12px rgba(10, 10, 10, 0.95),
-                       0 0 0 13px rgba(212, 175, 55, 0.15);
-        }
-
-        .elegant-divider {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold), transparent);
-            opacity: 0.6;
-        }
-
-        .category-label {
-            font-size: 0.875rem;
-            letter-spacing: 0.15em;
-            font-weight: 600;
-        }
-
-        .cosmic-bg {
-            background-image: 
-                radial-gradient(circle at 25% 30%, rgba(212,175,55,0.06) 0%, transparent 50%),
-                radial-gradient(circle at 75% 70%, rgba(212,175,55,0.05) 0%, transparent 50%);
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-[#0A0A0A] text-[#E8E8E8]">
     <!-- Background Canvas for Stars -->
@@ -199,7 +14,7 @@
     
     <!-- Subtle Golden Ratio Overlay -->
     <div class="fixed inset-0 z-0 opacity-[0.035] pointer-events-none" 
-         style="background-image: url('Golden Ratio Division background.png'); background-size: cover; background-position: center; mix-blend-mode: screen;"></div>
+         style="background-image: url('assets/Golden Ratio Division background.png'); background-size: cover; background-position: center; mix-blend-mode: screen;"></div>
 
     <!-- NAV HEADER -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-[#D4AF37]/30">
@@ -207,7 +22,7 @@
             <!-- Logo -->
             <div class="flex items-center gap-x-3">
                 <div class="w-11 h-11 flex items-center justify-center">
-                    <img src="Chrysanthemum Vault LOGO.png" alt="Chrysanthemum Vault Logo" class="w-11 h-11 object-contain drop-shadow-[0_0_12px_#D4AF37]">
+                    <img src="assets/Chrysanthemum Vault LOGO.png" alt="Chrysanthemum Vault Logo" class="w-11 h-11 object-contain drop-shadow-[0_0_12px_#D4AF37]">
                 </div>
                 <div>
                     <div class="text-xl font-bold tracking-[3px] text-[#D4AF37]">CHRYSANTHEMUM</div>
@@ -243,7 +58,7 @@
                 <div class="orbit w-[380px] h-[380px] top-[85px] left-[85px] border-[#D4AF37]/40 fast" style="animation-duration: 21s;"></div>
                 
                 <!-- Main Galaxy Image -->
-                <img src="Chrysanthemum Galaxy.png" 
+                <img src="assets/Chrysanthemum Galaxy.png" 
                      alt="Chrysanthemum Galaxy" 
                      class="w-full max-w-[620px] mx-auto relative z-10 drop-shadow-[0_0_80px_#D4AF37]">
                 
@@ -296,10 +111,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 
                 <!-- Paintings -->
-                <div onclick="exploreCategory('Paintings', 'Easel Paintings.png')" 
+                <div onclick="exploreCategory('Paintings', 'assets/Easel Paintings.png')" 
                      class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
                     <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
-                        <img src="Easel Paintings.png" alt="Paintings" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                        <img src="assets/Easel Paintings.png" alt="Paintings" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div>
                         <div class="category-label text-[#D4AF37] mb-1">PAINTINGS</div>
@@ -308,10 +123,10 @@
                 </div>
 
                 <!-- Marquetry -->
-                <div onclick="exploreCategory('Marquetry', 'Box Marquetry.png')" 
+                <div onclick="exploreCategory('Marquetry', 'assets/Box Marquetry.png')" 
                      class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
                     <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
-                        <img src="Box Marquetry.png" alt="Marquetry" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                        <img src="assets/Box Marquetry.png" alt="Marquetry" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div>
                         <div class="category-label text-[#D4AF37] mb-1">MARQUETRY</div>
@@ -320,10 +135,10 @@
                 </div>
 
                 <!-- Curiosities -->
-                <div onclick="exploreCategory('Curiosities', 'Chrysanthemum Vault LOGO.png')" 
+                <div onclick="exploreCategory('Curiosities', 'assets/Chrysanthemum Vault LOGO.png')" 
                      class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
                     <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
-                        <img src="Chrysanthemum Vault LOGO.png" alt="Curiosities" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                        <img src="assets/Chrysanthemum Vault LOGO.png" alt="Curiosities" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div>
                         <div class="category-label text-[#D4AF37] mb-1">CURIOSITIES</div>
@@ -332,10 +147,10 @@
                 </div>
 
                 <!-- Jewelry -->
-                <div onclick="exploreCategory('Jewelry', 'Gemstone Pendant Jewelry.png')" 
+                <div onclick="exploreCategory('Jewelry', 'assets/Gemstone Pendant Jewelry.png')" 
                      class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
                     <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
-                        <img src="Gemstone Pendant Jewelry.png" alt="Jewelry" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                        <img src="assets/Gemstone Pendant Jewelry.png" alt="Jewelry" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div>
                         <div class="category-label text-[#D4AF37] mb-1">JEWELRY</div>
@@ -344,10 +159,10 @@
                 </div>
 
                 <!-- Archive -->
-                <div onclick="exploreCategory('Archive', 'Book Archive.png')" 
+                <div onclick="exploreCategory('Archive', 'assets/Book Archive.png')" 
                      class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
                     <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
-                        <img src="Book Archive.png" alt="Archive" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                        <img src="assets/Book Archive.png" alt="Archive" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div>
                         <div class="category-label text-[#D4AF37] mb-1">ARCHIVE</div>
@@ -356,10 +171,10 @@
                 </div>
 
                 <!-- Commissions -->
-                <div onclick="exploreCategory('Commissions', 'Compass Commissions.png')" 
+                <div onclick="exploreCategory('Commissions', 'assets/Compass Commissions.png')" 
                      class="category-card group bg-[#111] border border-[#D4AF37]/30 p-8 flex flex-col items-center text-center cursor-pointer vault-frame">
                     <div class="icon-container w-28 h-28 mb-6 flex items-center justify-center">
-                        <img src="Compass Commissions.png" alt="Commissions" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
+                        <img src="assets/Compass Commissions.png" alt="Commissions" class="w-24 h-24 object-contain group-hover:scale-110 transition-transform duration-500">
                     </div>
                     <div>
                         <div class="category-label text-[#D4AF37] mb-1">COMMISSIONS</div>
@@ -392,7 +207,7 @@
             </div>
             <div class="relative">
                 <div class="aspect-[16/9] bg-[#111] border border-[#D4AF37]/30 flex items-center justify-center overflow-hidden">
-                    <img src="Golden Ratio Division background.png" class="opacity-40 scale-125" alt="Golden Ratio">
+                    <img src="assets/Golden Ratio Division background.png" class="opacity-40 scale-125" alt="Golden Ratio">
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="text-center">
                             <i class="fas fa-infinity text-6xl text-[#D4AF37]/60 mb-4"></i>
@@ -461,7 +276,7 @@
             
             <div class="text-center mb-8">
                 <div class="mx-auto w-16 h-16 mb-4">
-                    <img src="Chrysanthemum Vault LOGO.png" class="w-full h-full object-contain" alt="">
+                    <img src="assets/Chrysanthemum Vault LOGO.png" class="w-full h-full object-contain" alt="">
                 </div>
                 <h3 class="text-3xl luxury-font tracking-tight">Private Inquiry</h3>
                 <p class="text-sm text-[#888] mt-2">Access is granted by personal invitation only.</p>
@@ -856,7 +671,7 @@
             console.log('%c[Chrysanthemum Vault] ✨ Animated landing page initialized. Press "c" for a special effect.', 'color:#666; font-size:9px');
             
             // Preload hover states hint
-            console.log('%c[Chrysanthemum Vault] All systems nominal. Welcome, collector.', 'color:#444; font-size:9px');
+            console.log('%c[Chrysanthemum Vault] All systems normal. Welcome, collector.', 'color:#444; font-size:9px');
         }
         
         // Boot the experience
