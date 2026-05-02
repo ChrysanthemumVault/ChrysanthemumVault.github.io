@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chrysanthemum Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#c9a133;
+  --gold-bright:#e8c97a;
+  --gold-dim:#7a5e1a;
+  --bg:#0a0c0f;
+}
+html,body{
+  width:100%;height:100%;
+  background:var(--bg);
+  color:var(--gold);
+  font-family:'Cormorant Garamond',serif;
+  overflow-x:hidden;
+}
+
+/* ════ NAVBAR ════ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 36px;height:78px;
+  background:rgba(8,9,12,0.97);
+  border-bottom:1px solid rgba(201,161,51,0.28);
+}
+.logo-group{display:flex;align-items:center;gap:13px}
+.logo-circle{
+  width:52px;height:52px;
+  border:1px solid rgba(201,161,51,0.7);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.logo-wordmark .top{
+  display:block;font-family:'Cinzel',serif;font-size:11.5px;
+  letter-spacing:0.18em;color:var(--gold-bright);font-weight:400;line-height:1.3;
+}
+.logo-wordmark .est{
+  display:flex;align-items:center;gap:7px;margin-top:4px;
+  font-family:'Cinzel',serif;font-size:8px;
+  letter-spacing:0.32em;color:var(--gold-dim);
+}
+.logo-wordmark .est::before,.logo-wordmark .est::after{
+  content:'';flex:1;height:1px;background:var(--gold-dim);max-width:24px;
+}
+.nav-links{display:flex;align-items:center;list-style:none}
+.nav-links li{display:flex;align-items:center}
+.nav-links li+li::before{
+  content:'|';color:rgba(201,161,51,0.38);margin:0 20px;font-size:11px;
+}
+.nav-links a{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.22em;
+  color:var(--gold);text-decoration:none;transition:color .25s;
+}
+.nav-links a:hover{color:var(--gold-bright)}
+.nav-inquire{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.28em;
+  color:var(--gold);border:1px solid var(--gold);background:transparent;
+  padding:10px 24px;cursor:pointer;transition:all .25s;
+}
+.nav-inquire:hover{background:var(--gold);color:#080a0d}
+
+/* ════ PAGE ════ */
+.page{padding-top:78px;min-height:100vh;display:flex;flex-direction:column}
+
+/* Outer border frame */
+.outer-frame{
+  position:relative;
+  margin:13px 18px 18px;
+  border:1px solid rgba(201,161,51,0.32);
+  flex:1;display:flex;flex-direction:column;overflow:hidden;
+  min-height:calc(100vh - 78px - 31px);
+}
+/* corner ornaments */
+.outer-frame::before,.outer-frame::after,
+.fc::before,.fc::after{
+  content:'';position:absolute;width:20px;height:20px;
+  border-color:var(--gold);border-style:solid;z-index:20;
+}
+.outer-frame::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.outer-frame::after {top:-1px;right:-1px;border-width:2px 2px 0 0}
+.fc::before{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+.fc::after {bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.fc{position:absolute;inset:0;pointer-events:none;z-index:20}
+
+/* ════ BACKGROUND CANVAS ════ */
+#bg-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+
+/* Faint arc lines bottom-left */
+.geo-arc{
+  position:absolute;bottom:0;left:0;
+  width:200px;height:260px;
+  pointer-events:none;z-index:1;opacity:0.15;
+}
+
+/* ════ HERO ════ */
+.hero{
+  position:relative;z-index:2;
+  flex:1;display:flex;flex-direction:column;align-items:center;
+}
+
+/* Flower + ellipses */
+.flower-wrap{
+  position:relative;
+  width:100%;flex:1;
+  display:flex;justify-content:center;align-items:flex-end;
+  padding-top:28px;
+}
+.flower-svg{
+  width:min(800px,90vw);
+  animation:float 7s ease-in-out infinite;
+  filter:drop-shadow(0 0 50px rgba(201,161,51,0.22));
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+
+/* ════ HORIZON ════ */
+.horizon{position:relative;z-index:3;width:100%}
+.h-line{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,
+    transparent 0%,rgba(201,161,51,0.25) 12%,
+    rgba(232,201,122,0.85) 38%,#fff8d8 50%,
+    rgba(232,201,122,0.85) 62%,rgba(201,161,51,0.25) 88%,transparent 100%);
+  box-shadow:
+    0 0 6px 2px rgba(255,235,160,0.65),
+    0 0 24px 6px rgba(201,161,51,0.45),
+    0 0 70px 20px rgba(201,161,51,0.18);
+}
+.h-burst{
+  position:absolute;left:50%;top:0;
+  transform:translate(-50%,-50%);
+  width:5px;height:5px;background:#fff8c8;
+  clip-path:polygon(50% 0%,54% 46%,100% 50%,54% 54%,50% 100%,46% 54%,0% 50%,46% 46%);
+  box-shadow:0 0 10px 5px rgba(255,235,150,0.8),0 0 30px 14px rgba(201,161,51,0.6);
+}
+
+/* ════ TITLE ════ */
+.title{
+  position:relative;z-index:3;
+  font-family:'Cinzel',serif;font-weight:400;
+  font-size:clamp(18px,3.2vw,42px);
+  letter-spacing:0.42em;color:#d4aa50;
+  text-align:center;padding:24px 20px 5px;
+  text-shadow:0 0 35px rgba(201,161,51,0.3);
+}
+.title-dot{
+  display:block;text-align:center;z-index:3;position:relative;
+  font-size:10px;color:var(--gold-dim);margin-bottom:6px;
+}
+
+/* ════ CATEGORIES ════ */
+.cats{
+  position:relative;z-index:3;width:100%;
+  display:grid;grid-template-columns:repeat(6,1fr);
+  border-top:1px solid rgba(201,161,51,0.28);
+}
+.cat{
+  display:flex;flex-direction:column;align-items:center;
+  border-right:1px solid rgba(201,161,51,0.28);
+  text-decoration:none;cursor:pointer;
+  transition:background .3s;
+}
+.cat:last-child{border-right:none}
+.cat:hover{background:rgba(201,161,51,0.05)}
+
+/* connector line from border up to sparkle */
+.c-line{
+  width:1px;height:46px;
+  background:linear-gradient(180deg,transparent,rgba(201,161,51,0.45));
+}
+/* 4-pointed sparkle */
+.c-star{
+  width:10px;height:10px;margin-bottom:8px;flex-shrink:0;
+  fill:var(--gold-bright);
+}
+/* icon box */
+.c-box{
+  position:relative;width:84px;height:84px;
+  border:1px solid rgba(201,161,51,0.38);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:13px;transition:border-color .3s,box-shadow .3s;
+}
+.c-box::before,.c-box::after{
+  content:'';position:absolute;width:11px;height:11px;
+  border-color:var(--gold);border-style:solid;
+}
+.c-box::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.c-box::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.cat:hover .c-box{border-color:rgba(201,161,51,0.75);box-shadow:0 0 18px rgba(201,161,51,0.18)}
+/* circle inside box */
+.c-ring{
+  position:absolute;width:58px;height:58px;border-radius:50%;
+  border:1px solid rgba(201,161,51,0.32);transition:border-color .3s;
+}
+.cat:hover .c-ring{border-color:rgba(201,161,51,0.6)}
+.c-icon{
+  width:33px;height:33px;stroke:var(--gold);fill:none;stroke-width:1.1;
+  position:relative;z-index:1;transition:stroke .3s;
+}
+.cat:hover .c-icon{stroke:var(--gold-bright)}
+.c-label{
+  font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.32em;
+  color:var(--gold);transition:color .3s;padding-bottom:24px;
+}
+.cat:hover .c-label{color:var(--gold-bright)}
+
+/* ════ MODAL ════ */
+.modal-bg{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(5,6,9,0.93);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;
+}
+.modal-bg.open{display:flex}
+.modal{
+  position:relative;width:min(640px,90vw);
+  border:1px solid rgba(201,161,51,0.4);
+  background:#08090d;padding:52px 48px 44px;
+}
+.modal::before,.modal::after,.mc-bl,.mc-br{
+  content:'';position:absolute;width:16px;height:16px;
+  border-color:var(--gold);border-style:solid;
+}
+.modal::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.modal::after{top:-1px;right:-1px;border-width:2px 2px 0 0}
+.mc-bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px}
+.mc-br{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.m-close{
+  position:absolute;top:16px;right:20px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.25em;
+  color:var(--gold-dim);background:none;border:none;cursor:pointer;transition:color .2s;
+}
+.m-close:hover{color:var(--gold-bright)}
+.modal h2{
+  font-family:'Cinzel',serif;font-size:20px;font-weight:400;
+  letter-spacing:0.32em;color:var(--gold-bright);
+  border-bottom:1px solid rgba(201,161,51,0.22);
+  padding-bottom:18px;margin-bottom:20px;
+}
+.modal p{font-size:17px;line-height:1.85;color:rgba(201,161,51,0.68);margin-bottom:12px}
+
+@media(max-width:700px){
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .cat:nth-child(3){border-right:none}
+  .cat:nth-child(n+4){border-top:1px solid rgba(201,161,51,0.28)}
+  .nav-links{display:none}
+  .navbar{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="navbar">
+  <div class="logo-group">
+    <div class="logo-circle">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+        <!-- Fan/palm radiating up from base -->
+        <g stroke="#c9a133" stroke-width="1.05">
+          <path d="M15 27 C15 27 9 19 7 10 C9 8.5 11.5 9.5 12.5 12 C13.5 16 14.2 22 15 27Z" fill="rgba(201,161,51,0.1)"/>
+          <path d="M15 27 C15 27 21 19 23 10 C21 8.5 18.5 9.5 17.5 12 C16.5 16 15.8 22 15 27Z" fill="rgba(201,161,51,0.1)"/>
+          <path d="M15 27 C15 27 5.5 20.5 4 13 C6 11 8.5 12.5 9.5 15 C11 19.5 12.8 23.5 15 27Z" fill="rgba(201,161,51,0.07)"/>
+          <path d="M15 27 C15 27 24.5 20.5 26 13 C24 11 21.5 12.5 20.5 15 C19 19.5 17.2 23.5 15 27Z" fill="rgba(201,161,51,0.07)"/>
+          <path d="M15 27 C15 27 7 23 6 17 C8 15 10 16 10.8 18.5 C12 22 13.5 25 15 27Z"/>
+          <path d="M15 27 C15 27 23 23 24 17 C22 15 20 16 19.2 18.5 C18 22 16.5 25 15 27Z"/>
+        </g>
+        <circle cx="15" cy="27" r="1.2" fill="#c9a133"/>
+      </svg>
+    </div>
+    <div class="logo-wordmark">
+      <span class="top">CHRYSANTHEMUM<br>VAULT.COM</span>
+      <span class="est">EST 2025</span>
+    </div>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#" onclick="openModal('vision');return false">THE VISION</a></li>
+    <li><a href="#" onclick="openModal('alchemy');return false">THE ALCHEMY</a></li>
+    <li><a href="#" onclick="openModal('collection');return false">THE COLLECTION</a></li>
+    <li><a href="#" onclick="openModal('atelier');return false">THE ATELIER</a></li>
+  </ul>
+
+  <button class="nav-inquire" onclick="openModal('inquire')">INQUIRE</button>
+</nav>
+
+<!-- ══ PAGE ══ -->
+<main class="page">
+<div class="outer-frame">
+  <div class="fc"></div>
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Faint geometry bottom-left -->
+  <svg class="geo-arc" viewBox="0 0 200 260" fill="none">
+    <path d="M0 260 Q70 190 180 110" stroke="#c9a133" stroke-width="0.7"/>
+    <path d="M0 235 Q60 180 160 115" stroke="#c9a133" stroke-width="0.45"/>
+    <path d="M0 210 Q55 170 140 120" stroke="#c9a133" stroke-width="0.3"/>
+  </svg>
+
+  <div class="hero">
+
+    <!-- ── FLOWER + ELLIPSES ── -->
+    <div class="flower-wrap">
+      <svg class="flower-svg" viewBox="0 0 800 490" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="pg" cx="50%" cy="58%" r="56%">
+            <stop offset="0%"   stop-color="#f2d46a"/>
+            <stop offset="50%"  stop-color="#c9a133"/>
+            <stop offset="100%" stop-color="#5c3d0a"/>
+          </radialGradient>
+          <radialGradient id="cg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#f5e080"/>
+            <stop offset="70%"  stop-color="#c9a133"/>
+            <stop offset="100%" stop-color="#4a3008"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Dashed ellipses -->
+        <ellipse cx="400" cy="316" rx="346" ry="128" stroke="#c9a133" stroke-width="0.75" stroke-dasharray="5 8" opacity="0.32"/>
+        <ellipse cx="400" cy="316" rx="268" ry="98"  stroke="#c9a133" stroke-width="0.5"  stroke-dasharray="3 10" opacity="0.22"/>
+
+        <!-- ── OUTER PETALS: long sweeping with hooked curled tips ── -->
+        <g stroke="url(#pg)" stroke-width="1.7" filter="url(#glow)">
+          <!-- Straight top petal pair -->
+          <path d="M400 314 C396 272 388 208 381 142 C384 128 390 116 400 110 C410 116 416 128 419 142 C412 208 404 272 400 314"/>
+          <!-- Upper-left & upper-right swept -->
+          <path d="M400 314 C383 278 352 228 312 170 C302 156 284 136 268 126 C270 120 278 116 286 118 C304 124 324 146 338 166 C372 222 393 272 400 314"/>
+          <path d="M400 314 C417 278 448 228 488 170 C498 156 516 136 532 126 C530 120 522 116 514 118 C496 124 476 146 462 166 C428 222 407 272 400 314"/>
+          <!-- Wide left sweep (near horizontal) -->
+          <path d="M400 314 C368 290 322 264 264 246 C244 240 214 238 196 246 C195 239 200 232 210 228 C230 220 260 222 282 230 C340 250 376 282 400 314"/>
+          <!-- Wide right sweep -->
+          <path d="M400 314 C432 290 478 264 536 246 C556 240 586 238 604 246 C605 239 600 232 590 228 C570 220 540 222 518 230 C460 250 424 282 400 314"/>
+          <!-- Far left horizontal petal -->
+          <path d="M400 314 C352 300 293 290 232 292 C212 294 190 302 176 314 C174 306 178 298 188 294 C208 284 238 282 262 284 C324 286 368 298 400 314"/>
+          <!-- Far right horizontal petal -->
+          <path d="M400 314 C448 300 507 290 568 292 C588 294 610 302 624 314 C626 306 622 298 612 294 C592 284 562 282 538 284 C476 286 432 298 400 314"/>
+          <!-- Lower-left drooping -->
+          <path d="M400 314 C364 316 322 326 286 348 C270 358 252 374 244 390 C238 383 240 374 248 366 C266 348 296 334 326 324 C358 314 382 310 400 314"/>
+          <!-- Lower-right drooping -->
+          <path d="M400 314 C436 316 478 326 514 348 C530 358 548 374 556 390 C562 383 560 374 552 366 C534 348 504 334 474 324 C442 314 418 310 400 314"/>
+          <!-- Curled-hook top-left (the distinctive curling tips) -->
+          <path d="M400 314 C374 280 332 236 282 186 C260 162 228 136 206 122 C198 118 190 120 188 128 C194 136 208 138 228 150 C256 166 284 196 314 232 C358 278 390 306 400 314"/>
+          <!-- Curled-hook top-right -->
+          <path d="M400 314 C426 280 468 236 518 186 C540 162 572 136 594 122 C602 118 610 120 612 128 C606 136 592 138 572 150 C544 166 516 196 486 232 C442 278 410 306 400 314"/>
+          <!-- Far-left curl -->
+          <path d="M400 314 C356 295 296 278 230 268 C200 264 168 266 146 278 C142 270 148 262 160 258 C184 248 218 248 248 256 C314 268 362 290 400 314"/>
+          <!-- Far-right curl -->
+          <path d="M400 314 C444 295 504 278 570 268 C600 264 632 266 654 278 C658 270 652 262 640 258 C616 248 582 248 552 256 C486 268 438 290 400 314"/>
+        </g>
+
+        <!-- ── MIDDLE PETAL RING ── -->
+        <g stroke="#c9a133" stroke-width="1.3" opacity="0.88" filter="url(#glow)">
+          <path d="M400 314 C395 284 386 250 374 214 C378 207 385 203 391 205 C398 225 400 264 400 314"/>
+          <path d="M400 314 C405 284 414 250 426 214 C422 207 415 203 409 205 C402 225 400 264 400 314"/>
+          <path d="M400 314 C380 286 354 262 320 238 C315 232 311 228 313 223 C320 220 327 222 334 228 C364 252 389 280 400 314"/>
+          <path d="M400 314 C420 286 446 262 480 238 C485 232 489 228 487 223 C480 220 473 222 466 228 C436 252 411 280 400 314"/>
+          <path d="M400 314 C370 302 336 295 300 296 C297 290 301 285 308 283 C342 280 374 290 400 314"/>
+          <path d="M400 314 C430 302 464 295 500 296 C503 290 499 285 492 283 C458 280 426 290 400 314"/>
+          <path d="M400 314 C378 318 352 328 328 342 C324 337 326 332 332 328 C354 316 380 308 400 314"/>
+          <path d="M400 314 C422 318 448 328 472 342 C476 337 474 332 468 328 C446 316 420 308 400 314"/>
+        </g>
+
+        <!-- ── INNER SHORT PETALS ── -->
+        <g stroke="#c9a133" stroke-width="1.1" opacity="0.78">
+          <path d="M400 314 C397 295 392 274 384 252 C388 247 394 246 399 248 C404 246 408 247 413 252 C407 274 402 295 400 314"/>
+          <path d="M400 314 C386 298 368 282 346 266 C348 261 354 259 359 262 C378 278 394 296 400 314"/>
+          <path d="M400 314 C414 298 432 282 454 266 C452 261 446 259 441 262 C422 278 406 296 400 314"/>
+          <path d="M400 314 C382 308 360 306 338 310 C337 304 342 299 349 298 C370 294 386 302 400 314"/>
+          <path d="M400 314 C418 308 440 306 462 310 C463 304 458 299 451 298 C430 294 414 302 400 314"/>
+          <path d="M400 314 C388 318 374 328 360 340 C357 335 359 330 364 326 C378 316 390 310 400 314"/>
+          <path d="M400 314 C412 318 426 328 440 340 C443 335 441 330 436 326 C422 316 410 310 400 314"/>
+        </g>
+
+        <!-- ── CENTER SCALE/SPIRAL DOME ── -->
+        <g stroke="#c9a133" stroke-width="0.85" opacity="0.9">
+          <!-- concentric arcs for the scaly dome look -->
+          <path d="M370 312 Q400 296 430 312" stroke-width="1.15"/>
+          <path d="M362 307 Q400 289 438 307" stroke-width="1.05"/>
+          <path d="M356 302 Q400 283 444 302" stroke-width="0.95"/>
+          <path d="M352 297 Q400 278 448 297" stroke-width="0.85"/>
+          <path d="M350 292 Q400 274 450 292" stroke-width="0.8"/>
+          <path d="M350 287 Q400 270 450 287" stroke-width="0.75"/>
+          <path d="M352 282 Q400 267 448 282" stroke-width="0.7"/>
+          <path d="M355 277 Q400 264 445 277" stroke-width="0.65"/>
+          <!-- inner scale lines -->
+          <path d="M372 304 Q386 295 400 300 Q414 295 428 304" stroke-width="0.8"/>
+          <path d="M378 308 Q389 301 400 306 Q411 301 422 308" stroke-width="0.7"/>
+          <!-- Center circles -->
+          <circle cx="400" cy="308" r="28" stroke-width="1.3" stroke="url(#cg)"/>
+          <circle cx="400" cy="308" r="20" stroke-width="1.1" opacity="0.8"/>
+          <circle cx="400" cy="308" r="13" stroke-width="0.95" opacity="0.7"/>
+          <circle cx="400" cy="308" r="7"  stroke-width="0.85" opacity="0.6"/>
+          <circle cx="400" cy="308" r="3"  fill="#f5e070" stroke="none"/>
+        </g>
+
+        <!-- ── SCATTERED 4-POINTED SPARKLE STARS ── -->
+        <g fill="#e8c97a">
+          <!-- big top-right star -->
+          <path d="M638 118 L640.5 109 L643 118 L640.5 127Z" opacity="0.95"/>
+          <path d="M631 118 L640.5 115.5 L650 118 L640.5 120.5Z" opacity="0.95"/>
+          <!-- upper-left star -->
+          <path d="M168 230 L170 223 L172 230 L170 237Z" opacity="0.88"/>
+          <path d="M162 230 L170 228 L178 230 L170 232Z" opacity="0.88"/>
+          <!-- mid left large star -->
+          <path d="M92 352 L94.5 343 L97 352 L94.5 361Z" opacity="0.78"/>
+          <path d="M84 352 L94.5 349 L105 352 L94.5 355Z" opacity="0.78"/>
+          <!-- lower left small -->
+          <path d="M162 436 L164 430 L166 436 L164 442Z" opacity="0.72"/>
+          <path d="M156 436 L164 434 L172 436 L164 438Z" opacity="0.72"/>
+          <!-- right side star -->
+          <path d="M694 310 L696 302 L698 310 L696 318Z" opacity="0.82"/>
+          <path d="M686 310 L696 307.5 L706 310 L696 312.5Z" opacity="0.82"/>
+          <!-- small scattered -->
+          <path d="M538 168 L539.5 163 L541 168 L539.5 173Z" opacity="0.5"/>
+          <path d="M533 168 L539.5 166 L546 168 L539.5 170Z" opacity="0.5"/>
+          <path d="M252 386 L253.5 381 L255 386 L253.5 391Z" opacity="0.52"/>
+          <path d="M247 386 L253.5 384 L260 386 L253.5 388Z" opacity="0.52"/>
+          <path d="M348 438 L349.5 433 L351 438 L349.5 443Z" opacity="0.45"/>
+          <path d="M343 438 L349.5 436 L356 438 L349.5 440Z" opacity="0.45"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- ── HORIZON ── -->
+    <div class="horizon">
+      <div class="h-burst"></div>
+      <div class="h-line"></div>
+    </div>
+
+    <!-- ── TITLE ── -->
+    <h1 class="title">CHRYSANTHEMUM VAULT</h1>
+    <span class="title-dot">✦</span>
+
+    <!-- ── CATEGORY STRIP ── -->
+    <div class="cats">
+
+      <a class="cat" href="#" onclick="openModal('paintings');return false">
+        <div class="c-line"></div>
+        <svg class="c-star" viewBox="0 0 10 10"><path d="M5 0L5.7 4.3L10 5L5.7 5.7L5 10L4.3 5.7L0 5L4.3 4.3Z"/></svg>
+        <div class="c-box">
+          <div class="c-ring"></div>
+          <svg class="c-icon" viewBox="0 0 34 34">
+            <rect x="6" y="4" width="22" height="16" rx="0.5"/>
+            <line x1="3"  y1="4"  x2="0.5" y2="22" stroke-width="1.1"/>
+            <line x1="31" y1="4"  x2="33.5" y2="22" stroke-width="1.1"/>
+            <line x1="17" y1="20" x2="17" y2="30" stroke-width="1.1"/>
+            <line x1="12" y1="30" x2="22" y2="30" stroke-width="1.1"/>
+          </svg>
+        </div>
+        <span class="c-label">PAINTINGS</span>
+      </a>
+
+      <a class="cat" href="#" onclick="openModal('marquetry');return false">
+        <div class="c-line"></div>
+        <svg class="c-star" viewBox="0 0 10 10"><path d="M5 0L5.7 4.3L10 5L5.7 5.7L5 10L4.3 5.7L0 5L4.3 4.3Z"/></svg>
+        <div class="c-box">
+          <div class="c-ring"></div>
+          <svg class="c-icon" viewBox="0 0 34 34">
+            <rect x="4"  y="4"  width="11" height="11" rx="0.5"/>
+            <rect x="19" y="4"  width="11" height="11" rx="0.5"/>
+            <rect x="4"  y="19" width="11" height="11" rx="0.5"/>
+            <rect x="19" y="19" width="11" height="11" rx="0.5"/>
+            <line x1="7"  y1="9"  x2="12" y2="9"  stroke-width="0.85"/>
+            <line x1="22" y1="24" x2="27" y2="24" stroke-width="0.85"/>
+            <line x1="9"  y1="7"  x2="9"  y2="12" stroke-width="0.85"/>
+            <line x1="24" y1="22" x2="24" y2="27" stroke-width="0.85"/>
+          </svg>
+        </div>
+        <span class="c-label">MARQUETRY</span>
+      </a>
+
+      <a class="cat" href="#" onclick="openModal('curiosities');return false">
+        <div class="c-line"></div>
+        <svg class="c-star" viewBox="0 0 10 10"><path d="M5 0L5.7 4.3L10 5L5.7 5.7L5 10L4.3 5.7L0 5L4.3 4.3Z"/></svg>
+        <div class="c-box">
+          <div class="c-ring"></div>
+          <svg class="c-icon" viewBox="0 0 34 34">
+            <circle cx="17" cy="14" r="10"/>
+            <ellipse cx="17" cy="14" rx="5" ry="10"/>
+            <line x1="7"  y1="14" x2="27" y2="14" stroke-width="0.9"/>
+            <line x1="8.5" y1="9"  x2="25.5" y2="9"  stroke-width="0.7"/>
+            <line x1="8.5" y1="19" x2="25.5" y2="19" stroke-width="0.7"/>
+            <line x1="17" y1="24" x2="17" y2="29" stroke-width="1.1"/>
+            <path d="M13 29 Q17 31.5 21 29" stroke-width="1.1"/>
+          </svg>
+        </div>
+        <span class="c-label">CURIOSITIES</span>
+      </a>
+
+      <a class="cat" href="#" onclick="openModal('jewelry');return false">
+        <div class="c-line"></div>
+        <svg class="c-star" viewBox="0 0 10 10"><path d="M5 0L5.7 4.3L10 5L5.7 5.7L5 10L4.3 5.7L0 5L4.3 4.3Z"/></svg>
+        <div class="c-box">
+          <div class="c-ring"></div>
+          <svg class="c-icon" viewBox="0 0 34 34">
+            <circle cx="17" cy="22" r="8"/>
+            <line x1="17" y1="14" x2="17" y2="30" stroke-width="0.85"/>
+            <line x1="9"  y1="22" x2="25" y2="22" stroke-width="0.85"/>
+            <line x1="11.3" y1="16.3" x2="22.7" y2="27.7" stroke-width="0.75"/>
+            <line x1="22.7" y1="16.3" x2="11.3" y2="27.7" stroke-width="0.75"/>
+            <path d="M14 14 Q17 7.5 20 14" stroke-width="1.1"/>
+            <line x1="17" y1="7.5" x2="17" y2="5" stroke-width="1.1"/>
+          </svg>
+        </div>
+        <span class="c-label">JEWELRY</span>
+      </a>
+
+      <a class="cat" href="#" onclick="openModal('archive');return false">
+        <div class="c-line"></div>
+        <svg class="c-star" viewBox="0 0 10 10"><path d="M5 0L5.7 4.3L10 5L5.7 5.7L5 10L4.3 5.7L0 5L4.3 4.3Z"/></svg>
+        <div class="c-box">
+          <div class="c-ring"></div>
+          <svg class="c-icon" viewBox="0 0 34 34">
+            <rect x="5" y="4" width="18" height="26" rx="0.5"/>
+            <rect x="7" y="4" width="14" height="26" rx="0.5" stroke-width="0.7" opacity="0.55"/>
+            <line x1="9"  y1="11" x2="19" y2="11" stroke-width="1"/>
+            <line x1="9"  y1="15" x2="19" y2="15" stroke-width="1"/>
+            <line x1="9"  y1="19" x2="15" y2="19" stroke-width="1"/>
+            <rect x="23" y="6" width="4" height="22" rx="0.5" stroke-width="0.9" opacity="0.55"/>
+          </svg>
+        </div>
+        <span class="c-label">ARCHIVE</span>
+      </a>
+
+      <a class="cat" href="#" onclick="openModal('commissions');return false">
+        <div class="c-line"></div>
+        <svg class="c-star" viewBox="0 0 10 10"><path d="M5 0L5.7 4.3L10 5L5.7 5.7L5 10L4.3 5.7L0 5L4.3 4.3Z"/></svg>
+        <div class="c-box">
+          <div class="c-ring"></div>
+          <svg class="c-icon" viewBox="0 0 34 34">
+            <circle cx="17" cy="17" r="12"/>
+            <line x1="17" y1="5"  x2="17" y2="9"  stroke-width="1.1"/>
+            <line x1="17" y1="25" x2="17" y2="29" stroke-width="1.1"/>
+            <line x1="5"  y1="17" x2="9"  y2="17" stroke-width="1.1"/>
+            <line x1="25" y1="17" x2="29" y2="17" stroke-width="1.1"/>
+            <!-- compass arrow pointing up -->
+            <path d="M17 17 L19.5 8 L17 13Z" fill="rgba(201,161,51,0.38)" stroke-width="0.9"/>
+            <path d="M17 17 L14.5 26 L17 21Z" fill="rgba(201,161,51,0.15)" stroke-width="0.9"/>
+            <circle cx="17" cy="17" r="2.2" fill="rgba(201,161,51,0.5)"/>
+          </svg>
+        </div>
+        <span class="c-label">COMMISSIONS</span>
+      </a>
+
+    </div><!-- /cats -->
+  </div><!-- /hero -->
+</div><!-- /outer-frame -->
+</main>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="mc-bl"></div><div class="mc-br"></div>
+    <button class="m-close" onclick="closeModal()">✕ CLOSE</button>
+    <h2 id="m-title"></h2>
+    <div id="m-body"></div>
+  </div>
+</div>
+
+<script>
+/* ── STARFIELD + NOISE BACKGROUND ── */
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W,H,stars=[];
+
+  function resize(){
+    const parent = canvas.parentElement;
+    W = canvas.width  = parent.offsetWidth;
+    H = canvas.height = parent.offsetHeight;
+    buildStars();
+  }
+
+  function buildStars(){
+    stars=[];
+    const n = Math.max(120, Math.floor(W*H/2800));
+    for(let i=0;i<n;i++){
+      stars.push({
+        x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*1.5+0.2,
+        phase:Math.random()*Math.PI*2,
+        speed:Math.random()*0.007+0.002,
+        gold:Math.random()>0.52,
+        big:Math.random()>0.85
+      });
+    }
+  }
+
+  function drawNoise(ctx,w,h){
+    const id=ctx.createImageData(w,h);
+    const d=id.data;
+    for(let i=0;i<d.length;i+=4){
+      const v=Math.random()*14|0;
+      d[i]=d[i+1]=d[i+2]=v;
+      d[i+3]=Math.random()>0.97?28:6;
+    }
+    ctx.putImageData(id,0,0);
+  }
+
+  let t=0;
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    drawNoise(ctx,W,H);
+
+    /* Nebula glow — warm centre */
+    const ng=ctx.createRadialGradient(W*.47,H*.38,0,W*.47,H*.38,W*.5);
+    ng.addColorStop(0,'rgba(90,65,18,0.11)');
+    ng.addColorStop(0.5,'rgba(45,30,6,0.06)');
+    ng.addColorStop(1,'transparent');
+    ctx.fillStyle=ng; ctx.fillRect(0,0,W,H);
+
+    /* Stars */
+    stars.forEach(s=>{
+      const a=0.2+0.8*(0.5+0.5*Math.sin(t*s.speed+s.phase));
+      ctx.save(); ctx.globalAlpha=a;
+      if(s.big){
+        /* 4-pointed sparkle */
+        ctx.fillStyle=s.gold?'#e8c97a':'#fff8ef';
+        const d=s.r*5.5;
+        ctx.beginPath();
+        ctx.moveTo(s.x,s.y-d);
+        ctx.lineTo(s.x+0.55,s.y-0.55);
+        ctx.lineTo(s.x+d,s.y);
+        ctx.lineTo(s.x+0.55,s.y+0.55);
+        ctx.lineTo(s.x,s.y+d);
+        ctx.lineTo(s.x-0.55,s.y+0.55);
+        ctx.lineTo(s.x-d,s.y);
+        ctx.lineTo(s.x-0.55,s.y-0.55);
+        ctx.closePath(); ctx.fill();
+      } else {
+        ctx.fillStyle=s.gold?'rgba(201,161,51,0.85)':'rgba(255,245,225,0.65)';
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+      }
+      ctx.restore();
+    });
+    t+=0.016;
+    requestAnimationFrame(animate);
+  }
+
+  new ResizeObserver(resize).observe(canvas.parentElement);
+  resize();
+  animate();
+})();
+
+/* ── MODAL ── */
+const C={
+  vision:{t:'THE VISION',b:'<p>Chrysanthemum Vault was founded on the conviction that exceptional beauty endures. We exist at the confluence of antiquity and intention — sourcing, restoring, and reimagining objects of singular character for collectors who demand the extraordinary.</p>'},
+  alchemy:{t:'THE ALCHEMY',b:'<p>Our process is one of transformation. Raw materials become luminous. The forgotten becomes coveted. Through patient craft and deep material knowledge, we transmute the overlooked into the exquisite.</p>'},
+  collection:{t:'THE COLLECTION',b:'<p>Paintings. Marquetry. Curiosities. Jewels. Archive documents. Each category within the Vault represents decades of dedicated pursuit across markets, estates, and private collections on every continent.</p>'},
+  atelier:{t:'THE ATELIER',b:'<p>Our atelier is the quiet engine behind the Vault. Here, master craftspeople undertake restoration, conservation, and bespoke commissions under conditions of uncompromising care. Visits by appointment only.</p>'},
+  inquire:{t:'INQUIRE',b:'<p>For acquisition enquiries, commission discussions, or private viewings, we welcome your correspondence.</p><p style="margin-top:22px;font-family:Cinzel,serif;font-size:10px;letter-spacing:.22em;color:rgba(201,161,51,.8)">EMAIL</p><p style="font-size:18px;letter-spacing:.06em;color:#d4aa50">contact@chrysanthemumvault.com</p>'},
+  paintings:{t:'PAINTINGS',b:'<p>A curated assembly of works spanning four centuries — from intimate cabinet paintings to monumental canvases. Each acquisition is chosen for its vitality, its provenance, and the singular quality of its light.</p>'},
+  marquetry:{t:'MARQUETRY',b:'<p>The art of inlaid wood: rosewood, ebony, satinwood, and ivory arranged into compositions of breathtaking precision. Our marquetry pieces represent the apex of furniture-making from Europe\'s great ateliers.</p>'},
+  curiosities:{t:'CURIOSITIES',b:'<p>Objects that defy easy categorisation. Scientific instruments, natural specimens, automata, and philosophical objects — each a conversation frozen in form, for the collector who seeks the extraordinary beyond convention.</p>'},
+  jewelry:{t:'JEWELRY',b:'<p>Jewels chosen not merely for their gemstones but for the mastery of their making. Historic pieces, signed work, and objects of vertu — assembled with an eye for craft that transcends mere ornament.</p>'},
+  archive:{t:'ARCHIVE',b:'<p>Manuscripts, letters, illustrated documents, and ephemera of historical and artistic consequence. The archive speaks where objects fall silent — offering the words, drawings, and correspondence of those who shaped civilisation.</p>'},
+  commissions:{t:'COMMISSIONS',b:'<p>We undertake bespoke commissions for discerning clients. Whether restoring an heirloom to its former splendour or creating an entirely new work in historical tradition, the Atelier brings uncompromising skill to every brief. All commissions begin with a private consultation.</p>'}
+};
+
+function openModal(k){
+  document.getElementById('m-title').textContent=C[k].t;
+  document.getElementById('m-body').innerHTML=C[k].b;
+  document.getElementById('modal-bg').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-bg').classList.remove('open')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
