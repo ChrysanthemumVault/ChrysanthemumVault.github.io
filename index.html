@@ -107,7 +107,10 @@ html,body{
 .hero{
   position:relative;z-index:2;
   flex:1;display:flex;flex-direction:column;align-items:center;
+  opacity:0;
+  animation:heroReveal 1.2s ease 4.4s forwards;
 }
+@keyframes heroReveal{from{opacity:0}to{opacity:1}}
 
 /* Flower + ellipses */
 .flower-wrap{
@@ -214,6 +217,40 @@ html,body{
 }
 .cat:hover .c-label{color:var(--gold-bright)}
 
+/* ════ FIBONACCI INTRO OVERLAY ════ */
+.genesis{
+  position:absolute;inset:0;z-index:6;pointer-events:none;
+  background:radial-gradient(circle at 50% 64%,rgba(110,80,20,.2),transparent 46%), #020304;
+  animation:genesisFade 1.1s ease 5.2s forwards;
+}
+@keyframes genesisFade{to{opacity:0;visibility:hidden}}
+.geno-stars{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle at 14% 24%, rgba(255,235,165,.7) 0 1px, transparent 2px),
+                   radial-gradient(circle at 68% 36%, rgba(201,161,51,.7) 0 1px, transparent 2px),
+                   radial-gradient(circle at 79% 18%, rgba(255,235,165,.7) 0 1.3px, transparent 2.4px),
+                   radial-gradient(circle at 34% 45%, rgba(201,161,51,.6) 0 1px, transparent 2px);
+  opacity:.45;
+}
+.genesis svg{position:absolute;inset:0;width:100%;height:100%}
+.gold-line{fill:none;stroke:#d7ac49;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(232,201,122,.45))}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:drawline var(--dur) ease forwards;animation-delay:var(--delay)}
+.draft{opacity:.35;stroke-dasharray:6 8}
+@keyframes drawline{to{stroke-dashoffset:0}}
+.pulse-node{fill:#fff1b8;opacity:0;animation:nodepulse .8s ease forwards;animation-delay:var(--delay);filter:drop-shadow(0 0 12px rgba(255,235,160,.9))}
+@keyframes nodepulse{0%{opacity:0;transform:scale(.6)}40%{opacity:1}100%{opacity:.75;transform:scale(1)}}
+.tracer{
+  width:5px;height:5px;transform-box:fill-box;transform-origin:center;
+  fill:#fff4c8;opacity:0;filter:drop-shadow(0 0 8px rgba(255,233,150,.9));
+  animation:trace 1.3s linear forwards;animation-delay:var(--delay);
+}
+@keyframes trace{0%{opacity:0}8%{opacity:1}100%{opacity:0;offset-distance:100%}}
+
+@media (prefers-reduced-motion:reduce){
+  .hero{opacity:1;animation:none}
+  .genesis{display:none}
+}
+
 /* ════ MODAL ════ */
 .modal-bg{
   position:fixed;inset:0;z-index:500;
@@ -297,6 +334,28 @@ html,body{
 <div class="outer-frame">
   <div class="fc"></div>
   <canvas id="bg-canvas"></canvas>
+  <div class="genesis" id="genesis">
+    <div class="geno-stars"></div>
+    <svg viewBox="0 0 1000 700" preserveAspectRatio="none">
+      <!-- chrysanthemum spiral linework -->
+      <path id="spiral-a" class="gold-line draw" style="--len:940;--dur:1.9s;--delay:.2s;stroke-width:1.8" d="M500 460 C505 430 512 405 530 382 C552 354 590 341 624 350 C668 362 698 403 699 451 C700 514 653 571 589 585 C505 603 421 551 394 468 C361 364 422 258 528 224 C659 182 786 263 818 396"/>
+      <path id="spiral-b" class="gold-line draw" style="--len:900;--dur:1.7s;--delay:.55s;stroke-width:1.2" d="M500 462 C496 438 486 420 468 402 C444 380 408 372 378 381 C336 394 307 433 304 476 C300 542 351 603 417 618 C505 639 596 587 626 499 C663 392 597 281 488 245"/>
+      <path class="gold-line draw draft" style="--len:860;--dur:1.5s;--delay:.9s;stroke-width:1.1" d="M500 460 C530 420 565 403 620 400 C680 397 733 432 756 487 C787 561 748 643 672 677"/>
+      <!-- vectors becoming frame / horizon / phi divisions -->
+      <path id="frame-build" class="gold-line draw" style="--len:2000;--dur:1.35s;--delay:2.2s;stroke-width:.9" d="M500 460 L500 72 L24 72 L24 680 L976 680 L976 72 L500 72"/>
+      <path class="gold-line draw draft" style="--len:1200;--dur:1.1s;--delay:2.05s;stroke-width:.8" d="M24 420 L976 420 M24 518 L612 518 M612 72 L612 680 M388 72 L388 420"/>
+      <path class="gold-line draw draft" style="--len:1000;--dur:1.1s;--delay:2.25s;stroke-width:.75" d="M24 72 L388 72 L388 296 L250 296 L250 420 M612 72 L836 72 L836 296"/>
+      <path id="horizon-build" class="gold-line draw" style="--len:1200;--dur:1.1s;--delay:2.85s;stroke-width:1.15" d="M40 420 L960 420"/>
+      <circle class="tracer" style="--delay:.25s; offset-path:path('M500 460 C505 430 512 405 530 382 C552 354 590 341 624 350 C668 362 698 403 699 451 C700 514 653 571 589 585 C505 603 421 551 394 468 C361 364 422 258 528 224 C659 182 786 263 818 396')"/>
+      <circle class="tracer" style="--delay:2.25s;offset-path:path('M500 460 L500 72 L24 72 L24 680 L976 680 L976 72 L500 72')"/>
+      <circle class="tracer" style="--delay:2.95s;offset-path:path('M40 420 L960 420')"/>
+      <circle class="pulse-node" style="--delay:2.85s" cx="500" cy="420" r="4"/>
+      <circle class="pulse-node" style="--delay:2.95s" cx="388" cy="420" r="2.6"/>
+      <circle class="pulse-node" style="--delay:3.05s" cx="612" cy="420" r="2.6"/>
+      <circle class="pulse-node" style="--delay:3.15s" cx="250" cy="296" r="2.6"/>
+      <circle class="pulse-node" style="--delay:3.25s" cx="836" cy="296" r="2.6"/>
+    </svg>
+  </div>
 
   <!-- Faint geometry bottom-left -->
   <svg class="geo-arc" viewBox="0 0 200 260" fill="none">
@@ -676,6 +735,7 @@ function openModal(k){
 }
 function closeModal(){document.getElementById('modal-bg').classList.remove('open')}
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
 </script>
 </body>
 </html>
