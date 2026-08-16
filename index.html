@@ -27,6 +27,9 @@
   --gold-bright:#e8c97a;
   --gold-dim:#7a5e1a;
   --bg:#0a0c0f;
+  --ink:#ddc697;            /* warm parchment — accessible body copy on black (~12:1) */
+  --ink-dim:#8a7a52;
+  --border-soft:rgba(201,161,51,0.16);
 }
 html,body{
   width:100%;height:100%;
@@ -75,9 +78,11 @@ html,body{
 .nav-links a:hover{color:var(--gold-bright)}
 .nav-right{display:flex;align-items:center;gap:14px}
 .nav-inquire{
+  display:inline-block;
   font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.28em;
   color:var(--gold);border:1px solid var(--gold);background:transparent;
   padding:10px 24px;cursor:pointer;transition:all .25s;
+  text-decoration:none;
 }
 .nav-inquire:hover{background:var(--gold);color:#080a0d}
 
@@ -287,9 +292,87 @@ html,body{
   border-bottom:1px solid rgba(201,161,51,0.22);
   padding-bottom:18px;margin-bottom:20px;
 }
-.modal p{font-size:17px;line-height:1.85;color:rgba(201,161,51,0.68);margin-bottom:12px}
+.modal p{font-size:17px;line-height:1.85;color:var(--ink);margin-bottom:12px}
 .modal a{color:#d4aa50}
 .modal a:hover{color:var(--gold-bright)}
+
+/* ════ BELOW-FOLD CONTENT ════
+   Real, crawlable, no-JS-required content — the modals above are a quick
+   peek; this is the same substance as an ordinary scrollable page, so nav
+   links and category tiles still lead somewhere if a click ever isn't
+   intercepted by JS. */
+.below-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+
+.pillars{padding:clamp(64px,9vw,110px) 0 clamp(46px,7vw,74px)}
+.pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:34px}
+.pillar{border-top:1px solid rgba(201,161,51,0.28);padding-top:18px;scroll-margin-top:100px}
+.pillar h2{
+  font-family:'Cinzel',serif;font-weight:400;font-size:13px;letter-spacing:0.2em;
+  color:var(--gold-bright);margin-bottom:10px;
+}
+.pillar p{font-size:16px;line-height:1.75;color:var(--ink)}
+@media(max-width:900px){.pillars-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.pillars-grid{grid-template-columns:1fr}}
+
+.catalogue{padding:clamp(20px,4vw,30px) 0 clamp(60px,8vw,90px)}
+.catalogue .eyebrow{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:var(--gold-dim);
+  display:flex;align-items:center;gap:12px;margin-bottom:36px;
+}
+.catalogue .eyebrow::after{content:'';flex:1;height:1px;background:var(--border-soft)}
+.cat-list{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--border-soft)}
+.cat-list>div{
+  padding:24px 28px;border-bottom:1px solid var(--border-soft);
+  scroll-margin-top:100px;
+}
+.cat-list>div:nth-child(odd){border-right:1px solid var(--border-soft)}
+.cat-list h3{
+  font-family:'Cinzel',serif;font-weight:400;font-size:13px;letter-spacing:0.16em;
+  color:var(--gold-bright);margin-bottom:8px;
+}
+.cat-list p{font-size:15.5px;line-height:1.7;color:var(--ink-dim)}
+@media(max-width:700px){
+  .cat-list{grid-template-columns:1fr}
+  .cat-list>div:nth-child(odd){border-right:none}
+}
+
+.contact-block{
+  padding:clamp(60px,9vw,100px) 0;border-top:1px solid rgba(201,161,51,0.28);
+  text-align:center;scroll-margin-top:100px;
+}
+.contact-block .eyebrow{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:var(--gold-dim);
+}
+.contact-block h2{
+  font-family:'Cinzel',serif;font-weight:400;font-size:clamp(22px,3.2vw,32px);
+  letter-spacing:0.1em;color:var(--gold-bright);margin:14px 0 16px;
+}
+.contact-block p{max-width:520px;margin:0 auto 26px;color:var(--ink);font-size:16.5px;line-height:1.7}
+.contact-block a.email{
+  display:inline-block;font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.08em;
+  color:var(--bg);background:var(--gold);padding:14px 30px;text-decoration:none;transition:opacity .25s;
+}
+.contact-block a.email:hover{opacity:0.85}
+.contact-block .meta{
+  margin-top:22px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.2em;color:var(--gold-dim);
+}
+
+.site-footer{border-top:1px solid rgba(201,161,51,0.28);padding:28px 0}
+.site-footer .below-wrap{
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+}
+.footer-mark{display:flex;align-items:center;gap:9px;text-decoration:none}
+.footer-mark span{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.16em;color:var(--gold-dim)}
+.footer-links{display:flex;gap:20px;list-style:none;flex-wrap:wrap}
+.footer-links a{
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.14em;color:var(--gold-dim);
+  text-decoration:none;transition:color .25s;
+}
+.footer-links a:hover{color:var(--gold-bright)}
+.footer-copy{
+  width:100%;text-align:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border-soft);
+  font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.12em;color:var(--gold-dim);
+}
 
 /* ════ REDUCED MOTION ════ */
 @media(prefers-reduced-motion:reduce){
@@ -297,13 +380,15 @@ html,body{
   *{transition-duration:.001ms!important}
 }
 
+@media(max-width:860px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  .navbar{padding:0 16px}
+}
 @media(max-width:700px){
   .cats{grid-template-columns:repeat(3,1fr)}
   .cat:nth-child(3){border-right:none}
   .cat:nth-child(n+4){border-top:1px solid rgba(201,161,51,0.28)}
-  .nav-links{display:none}
-  .nav-toggle{display:flex}
-  .navbar{padding:0 16px}
 }
 </style>
 </head>
@@ -340,7 +425,7 @@ html,body{
   </ul>
 
   <div class="nav-right">
-    <button class="nav-inquire" data-modal="inquire">INQUIRE</button>
+    <a class="nav-inquire" href="#contact" data-modal="inquire">INQUIRE</a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span><span></span><span></span>
     </button>
@@ -621,6 +706,97 @@ html,body{
 </div><!-- /outer-frame -->
 </main>
 
+<!-- ══ BELOW-FOLD CONTENT (real page content — same copy the modals show,
+     always present, no JS required; nav links and category tiles land here
+     if a click is ever not intercepted by the modal script) ══ -->
+<section class="pillars">
+  <div class="below-wrap">
+    <div class="pillars-grid">
+      <div class="pillar" id="vision">
+        <h2>The Vision</h2>
+        <p>Chrysanthemum Vault was founded on the conviction that exceptional beauty endures. We exist at the confluence of antiquity and intention — sourcing, restoring, and reimagining objects of singular character for collectors who demand the extraordinary.</p>
+      </div>
+      <div class="pillar" id="alchemy">
+        <h2>The Alchemy</h2>
+        <p>Our process is one of transformation. Raw materials become luminous. The forgotten becomes coveted. Through patient craft and deep material knowledge, we transmute the overlooked into the exquisite.</p>
+      </div>
+      <div class="pillar" id="collection">
+        <h2>The Collection</h2>
+        <p>Paintings. Marquetry. Curiosities. Jewels. Archive documents. Each category within the Vault represents decades of dedicated pursuit across markets, estates, and private collections on every continent.</p>
+      </div>
+      <div class="pillar" id="atelier">
+        <h2>The Atelier</h2>
+        <p>Our atelier is the quiet engine behind the Vault. Here, master craftspeople undertake restoration, conservation, and bespoke commissions under conditions of uncompromising care. Visits by appointment only.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="catalogue" aria-labelledby="catalogue-heading">
+  <div class="below-wrap">
+    <div class="eyebrow" id="catalogue-heading">The Catalogue</div>
+    <div class="cat-list">
+      <div id="paintings">
+        <h3>Paintings</h3>
+        <p>A curated assembly of works spanning four centuries — from intimate cabinet paintings to monumental canvases. Each acquisition is chosen for its vitality, its provenance, and the singular quality of its light.</p>
+      </div>
+      <div id="marquetry">
+        <h3>Marquetry</h3>
+        <p>The art of inlaid wood: rosewood, ebony, satinwood, and ivory arranged into compositions of breathtaking precision. Our marquetry pieces represent the apex of furniture-making from Europe's great ateliers.</p>
+      </div>
+      <div id="curiosities">
+        <h3>Curiosities</h3>
+        <p>Objects that defy easy categorisation. Scientific instruments, natural specimens, automata, and philosophical objects — each a conversation frozen in form, for the collector who seeks the extraordinary beyond convention.</p>
+      </div>
+      <div id="jewelry">
+        <h3>Jewelry</h3>
+        <p>Jewels chosen not merely for their gemstones but for the mastery of their making. Historic pieces, signed work, and objects of vertu — assembled with an eye for craft that transcends mere ornament.</p>
+      </div>
+      <div id="archive">
+        <h3>Archive</h3>
+        <p>Manuscripts, letters, illustrated documents, and ephemera of historical and artistic consequence. The archive speaks where objects fall silent — offering the words, drawings, and correspondence of those who shaped civilisation.</p>
+      </div>
+      <div id="commissions">
+        <h3>Commissions</h3>
+        <p>Bespoke work for discerning clients. Whether restoring an heirloom to its former splendour or creating an entirely new work in historical tradition, the Atelier brings uncompromising skill to every brief. All commissions begin with a private consultation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-block" id="contact" aria-labelledby="contact-heading">
+  <div class="below-wrap">
+    <div class="eyebrow">Correspondence</div>
+    <h2 id="contact-heading">Inquire Within</h2>
+    <p>For acquisition enquiries, commission discussions, or private viewings, we welcome your correspondence.</p>
+    <a class="email" href="mailto:contact@chrysanthemumvault.com">contact@chrysanthemumvault.com</a>
+    <p class="meta">San Antonio, Texas &nbsp;·&nbsp; By appointment</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="below-wrap">
+    <a class="footer-mark" href="#">
+      <svg width="22" height="22" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+        <g stroke="#7a5e1a" stroke-width="1.05">
+          <path d="M15 27 C15 27 9 19 7 10 C9 8.5 11.5 9.5 12.5 12 C13.5 16 14.2 22 15 27Z"/>
+          <path d="M15 27 C15 27 21 19 23 10 C21 8.5 18.5 9.5 17.5 12 C16.5 16 15.8 22 15 27Z"/>
+          <path d="M15 27 C15 27 7 23 6 17 C8 15 10 16 10.8 18.5 C12 22 13.5 25 15 27Z"/>
+          <path d="M15 27 C15 27 23 23 24 17 C22 15 20 16 19.2 18.5 C18 22 16.5 25 15 27Z"/>
+        </g>
+      </svg>
+      <span>Chrysanthemum Vault</span>
+    </a>
+    <ul class="footer-links">
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#atelier">Atelier</a></li>
+      <li><a href="mailto:contact@chrysanthemumvault.com">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© <span id="fyear">2026</span> Chrysanthemum Vault. All rights reserved.</p>
+  </div>
+</footer>
+
 <!-- ══ MODAL ══ -->
 <div class="modal-bg" id="modal-bg">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
@@ -804,6 +980,9 @@ navToggle.addEventListener('click',()=>{
   navToggle.setAttribute('aria-expanded',String(open));
   navToggle.setAttribute('aria-label',open?'Close menu':'Open menu');
 });
+
+/* ── FOOTER YEAR ── */
+document.getElementById('fyear').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
