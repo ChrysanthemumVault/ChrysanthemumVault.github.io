@@ -298,6 +298,34 @@ html,body{
 .modal a{color:#d4aa50}
 .modal a:hover{color:var(--gold-bright)}
 
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* ════ PAINTINGS GALLERY ════ */
+.gallery{padding:0 0 clamp(60px,8vw,90px)}
+.gallery .eyebrow{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:var(--gold-dim);
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;scroll-margin-top:100px;
+}
+.gallery .eyebrow::after{content:'';flex:1;height:1px;background:var(--border-soft)}
+.gallery-intro{font-size:16px;line-height:1.75;color:var(--ink-dim);max-width:62ch;margin-bottom:34px}
+.art-grid{columns:3;column-gap:28px}
+.art-card{break-inside:avoid;margin:0 0 34px}
+.art-link{display:block;border:1px solid var(--border-soft);padding:8px;background:#08090d;transition:border-color .25s}
+.art-link:hover,.art-link:focus-visible{border-color:rgba(201,161,51,0.6);outline:none}
+.art-link img{display:block;width:100%;height:auto}
+.art-card figcaption{padding:12px 2px 0;display:flex;flex-direction:column;gap:3px}
+.art-title{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.12em;color:var(--gold-bright)}
+.art-meta{font-size:15px;line-height:1.5;color:var(--ink)}
+.art-status{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.18em;color:var(--gold-dim);margin-top:4px}
+.art-status.art-inq{color:var(--gold)}
+.art-id{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.2em;color:var(--gold-dim);opacity:.75}
+@media(max-width:900px){.art-grid{columns:2}}
+@media(max-width:540px){.art-grid{columns:1}}
+.modal.art{width:min(980px,94vw);padding:46px 28px 26px;max-height:94vh;overflow:auto}
+.modal.art h2{font-size:15px;letter-spacing:0.2em;padding-bottom:14px;margin-bottom:16px}
+.modal.art img{display:block;max-width:100%;max-height:68vh;margin:0 auto 14px;height:auto;width:auto}
+.modal.art p{font-size:15.5px;line-height:1.6;margin-bottom:4px;text-align:center}
+.modal.art .art-status{display:block;text-align:center}
+
 /* ════ BELOW-FOLD CONTENT ════
    Real, crawlable, no-JS-required content — the modals above are a quick
    peek; this is the same substance as an ordinary scrollable page, so nav
@@ -634,6 +662,126 @@ html,body{
   </div>
 </section>
 
+<section class="gallery" aria-labelledby="gallery-heading">
+  <div class="below-wrap">
+    <div class="eyebrow" id="gallery">Paintings · Selected Works</div>
+    <h2 id="gallery-heading" class="sr-only">Paintings: selected works</h2>
+    <p class="gallery-intro">Finished paintings by Karl S. Crismond, 2010 to 2026. These works are held in the artist's collection or in private hands and are not for sale; they are shown here for the record.</p>
+    <div class="art-grid">
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0001-red-tree.jpg" data-art data-title="Untitled (Red Tree)" data-meta="Oil on wood panel · A3 · 2010" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0001-red-tree-thumb.jpg" alt="A wind-swept red tree against a blue and white sky over green fields" width="720" height="513" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Untitled (Red Tree)</span>
+          <span class="art-meta">Oil on wood panel · A3 · 2010</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0001</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0003-sycamore-tree.jpg" data-art data-title="Untitled Sycamore Tree" data-meta="Oil and acrylic on wood panel · A4" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0003-sycamore-tree-thumb.jpg" alt="A brown sycamore with swirling bark and branches against bright green" width="451" height="720" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Untitled Sycamore Tree</span>
+          <span class="art-meta">Oil and acrylic on wood panel · A4</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0003</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0004-oairath-anan-ziggurat-of-zenor.jpg" data-art data-title="Oairath Anan in the Ziggurat of Zenor" data-meta="Oil and acrylic on canvas · 12 × 24 in · 2024" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0004-oairath-anan-ziggurat-of-zenor-thumb.jpg" alt="A small robed figure seated before a tall waterfall between violet and blue trees under a gold sky" width="363" height="720" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Oairath Anan in the Ziggurat of Zenor</span>
+          <span class="art-meta">Oil and acrylic on canvas · 12 × 24 in · 2024</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0004</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0018-lovers-growing-apart.jpg" data-art data-title="Lovers Growing Apart" data-meta="Watercolor · 16 × 20 in" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0018-lovers-growing-apart-thumb.jpg" alt="Two blue trees leaning away from each other against orange and yellow flames" width="720" height="574" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Lovers Growing Apart</span>
+          <span class="art-meta">Watercolor · 16 × 20 in</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0018</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0021-the-lorax-pride.jpg" data-art data-title="The Lorax (Pride)" data-meta="Oil on wood · approx. 28 × 36 in" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0021-the-lorax-pride-thumb.jpg" alt="Tufted trees in rainbow colours on striped trunks against a swirling blue ground, in a gilt frame" width="590" height="720" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">The Lorax (Pride)</span>
+          <span class="art-meta">Oil on wood · approx. 28 × 36 in</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0021</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0049-tarzan.jpg" data-art data-title="Tarzan" data-meta="Acrylic and ink on Japanese wood panel · B4 · 2025" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0049-tarzan-thumb.jpg" alt="A bearded nude man crouching on a mossy branch before a bright jungle landscape" width="540" height="720" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Tarzan</span>
+          <span class="art-meta">Acrylic and ink on Japanese wood panel · B4 · 2025</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0049</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0071-texas-lilacs.jpg" data-art data-title="Texas Lilacs" data-meta="Oil and acrylic on canvas · 16 × 20 in · 2024" data-status="Private collection · Not for sale">
+          <img src="assets/images/paintings/cv-0071-texas-lilacs-thumb.jpg" alt="Purple lilacs in a square glass vase on a pink table against black" width="579" height="720" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Texas Lilacs</span>
+          <span class="art-meta">Oil and acrylic on canvas · 16 × 20 in · 2024</span>
+          <span class="art-status">Private collection · Not for sale</span>
+          <span class="art-id">CV-0071</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0103-lazy-autumn.jpg" data-art data-title="Lazy Autumn" data-meta="Oil and acrylic on canvas · 12 × 16 in · 2025" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0103-lazy-autumn-thumb.jpg" alt="A boy and a tiger crossing a stream on a fallen log under orange autumn leaves" width="720" height="707" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Lazy Autumn</span>
+          <span class="art-meta">Oil and acrylic on canvas · 12 × 16 in · 2025</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0103</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0107-gold-birch-forest.jpg" data-art data-title="Gold Birch Forest" data-meta="Gold leaf and acrylic on wood panel · F4 · 2026" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0107-gold-birch-forest-thumb.jpg" alt="White birch trunks receding into a gold-leaf forest" width="720" height="529" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Gold Birch Forest</span>
+          <span class="art-meta">Gold leaf and acrylic on wood panel · F4 · 2026</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0107</span>
+        </figcaption>
+      </figure>
+      <figure class="art-card">
+        <a class="art-link" href="assets/images/paintings/cv-0163-batman-and-robin-kissing.jpg" data-art data-title="Batman and Robin Kissing" data-meta="Oil on canvas · 12 × 12 in · 2012" data-status="Artist's collection · Not for sale">
+          <img src="assets/images/paintings/cv-0163-batman-and-robin-kissing-thumb.jpg" alt="Two masked comic-book heroes kissing against flat city blocks of colour" width="720" height="701" loading="lazy" />
+        </a>
+        <figcaption>
+          <span class="art-title">Batman and Robin Kissing</span>
+          <span class="art-meta">Oil on canvas · 12 × 12 in · 2012</span>
+          <span class="art-status">Artist's collection · Not for sale</span>
+          <span class="art-id">CV-0163</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="contact-block" id="contact" aria-labelledby="contact-heading">
   <div class="below-wrap">
     <div class="eyebrow">Correspondence</div>
@@ -798,10 +946,28 @@ function openModal(k){
   if(!C[k]) return;
   document.getElementById('m-title').textContent=C[k].t;
   document.getElementById('m-body').innerHTML=C[k].b;
+  modalEl.classList.remove('art');
   lastFocus=document.activeElement;
   modalBg.classList.add('open');
   closeBtn.focus();
 }
+/* Paintings gallery: open the full image in the same dialog (plain link without JS) */
+function openArt(a){
+  const body=document.getElementById('m-body');
+  document.getElementById('m-title').textContent=a.dataset.title.toUpperCase();
+  body.textContent='';
+  const img=new Image();img.src=a.getAttribute('href');img.alt=a.querySelector('img').alt;
+  const meta=document.createElement('p');meta.textContent=a.dataset.meta;
+  const st=document.createElement('span');st.className='art-status';st.textContent=a.dataset.status;
+  body.append(img,meta,st);
+  modalEl.classList.add('art');
+  lastFocus=a;
+  modalBg.classList.add('open');
+  closeBtn.focus();
+}
+document.querySelectorAll('[data-art]').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();openArt(a);});
+});
 function closeModal(){
   modalBg.classList.remove('open');
   if(lastFocus&&lastFocus.focus)lastFocus.focus();
